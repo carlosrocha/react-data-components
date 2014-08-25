@@ -1,0 +1,31 @@
+{
+  "name": "react-data-components",
+  "version": "0.0.1-alpha",
+  "description": "React data components",
+  "author": "Carlos Rocha",
+  "main": "./index",
+  "peerDependencies": {
+    "react": "^0.11.1"
+  },
+  "devDependencies": {
+    "jest-cli": "^0.1.18",
+    "jsx-loader": "^0.11.0",
+    "react-tools": "^0.11.1",
+    "webpack": "^1.3.3-beta1",
+    "style-loader": "*",
+    "url-loader": "*",
+    "css-loader": "*",
+    "d3": "*"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors --watch",
+    "test": "jest"
+  },
+  "jest": {
+    "rootDir": "src",
+    "scriptPreprocessor": "../jest/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "../node_modules/react"
+    ]
+  }
+}
