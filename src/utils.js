@@ -1,4 +1,8 @@
 
+exports.contains = function(arr, val) {
+  return arr.indexOf(val) >= 0;
+};
+
 /**
  * Useful for binding values to an event.
  * @param {Function} func the function to execute.
@@ -15,14 +19,12 @@ exports.closure = function(func) {
 
 /**
  * @param {String} a
- * @return {Function} Partially applied function.
+ * @return {Boolean}
  */
-exports.containsIgnoreCase = function(a) {
+exports.containsIgnoreCase = function(a, b) {
   a = a.toLowerCase().trim();
-  return function(b) {
-    b = b.toLowerCase().trim();
-    return b.indexOf(a) >= 0;
-  };
+  b = b.toLowerCase().trim();
+  return b.indexOf(a) >= 0;
 };
 
 /**
@@ -40,18 +42,12 @@ exports.findWhere = function(arr, obj) {
   }
 };
 
-/**
- * @param {Function} pred function that receives the value and returns true or false
- * @return {Function} partially applied function.
- */
-exports.some = function(pred) {
-  return function(obj) {
-    // TODO: support for arrays
-    for (var key in obj) {
-      if (pred(obj[key]) === true) {
-        return true;
-      }
+exports.some = function(pred, obj) {
+  // TODO: support for arrays
+  for (var key in obj) {
+    if (pred(obj[key]) === true) {
+      return true;
     }
-    return false;
-  };
+  }
+  return false;
 };

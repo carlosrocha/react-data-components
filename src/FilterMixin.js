@@ -1,16 +1,22 @@
 var utils = require('./utils');
-var findWhere = utils.findWhere;
-var containsIgnoreCase = utils.containsIgnoreCase;
 var some = utils.some;
-
-var contains = function(arr, val) {
-  return arr.indexOf(val) >= 0;
-};
+var contains = utils.contains;
+var containsIgnoreCase = utils.containsIgnoreCase;
 
 var FilterMixin = {
   getInitialState: function() {
     return {
-      filterBy: {}
+      filterValues: {}
+    };
+  },
+
+  getDefaultProps: function() {
+    return {
+      filters: {
+        globalSearch: {
+          filter: containsIgnoreCase
+        }
+      }
     };
   },
 
@@ -32,20 +38,13 @@ var FilterMixin = {
     return result;
   },
 
-  checkFilter: function(prop, filterValue, value) {
-    var filterDef = findWhere(this.props.filters, { prop: prop });
-    return filterDef.filter(filterValue, value);
-  },
-
-  /**
-   * @param {Object} filterBy the object with the filtering definitions
-   * @return {Array} the filtered array of data
-   */
-  applyFilters: function(filterBy) {
+  applyFilters: function(filterValues) {
     var data = this.props.initialData;
+    var filters = this.props.filters;
+
     return data.filter(function(each) {
-      for (var prop in filterBy) {
-        if (!this.checkFilter(prop, filterBy[prop], each[prop])) {
+      for (var key in filterValues) {
+        if (!this.filterPass(filters[key], filterValues[key], each)) {
           return false;
         }
       }
@@ -53,31 +52,33 @@ var FilterMixin = {
     }, this);
   },
 
-  /**
-   * Global text search.
-   * @param {Event} e the change event
-   * @return {void}
-   */
-  onFilterGlobal: function(e) {
-    var text = e.target.value;
-    var data = this.props.initialData.filter(some(containsIgnoreCase(text)));
-
-    this.setState({
-      data: data,
-      globalSearch: text
-    });
+  filterPass: function(filterDef, filterValue, row) {
+    if (!filterDef.prop) {
+      // Filter is for all properties
+      var filterFunction = function(each) {
+        return filterDef.filter(filterValue, each);
+      };
+      return some(filterFunction, row);
+    } else {
+      // Filter is for one property
+      return filterDef.filter(filterValue, row[filterDef.prop]);
+    }
   },
 
   onFilter: function(prop, e) {
-    var filterBy = this.state.filterBy;
+    var filterValues = this.state.filterValues;
     var filterValue = e.target.value;
-    filterBy[prop] = filterValue;
+    if (filterValue) {
+      filterValues[prop] = filterValue;
+    } else {
+      delete filterValues[prop];
+    }
 
-    var newData = this.applyFilters(filterBy);
+    var newData = this.applyFilters(filterValues);
 
     this.setState({
       data: newData,
-      filterBy: filterBy,
+      filterValues: filterValues,
       // TODO: mixins are not supposed to know about each other
       currentPage: 0
     });
