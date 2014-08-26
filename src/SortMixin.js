@@ -28,7 +28,7 @@ var SortMixin = {
     return sortedData;
   },
 
-  onSort: function(prop) {
+  onSort: function(e, prop) {
     var sortBy = this.state.sortBy;
 
     // If no state before or it was sorting on another column, then initialize on null.
