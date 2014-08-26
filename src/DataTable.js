@@ -22,6 +22,13 @@ var DataTable = React.createClass({
     };
   },
 
+  onRowClicked: function(e, data, key) {
+    if (this.props.onRowClicked) {
+      this.props.onRowClicked(data);
+    }
+    this.setState({ selected: key });
+  },
+
   render: function() {
     var page = this.buildPage();
 
@@ -61,6 +68,8 @@ var DataTable = React.createClass({
           keys={this.props.keys}
           sortBy={this.state.sortBy}
           onSort={this.onSort}
+          onRowClicked={this.onRowClicked}
+          selected={this.state.selected}
         />
       </div>
     );

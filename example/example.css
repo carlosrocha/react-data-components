@@ -41,6 +41,9 @@ td.empty-cell {
   -webkit-user-select: none;
           user-select: none;
 }
+tr.selected {
+  background-color: #eee;
+}
 .select-control {
   margin: 20px 0;
 }

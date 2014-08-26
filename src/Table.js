@@ -4,6 +4,7 @@
 
 var React = require('react');
 var TableHeader = require('./TableHeader');
+var closure = require('./utils').closure;
 
 /**
  * @param {Object} obj the object to check.
@@ -24,7 +25,7 @@ var keyGetter = function(keys) {
   };
 };
 
-var mapData = function(columns, data, getKeys) {
+var mapData = function(columns, data, getKeys, rowClicked, selected) {
   var result = [];
 
   for (var i = 0; i < data.length; i++) {
@@ -53,7 +54,17 @@ var mapData = function(columns, data, getKeys) {
       row.push(<td key={j} className={className}>{value}</td>);
     }
 
-    result.push(<tr key={getKeys(currentData)}>{row}</tr>);
+    // Use the key to keep track of the selection
+    var key = getKeys(currentData).join(',');
+    var rowClass = selected === key ? 'selected' : null;
+    result.push(
+      <tr
+        key={key}
+        className={rowClass}
+        onClick={rowClicked(currentData, key)}>
+        {row}
+      </tr>
+    );
   }
 
   return result;
@@ -70,7 +81,8 @@ var Table = React.createClass({
   render: function() {
     var columns = this.props.columns;
     var getKeys = keyGetter(this.props.keys);
-    var rows = mapData(columns, this.props.dataArray, getKeys);
+    var rowClicked = closure(this.props.onRowClicked);
+    var rows = mapData(columns, this.props.dataArray, getKeys, rowClicked, this.props.selected);
 
     return this.transferPropsTo(
       <table>

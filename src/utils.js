@@ -5,9 +5,10 @@
  * @return {Function}
  */
 exports.closure = function(func) {
-  return function(val) {
-    return function() {
-      func(val);
+  return function() {
+    var args = arguments;
+    return function(e) {
+      func.apply(null, [e].concat(Array.prototype.slice.apply(args)));
     };
   };
 };
