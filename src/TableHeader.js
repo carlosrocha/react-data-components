@@ -50,10 +50,9 @@ var TableHeader = React.createClass({
           ref={'th-' + idx}
           key={idx}
           onClick={event}
-          style={{width: col.width}}
-          className={className}>
+          style={{width: col.width}}>
           {col.title}
-          <i />
+          <i className={className} />
         </th>
       );
     }, this);
