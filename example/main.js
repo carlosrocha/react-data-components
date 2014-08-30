@@ -2,14 +2,13 @@
  * @jsx React.DOM
  */
 
-require('./bootstrap/css/bootstrap.css');
-require('./example.css');
+require('../less/table.less');
 
 var React = require('react');
 var d3 = require('d3');
 var DataTable = require('../').DataTable;
 
-var csvFile = 'example/CTA_-_Map_of_Fare_Media_Sales_Outlets.csv';
+var csvFile = '/CTA_-_Map_of_Fare_Media_Sales_Outlets.csv';
 
 var renderMapUrl = function(val, list) {
   var url = 'http://maps.google.com/?q=' + list['LAT'] + ',' + list['LON'];
