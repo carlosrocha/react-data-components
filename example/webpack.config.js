@@ -1,17 +1,17 @@
 var path = require('path');
 
 module.exports = {
-  entry: './main',
+  cache: true,
+  entry: {
+    table: './example/table/main'
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
-  },
-  resolve: {
-    modulesDirectories: [ '../node_modules', '../' ]
+    filename: '[name].entry.js'
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'jsx' },
+      { test: /\.js$/, loader: 'react-hot!jsx' },
       { test: /\.less$/, loader: 'style!css!less' },
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.woff$/, loader: 'url?limit=10000&mimetype=application/font-woff' },

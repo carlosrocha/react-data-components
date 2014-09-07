@@ -3,6 +3,7 @@
  */
 
 var React = require('react/addons');
+var cx = require('react/lib/cx');
 var ListButton = require('./ListButton');
 
 /**
@@ -90,48 +91,50 @@ var Pagination = React.createClass({
     }
 
     // First and Prev button handlers and class
-    var firstHandler = returnFalse,
-        prevHandler = returnFalse,
-        firstClass = 'disabled';
-    if (currentPage > 0) {
-      firstClass = null;
-      firstHandler = this.onChangePage.bind(this, 0);
-      prevHandler = this.onChangePage.bind(this, currentPage - 1);
-    }
+    var isFirst = currentPage === 0;
+    var firstHandler = isFirst ? returnFalse : this.onChangePage.bind(this, 0);
+    var firstClass = cx({
+      'first': true,
+      'disabled': isFirst
+    });
+    var prevHandler = isFirst ? returnFalse : this.onChangePage.bind(this, currentPage - 1);
+    var prevClass = cx({
+      'prev': true,
+      'disabled': isFirst
+    });
 
     // Next and Last button handlers and class
-    var nextHandler = returnFalse,
-        lastHandler = returnFalse,
-        lastClass = 'disabled';
-    if (currentPage < totalPages - 1) {
-      lastClass = null;
-      nextHandler = this.onChangePage.bind(this, currentPage + 1);
-      lastHandler = this.onChangePage.bind(this, totalPages - 1);
-    }
+    var isLast = currentPage === (totalPages - 1);
+    var nextHandler = isLast ? returnFalse : this.onChangePage.bind(this, currentPage + 1);
+    var nextClass = cx({
+      'next': true,
+      'disabled': isLast
+    });
+    var lastHandler = isLast ? returnFalse : this.onChangePage.bind(this, totalPages - 1);
+    var lastClass = cx({
+      'last': true,
+      'disabled': isLast
+    });
 
     return this.transferPropsTo(
       <ul>
         <ListButton
           className={firstClass}
-          event={firstHandler}>
-          First
-        </ListButton>
+          event={firstHandler}
+        />
         <ListButton
-          className={firstClass}
-          event={prevHandler}>
-          Prev
-        </ListButton>
+          className={prevClass}
+          event={prevHandler}
+        />
         {buttons}
         <ListButton
-          className={lastClass}
-          event={nextHandler}>
-          Next
-        </ListButton>
+          className={nextClass}
+          event={nextHandler}
+        />
         <ListButton
           className={lastClass}
-          event={lastHandler}>
-          Last
-        </ListButton>
+          event={lastHandler}
+        />
       </ul>
     );
   }

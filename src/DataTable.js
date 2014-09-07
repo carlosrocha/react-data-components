@@ -34,33 +34,27 @@ var DataTable = React.createClass({
 
     return this.transferPropsTo(
       <div>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="select-control">
-              <SelectField
-                id="page-menu"
-                label="Page size:"
-                value={this.state.pageLength}
-                options={this.props.pageLengthOptions}
-                onChange={this.onPageLengthChange}
-              />
-              <SearchField
-                id="search-field"
-                label="Search:"
-                value={this.state.filterValues['globalSearch']}
-                onChange={this.onFilter.bind(this, 'globalSearch')}
-              />
-            </div>
-          </div>
-          <div className="col-md-6">
-            <Pagination
-              className="pagination"
-              currentPage={page.currentPage}
-              totalPages={page.totalPages}
-              onChangePage={this.onChangePage}
-            />
-          </div>
+        <div className="pull-left">
+          <SelectField
+            id="page-menu"
+            label="Page size:"
+            value={this.state.pageLength}
+            options={this.props.pageLengthOptions}
+            onChange={this.onPageLengthChange}
+          />
+          <SearchField
+            id="search-field"
+            label="Search:"
+            value={this.state.filterValues['globalSearch']}
+            onChange={this.onFilter.bind(this, 'globalSearch')}
+          />
         </div>
+        <Pagination
+          className="pagination pull-right"
+          currentPage={page.currentPage}
+          totalPages={page.totalPages}
+          onChangePage={this.onChangePage}
+        />
         <Table
           className="table table-bordered"
           dataArray={page.data}
