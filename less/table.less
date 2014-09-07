@@ -4,12 +4,10 @@
           user-select: @option;
 }
 
-body {
+.container {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #222;
-}
-.container {
   width: 970px;
   padding-right: 15px;
   padding-left: 15px;
@@ -79,9 +77,7 @@ i.sort-asc:before {
   a:hover {
     text-decoration: none;
   }
-  > li {
-    display: inline;
-  }
+  > li { display: inline; }
   > li:first-child a {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -98,15 +94,9 @@ i.sort-asc:before {
     margin-left: -1px;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
   }
-  li:last-child a {
-    border-right-width: 1px;
-  }
-  li a:hover {
-    background: @pagination-border-color;
-  }
-  li.active a {
-    background: @pagination-active-color;
-  }
+  li:last-child a { border-right-width: 1px; }
+  li a:hover { background: @pagination-border-color; }
+  li.active a { background: @pagination-active-color; }
   li.disabled a {
     cursor: not-allowed;
     background: lighten(@pagination-bg-color, 20%);
@@ -117,16 +107,8 @@ i.sort-asc:before {
   .last a:before {
     font: normal x-large serif;
   }
-  .first a:before {
-    content: '«';
-  }
-  .prev a:before {
-    content: '‹';
-  }
-  .next a:before {
-    content: '›';
-  }
-  .last a:before {
-    content: '»';
-  }
+  .first a:before { content: '«'; }
+  .prev a:before { content: '‹'; }
+  .next a:before { content: '›'; }
+  .last a:before { content: '»'; }
 }

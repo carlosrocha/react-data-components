@@ -1,25 +1,27 @@
 @import "~bootstrap/less/bootstrap.less";
 
-th {
-  cursor: pointer;
-  text-align: center;
-  .user-select(none);
+.table {
+  th {
+    cursor: pointer;
+    text-align: center;
+    .user-select(none);
+  }
+  th > i {
+    float: right;
+    color: hsl(20, 0%, 70%);
+    &:extend(.glyphicon);
+  }
+  i.sort-asc:before { content: '\e113'; }
+  i.sort-desc:before { content: '\e114'; }
+  i.sort-off:before { content: '\e150'; }
+  td.empty-cell {
+    font-style: italic;
+    color: darkgray;
+    cursor: default;
+    .user-select(none);
+  }
+  tr.selected { background-color: #eee; }
 }
-th > i {
-  float: right;
-  color: hsl(20, 0%, 70%);
-  &:extend(.glyphicon);
-}
-i.sort-asc:before { content: '\e113'; }
-i.sort-desc:before { content: '\e114'; }
-i.sort-off:before { content: '\e150'; }
-td.empty-cell {
-  font-style: italic;
-  color: darkgray;
-  cursor: default;
-  .user-select(none);
-}
-tr.selected { background-color: #eee; }
 .select-control { margin: 20px 0; }
 .text-center { text-align: center; }
 .pagination {
