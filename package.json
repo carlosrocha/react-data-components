@@ -27,7 +27,7 @@
     "webpack-dev-server": "^1.5.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --watch",
+    "start": "webpack-dev-server --config example/webpack.config.js  --progress --colors --hot --inline",
     "test": "jest"
   },
   "jest": {
