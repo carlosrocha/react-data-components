@@ -25,6 +25,10 @@ var keyGetter = function(keys) {
   };
 };
 
+var isEmpty = function(val) {
+  return val === undefined || val === null || val === '';
+};
+
 var mapData = function(columns, data, getKeys, rowClicked, selected) {
   var result = [];
 
@@ -38,7 +42,7 @@ var mapData = function(columns, data, getKeys, rowClicked, selected) {
       var className = def.className;
 
       // If prop is defined then it was expecting a value from the data.
-      if (def.prop && (value === undefined || value === null)) {
+      if (def.prop && isEmpty(value)) {
         value = def.defaultContent;
         className = 'empty-cell';
       }
@@ -82,7 +86,7 @@ var Table = React.createClass({
   render: function() {
     var columns = this.props.columns;
     var getKeys = keyGetter(this.props.keys);
-    var rowClicked = closure(this.props.onRowClicked);
+    var rowClicked = this.props.onRowClicked ? closure(this.props.onRowClicked) : null;
     var rows = mapData(columns, this.props.dataArray, getKeys, rowClicked, this.props.selected);
 
     return this.transferPropsTo(
