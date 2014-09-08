@@ -22,8 +22,8 @@ exports.closure = function(func) {
  * @return {Boolean}
  */
 exports.containsIgnoreCase = function(a, b) {
-  a = a.toLowerCase().trim();
-  b = b.toLowerCase().trim();
+  a = (a + '').toLowerCase().trim();
+  b = (b + '').toLowerCase().trim();
   return b.indexOf(a) >= 0;
 };
 

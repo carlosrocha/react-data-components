@@ -39,8 +39,7 @@ var TableHeader = React.createClass({
 
       var event, className = 'sort-disabled';
       // Values that are not in the dataset are not sortable.
-      if (col.sortable !== false && col.prop) {
-        //event = this.onSort.bind(this, col.prop);
+      if (col.sortable !== false && col.prop !== undefined) {
         event = onSort(col.prop);
         className = sortClass(sortBy, col.prop);
       }

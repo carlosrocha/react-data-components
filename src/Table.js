@@ -38,7 +38,7 @@ var mapData = function(columns, data, getKeys, rowClicked, selected) {
       var className = def.className;
 
       // If prop is defined then it was expecting a value from the data.
-      if (def.prop && !value) {
+      if (def.prop && (value === undefined || value === null)) {
         value = def.defaultContent;
         className = 'empty-cell';
       }
