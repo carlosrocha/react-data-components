@@ -1,7 +1,11 @@
 {
   "name": "react-data-components",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "description": "React data components",
+  "keywords": [
+    "react",
+    "react-component"
+  ],
   "author": "Carlos Rocha",
   "main": "./index",
   "repository": {
