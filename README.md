@@ -59,4 +59,5 @@ Name             | Type               | Description
 `render`         | function           | Function to customize the render on column.
 `className`      | string or function | Class for the td.
 `defaultContent` | string             | The default value to display if no data.
+`sortable`       | boolean            | `true` by default.
 
