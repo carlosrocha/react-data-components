@@ -60,7 +60,7 @@ var mapData = function(columns, data, getKeys, rowClicked, selected) {
 
     // Use the key to keep track of the selection
     var key = getKeys(currentData).join(',');
-    var rowClass = selected === key ? 'selected' : null;
+    var rowClass = selected === key ? 'active' : null;
     var rowClickedEvent = rowClicked ? rowClicked(currentData, key) : null;
     result.push(
       <tr
