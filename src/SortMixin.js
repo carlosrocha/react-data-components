@@ -1,35 +1,29 @@
+var {sortByFunc} = require('./utils');
 
-var sortByFunc = function(prop) {
-  return function(a, b) {
-    return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
-  };
-};
+function sort(sortBy, data) {
+  var sortedData = data.sort(sortByFunc(sortBy.prop));
+  if (sortBy.order === 'desc') {
+    sortedData.reverse();
+  }
+  return sortedData;
+}
 
-var SortMixin = {
-  getInitialState: function() {
-    return {
-      sortBy: this.props.initialSortBy
-    };
+module.exports = {
+
+  getInitialState() {
+    return { sortBy: this.props.initialSortBy };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     // Do the initial sorting if specified.
-    if (this.state.sortBy) {
-      this.setState({ data: this.sort(this.state.sortBy) });
+    var {sortBy, data} = this.state;
+    if (sortBy) {
+      this.setState({ data: sort(sortBy, data) });
     }
   },
 
-  sort: function(sortBy) {
-    var sortedData = this.state.data.sort(sortByFunc(sortBy.prop));
-    if (sortBy.order === 'desc') {
-      sortedData.reverse();
-    }
-
-    return sortedData;
-  },
-
-  onSort: function(e, prop) {
-    var sortBy = this.state.sortBy;
+  onSort(prop) {
+    var {sortBy, data} = this.state;
 
     // If no state before or it was sorting on another column, then initialize on null.
     var prevOrder = !sortBy || sortBy.prop !== prop ? null : sortBy.order;
@@ -39,13 +33,12 @@ var SortMixin = {
     var nextSortBy = { prop: prop, order: nextOrder };
 
     // Perform the sort.
-    var sortedData = this.sort(nextSortBy);
+    var sortedData = sort(nextSortBy, data);
 
     this.setState({
       sortBy: nextSortBy,
       data: sortedData
     });
-  },
-};
+  }
 
-module.exports = SortMixin;
+};

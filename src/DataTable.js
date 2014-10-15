@@ -13,16 +13,17 @@ var PageMixin = require('./PageMixin');
 var FilterMixin = require('./FilterMixin');
 
 var DataTable = React.createClass({
+
   mixins: [ SortMixin, PageMixin, FilterMixin ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       // Clone the initialData.
       data: this.props.initialData.slice(0)
     };
   },
 
-  render: function() {
+  render() {
     var page = this.buildPage();
 
     return this.transferPropsTo(

@@ -5,7 +5,8 @@
 var React = require('react');
 
 var SearchField = React.createClass({
-  render: function() {
+
+  render() {
     return (
       <div>
         <label htmlFor={this.props.id}>{this.props.label}</label>
@@ -18,6 +19,7 @@ var SearchField = React.createClass({
       </div>
     );
   }
+
 });
 
 module.exports = SearchField;

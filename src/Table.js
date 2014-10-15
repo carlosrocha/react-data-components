@@ -4,32 +4,9 @@
 
 var React = require('react');
 var TableHeader = require('./TableHeader');
-var closure = require('./utils').closure;
+var {isFunc, isEmpty, keyGetter} = require('./utils');
 
-/**
- * @param {Object} obj the object to check.
- * @return {Boolen} true if the object is a function, false otherwise.
- */
-var isFunc = function(obj) { return typeof obj === 'function'; };
-
-/**
- * Creates a function to get keys of objects.
- * @param {Array} keys Array of keys to get.
- * @return {Array} the array of values of the keys.
- */
-var keyGetter = function(keys) {
-  return function(data) {
-    return keys.map(function(key) {
-      return data[key];
-    });
-  };
-};
-
-var isEmpty = function(val) {
-  return val === undefined || val === null || val === '';
-};
-
-var mapData = function(columns, data, getKeys, rowClicked, selected) {
+function mapData(columns, data, getKeys, rowClicked, selected) {
   var result = [];
 
   for (var i = 0; i < data.length; i++) {
@@ -61,7 +38,8 @@ var mapData = function(columns, data, getKeys, rowClicked, selected) {
     // Use the key to keep track of the selection
     var key = getKeys(currentData).join(',');
     var rowClass = selected === key ? 'active' : null;
-    var rowClickedEvent = rowClicked ? rowClicked(currentData, key) : null;
+    var rowClickedEvent = rowClicked ?
+        rowClicked.bind(null, currentData, key) : null;
     result.push(
       <tr
         key={key}
@@ -73,21 +51,21 @@ var mapData = function(columns, data, getKeys, rowClicked, selected) {
   }
 
   return result;
-};
+}
 
 var emptyRow = <tr><td colSpan={100} className="text-center">No data</td></tr>;
 
 var Table = React.createClass({
+
   propTypes: {
-    columns: React.PropTypes.array.isRequired,
+    columns:   React.PropTypes.array.isRequired,
     dataArray: React.PropTypes.array.isRequired
   },
 
-  render: function() {
-    var columns = this.props.columns;
-    var getKeys = keyGetter(this.props.keys);
-    var rowClicked = this.props.onRowClicked ? closure(this.props.onRowClicked) : null;
-    var rows = mapData(columns, this.props.dataArray, getKeys, rowClicked, this.props.selected);
+  render() {
+    var {columns, keys, dataArray, onRowClicked, selected} = this.props;
+    var getKeys = keyGetter(keys);
+    var rows = mapData(columns, dataArray, getKeys, onRowClicked, selected);
 
     return this.transferPropsTo(
       <table>
@@ -102,6 +80,7 @@ var Table = React.createClass({
       </table>
     );
   }
+
 });
 
 module.exports = Table;

@@ -4,17 +4,29 @@
 
 var React = require('react/addons');
 var cx = require('react/lib/cx');
-var ListButton = require('./ListButton');
 
 /**
  * Used to cancel events.
  */
-var returnFalse = function() { return false; };
+var returnFalse = () => false;
+
+var ListButton = React.createClass({
+
+  render() {
+    return (
+      <li className={this.props.className}>
+        <a href="#" onClick={this.props.event}>{this.props.children}</a>
+      </li>
+    );
+  }
+
+});
 
 /**
  * Pagination component.
  */
 var Pagination = React.createClass({
+
   mixins: [ React.addons.PureRenderMixin ],
 
   propTypes: {
@@ -39,22 +51,20 @@ var Pagination = React.createClass({
     showPages: React.PropTypes.number
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       showPages: 5
     };
   },
 
-  onChangePage: function(pageNumber) {
+  onChangePage(pageNumber) {
     this.props.onChangePage(pageNumber);
     return false;
   },
 
-  render: function() {
-    var totalPages = this.props.totalPages,
-        showPages = this.props.showPages,
-        currentPage = this.props.currentPage,
-        diff = Math.floor(showPages / 2),
+  render() {
+    var {totalPages, showPages, currentPage} = this.props;
+    var diff = Math.floor(showPages / 2),
         start = currentPage - diff,
         end = currentPage + diff + 1;
 

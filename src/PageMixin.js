@@ -1,23 +1,21 @@
+module.exports = {
 
-var PageMixin = {
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       initialPageLength: 10,
       pageLengthOptions: [ 5, 10, 20 ]
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       currentPage: 0,
       pageLength: this.props.initialPageLength
     };
   },
 
-  buildPage: function() {
-    var data = this.state.data;
-    var currentPage = this.state.currentPage;
-    var pageLength = this.state.pageLength;
+  buildPage() {
+    var {data, currentPage, pageLength} = this.state;
     var start = pageLength * currentPage;
 
     return {
@@ -27,11 +25,11 @@ var PageMixin = {
     };
   },
 
-  onChangePage: function(pageNumber) {
+  onChangePage(pageNumber) {
     this.setState({ currentPage: pageNumber });
   },
 
-  onPageLengthChange: function(e) {
+  onPageLengthChange(e) {
     var newPageLength = +e.target.value;
     var pageNumber = this.state.currentPage;
     var dataLength = this.state.data.length;
@@ -45,7 +43,6 @@ var PageMixin = {
       pageLength: newPageLength,
       currentPage: pageNumber
     });
-  },
-};
+  }
 
-module.exports = PageMixin;
+};

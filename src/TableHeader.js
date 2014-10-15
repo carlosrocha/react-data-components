@@ -3,25 +3,25 @@
  */
 
 var React = require('react/addons');
-var closure = require('./utils').closure;
 
-var sortClass = function(sortBy, prop) {
+function sortClass(sortBy, prop) {
   if (!sortBy || sortBy.prop !== prop || !sortBy.order) {
     return 'sort-off';
   }
   return sortBy.order === 'asc' ? 'sort-asc' : 'sort-desc';
-};
+}
 
 var TableHeader = React.createClass({
+
   mixins: [ React.addons.PureRenderMixin ],
 
   propTypes: {
     columns: React.PropTypes.array.isRequired,
-    sortBy: React.PropTypes.object,
-    onSort: React.PropTypes.func.isRequired
+    sortBy:  React.PropTypes.object,
+    onSort:  React.PropTypes.func.isRequired
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
     for (var i = 0; i < this.props.columns.length; i++) {
@@ -32,15 +32,14 @@ var TableHeader = React.createClass({
     }
   },
 
-  render: function() {
-    var sortBy = this.props.sortBy;
-    var onSort = closure(this.props.onSort);
-    var headers = this.props.columns.map(function(col, idx) {
+  render() {
+    var {sortBy, onSort, columns} = this.props;
+    var headers = columns.map((col, idx) => {
 
       var event, className = 'sort-disabled';
       // Values that are not in the dataset are not sortable.
       if (col.sortable !== false && col.prop !== undefined) {
-        event = onSort(col.prop);
+        event = onSort.bind(null, col.prop)
         className = sortClass(sortBy, col.prop);
       }
 
@@ -54,7 +53,7 @@ var TableHeader = React.createClass({
           <i className={className} />
         </th>
       );
-    }, this);
+    });
 
     return (
       <thead>
@@ -64,6 +63,7 @@ var TableHeader = React.createClass({
       </thead>
     );
   }
+
 });
 
 module.exports = TableHeader;

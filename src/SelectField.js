@@ -5,21 +5,22 @@
 var React = require('react');
 
 var SelectField = React.createClass({
-  render: function() {
-    var options = this.props.options.map(function(each) {
-      return <option key={each} value={each}>{each}</option>;
-    });
 
-    var id = this.props.id;
+  render() {
+    var {id, options, label, value, onChange} = this.props;
+    var mappedOpts =
+      options.map((each) => <option key={each} value={each}>{each}</option>);
+
     return (
       <div>
-        <label htmlFor={id}>{this.props.label}</label>
-        <select id={id} value={this.props.value} onChange={this.props.onChange}>
-          {options}
+        <label htmlFor={id}>{label}</label>
+        <select id={id} value={value} onChange={onChange}>
+          {mappedOpts}
         </select>
       </div>
     );
   }
+
 });
 
 module.exports = SelectField;
