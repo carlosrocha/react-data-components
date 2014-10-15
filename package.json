@@ -1,13 +1,13 @@
 {
   "name": "react-data-components",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React data components",
   "keywords": [
     "react",
     "react-component"
   ],
   "author": "Carlos Rocha",
-  "main": "./index",
+  "main": "./dist/react-data-components.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/carlosrocha/react-data-components"

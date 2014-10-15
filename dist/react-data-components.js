@@ -1,1 +1,735 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t(require("React")):"function"==typeof define&&define.amd?define(["React"],t):"object"==typeof exports?exports.ReactDataComponents=t(require("React")):e.ReactDataComponents=t(e.React)}(this,function(e){return function(e){function t(r){if(n[r])return n[r].exports;var a=n[r]={exports:{},id:r,loaded:!1};return e[r].call(a.exports,a,a.exports,t),a.loaded=!0,a.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){t.DataTable=n(9),t.Table=n(7),t.TableHeader=n(8),t.Pagination=n(5),t.SortMixin=n(6),t.PageMixin=n(4),t.FilterMixin=n(3)},function(t){t.exports=e},function(e,t){t.containsIgnoreCase=function(e,t){return e=(e+"").toLowerCase().trim(),t=(t+"").toLowerCase().trim(),t.indexOf(e)>=0},t.some=function(e,t){for(var n in t)if(e(t[n],n)===!0)return!0;return!1},t.isFunc=function(e){return"function"==typeof e},t.keyGetter=function(e){return function(t){return e.map(function(e){return t[e]})}},t.isEmpty=function(e){return void 0===e||null===e||""===e},t.sortByFunc=function(e){return function(t,n){return t[e]<n[e]?-1:t[e]>n[e]?1:0}}},function(e,t,n){function r(e,t){return function(n,r){var a=e[r],o=a.filter.bind(null,n);return a.prop?!o(t[a.prop]):!s(function(e){return o(e)},t)}}var a=n(2),s=a.some,o=a.containsIgnoreCase;e.exports={getInitialState:function(){return{filterValues:{}}},getDefaultProps:function(){return{filters:{globalSearch:{filter:o}}}},onFilter:function(e,t){var n=this.state,a=n.filterValues,o=this.props,i=o.initialData,l=o.filters,u=t.target.value;u?a[e]=u:delete a[e];var p=r.bind(null,l),c=i.filter(function(e){return!s(p(e),a)});this.setState({data:c,filterValues:a,currentPage:0})}}},function(e){e.exports={getDefaultProps:function(){return{initialPageLength:10,pageLengthOptions:[5,10,20]}},getInitialState:function(){return{currentPage:0,pageLength:this.props.initialPageLength}},buildPage:function(){var e=this.state,t=e.data,n=e.currentPage,r=e.pageLength,a=r*n;return{data:t.slice(a,a+r),currentPage:n,totalPages:Math.ceil(t.length/r)}},onChangePage:function(e){this.setState({currentPage:e})},onPageLengthChange:function(e){var t=+e.target.value,n=this.state.currentPage,r=this.state.data.length;t*n>=r&&(n=Math.ceil(r/t)-1),this.setState({pageLength:t,currentPage:n})}}},function(e,t,n){var r=n(1),a=r.addons.classSet,s=function(){return!1},o=r.createClass({displayName:"ListButton",render:function(){return r.DOM.li({className:this.props.className},r.DOM.a({href:"#",onClick:this.props.event},this.props.children))}}),i=r.createClass({displayName:"Pagination",mixins:[r.addons.PureRenderMixin],propTypes:{onChangePage:r.PropTypes.func.isRequired,totalPages:r.PropTypes.number.isRequired,currentPage:r.PropTypes.number.isRequired,showPages:r.PropTypes.number},getDefaultProps:function(){return{showPages:5}},onChangePage:function(e){return this.props.onChangePage(e),!1},render:function(){var e=this.props,t=e.totalPages,n=e.showPages,i=e.currentPage,l=Math.floor(n/2),u=i-l,p=i+l+1;n>t?(u=0,p=t):0>=u?(u=0,p=n):p>=t&&(u=t-n,p=t);for(var c,d,h=[],f=u;p>f;f++)i===f?(c="active",d=s):(c=null,d=this.onChangePage.bind(this,f)),h.push(o({key:f,className:c,event:d},f+1));var g=0===i,y=g?s:this.onChangePage.bind(this,0),v=a({first:!0,disabled:g}),m=g?s:this.onChangePage.bind(this,i-1),P=a({prev:!0,disabled:g}),b=i===t-1,C=b?s:this.onChangePage.bind(this,i+1),D=a({next:!0,disabled:b}),M=b?s:this.onChangePage.bind(this,t-1),x=a({last:!0,disabled:b});return this.transferPropsTo(r.DOM.ul(null,o({className:v,event:y}),o({className:P,event:m}),h,o({className:D,event:C}),o({className:x,event:M})))}});e.exports=i},function(e,t,n){function r(e,t){var n=t.sort(s(e.prop));return"desc"===e.order&&n.reverse(),n}var a=n(2),s=a.sortByFunc;e.exports={getInitialState:function(){return{sortBy:this.props.initialSortBy}},componentWillMount:function(){var e=this.state,t=e.sortBy,n=e.data;t&&this.setState({data:r(t,n)})},onSort:function(e){var t=this.state,n=t.sortBy,a=t.data,s=n&&n.prop===e?n.order:null,o=s&&"desc"!==s?"desc":"asc",i={prop:e,order:o},l=r(i,a);this.setState({sortBy:i,data:l})}}},function(e,t,n){function r(e,t,n,r,s){for(var o=[],u=0;u<t.length;u++){for(var p=[],c=t[u],d=0;d<e.length;d++){var h=e[d],f=c[h.prop],g=h.className;h.prop&&l(f)&&(f=h.defaultContent,g="empty-cell"),h.render&&(f=h.render(f,c)),i(g)&&(g=g(f,c)),p.push(a.DOM.td({key:d,className:g},f))}var y=n(c).join(","),v=s===y?"active":null,m=r?r.bind(null,c,y):null;o.push(a.DOM.tr({key:y,className:v,onClick:m},p))}return o}var a=n(1),s=n(8),o=n(2),i=o.isFunc,l=o.isEmpty,u=o.keyGetter,p=a.DOM.tr(null,a.DOM.td({colSpan:100,className:"text-center"},"No data")),c=a.createClass({displayName:"Table",propTypes:{columns:a.PropTypes.array.isRequired,dataArray:a.PropTypes.array.isRequired},render:function(){var e=this.props,t=e.columns,n=e.keys,o=e.dataArray,i=e.onRowClicked,l=e.selected,c=u(n),d=r(t,o,c,i,l);return this.transferPropsTo(a.DOM.table(null,s({columns:t,sortBy:this.props.sortBy,onSort:this.props.onSort}),a.DOM.tbody(null,d.length?d:p)))}});e.exports=c},function(e,t,n){function r(e,t){return e&&e.prop===t&&e.order?"asc"===e.order?"sort-asc":"sort-desc":"sort-off"}var a=n(1),s=a.createClass({displayName:"TableHeader",mixins:[a.addons.PureRenderMixin],propTypes:{columns:a.PropTypes.array.isRequired,sortBy:a.PropTypes.object,onSort:a.PropTypes.func},componentDidMount:function(){for(var e=0;e<this.props.columns.length;e++){var t=this.refs["th-"+e].getDOMNode();t.style.width||(t.style.width=t.offsetWidth+"px")}},render:function(){var e=this.props,t=e.sortBy,n=e.onSort,s=e.columns,o=s.map(function(e,s){var o,i="sort-disabled";return e.sortable!==!1&&void 0!==e.prop&&(o=n.bind(null,e.prop),i=r(t,e.prop)),a.DOM.th({ref:"th-"+s,key:s,onClick:o,style:{width:e.width}},e.title,a.DOM.i({className:i}))});return a.DOM.thead(null,a.DOM.tr(null,o))}});e.exports=s},function(e,t,n){var r=n(1),a=n(7),s=n(5),o=n(11),i=n(10),l=n(6),u=n(4),p=n(3),c=r.createClass({displayName:"DataTable",mixins:[l,u,p],getInitialState:function(){return{data:this.props.initialData.slice(0)}},render:function(){var e=this.buildPage();return this.transferPropsTo(r.DOM.div(null,r.DOM.div({className:"pull-left"},o({id:"page-menu",label:"Page size:",value:this.state.pageLength,options:this.props.pageLengthOptions,onChange:this.onPageLengthChange}),i({id:"search-field",label:"Search:",value:this.state.filterValues.globalSearch,onChange:this.onFilter.bind(this,"globalSearch")})),s({className:"pagination pull-right",currentPage:e.currentPage,totalPages:e.totalPages,onChangePage:this.onChangePage}),a({className:"table table-bordered",dataArray:e.data,columns:this.props.columns,keys:this.props.keys,sortBy:this.state.sortBy,onSort:this.onSort})))}});e.exports=c},function(e,t,n){var r=n(1),a=r.createClass({displayName:"SearchField",render:function(){return r.DOM.div(null,r.DOM.label({htmlFor:this.props.id},this.props.label),r.DOM.input({id:this.props.id,type:"search",value:this.props.value,onChange:this.props.onChange}))}});e.exports=a},function(e,t,n){var r=n(1),a=r.createClass({displayName:"SelectField",render:function(){var e=this.props,t=e.id,n=e.options,a=e.label,s=e.value,o=e.onChange,i=n.map(function(e){return r.DOM.option({key:e,value:e},e)});return r.DOM.div(null,r.DOM.label({htmlFor:t},a),r.DOM.select({id:t,value:s,onChange:o},i))}});e.exports=a}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("react"), require("react/addons"));
+	else if(typeof define === 'function' && define.amd)
+		define(["react", "react/addons"], factory);
+	else if(typeof exports === 'object')
+		exports["ReactDataComponents"] = factory(require("react"), require("react/addons"));
+	else
+		root["ReactDataComponents"] = factory(root["react"], root["react/addons"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */exports.DataTable = __webpack_require__(1);
+	exports.Table = __webpack_require__(2);
+	exports.TableHeader = __webpack_require__(3);
+	exports.Pagination = __webpack_require__(4);
+	exports.SortMixin = __webpack_require__(5);
+	exports.PageMixin = __webpack_require__(6);
+	exports.FilterMixin = __webpack_require__(7);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(8);
+	var Table = __webpack_require__(2);
+	var Pagination = __webpack_require__(4);
+	var SelectField = __webpack_require__(10);
+	var SearchField = __webpack_require__(11);
+
+	var SortMixin = __webpack_require__(5);
+	var PageMixin = __webpack_require__(6);
+	var FilterMixin = __webpack_require__(7);
+
+	var DataTable = React.createClass({displayName: 'DataTable',
+
+	  mixins: [ SortMixin, PageMixin, FilterMixin ],
+
+	  getInitialState:function() {
+	    return {
+	      // Clone the initialData.
+	      data: this.props.initialData.slice(0)
+	    };
+	  },
+
+	  render:function() {
+	    var page = this.buildPage();
+
+	    return this.transferPropsTo(
+	      React.DOM.div(null, 
+	        React.DOM.div({className: "pull-left"}, 
+	          SelectField({
+	            id: "page-menu", 
+	            label: "Page size:", 
+	            value: this.state.pageLength, 
+	            options: this.props.pageLengthOptions, 
+	            onChange: this.onPageLengthChange}
+	          ), 
+	          SearchField({
+	            id: "search-field", 
+	            label: "Search:", 
+	            value: this.state.filterValues['globalSearch'], 
+	            onChange: this.onFilter.bind(this, 'globalSearch')}
+	          )
+	        ), 
+	        Pagination({
+	          className: "pagination pull-right", 
+	          currentPage: page.currentPage, 
+	          totalPages: page.totalPages, 
+	          onChangePage: this.onChangePage}
+	        ), 
+	        Table({
+	          className: "table table-bordered", 
+	          dataArray: page.data, 
+	          columns: this.props.columns, 
+	          keys: this.props.keys, 
+	          sortBy: this.state.sortBy, 
+	          onSort: this.onSort}
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = DataTable;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(8);
+	var TableHeader = __webpack_require__(3);
+	var $__0=    __webpack_require__(12),isFunc=$__0.isFunc,isEmpty=$__0.isEmpty,keyGetter=$__0.keyGetter;
+
+	function mapData(columns, data, getKeys, rowClicked, selected) {
+	  var result = [];
+
+	  for (var i = 0; i < data.length; i++) {
+	    var row = [];
+	    var currentData = data[i];
+
+	    for (var j = 0; j < columns.length; j++) {
+	      var def = columns[j];
+	      var value = currentData[def.prop];
+	      var className = def.className;
+
+	      // If prop is defined then it was expecting a value from the data.
+	      if (def.prop && isEmpty(value)) {
+	        value = def.defaultContent;
+	        className = 'empty-cell';
+	      }
+
+	      if (def.render) {
+	        value = def.render(value, currentData);
+	      }
+
+	      if (isFunc(className)) {
+	        className = className(value, currentData);
+	      }
+
+	      row.push(React.DOM.td({key: j, className: className}, value));
+	    }
+
+	    // Use the key to keep track of the selection
+	    var key = getKeys(currentData).join(',');
+	    var rowClass = selected === key ? 'active' : null;
+	    var rowClickedEvent = rowClicked ?
+	        rowClicked.bind(null, currentData, key) : null;
+	    result.push(
+	      React.DOM.tr({
+	        key: key, 
+	        className: rowClass, 
+	        onClick: rowClickedEvent}, 
+	        row
+	      )
+	    );
+	  }
+
+	  return result;
+	}
+
+	var emptyRow = React.DOM.tr(null, React.DOM.td({colSpan: 100, className: "text-center"}, "No data"));
+
+	var Table = React.createClass({displayName: 'Table',
+
+	  propTypes: {
+	    columns:   React.PropTypes.array.isRequired,
+	    dataArray: React.PropTypes.array.isRequired
+	  },
+
+	  render:function() {
+	    var $__0=      this.props,columns=$__0.columns,keys=$__0.keys,dataArray=$__0.dataArray,onRowClicked=$__0.onRowClicked,selected=$__0.selected;
+	    var getKeys = keyGetter(keys);
+	    var rows = mapData(columns, dataArray, getKeys, onRowClicked, selected);
+
+	    return this.transferPropsTo(
+	      React.DOM.table(null, 
+	        TableHeader({
+	          columns: columns, 
+	          sortBy: this.props.sortBy, 
+	          onSort: this.props.onSort}
+	        ), 
+	        React.DOM.tbody(null, 
+	          rows.length ? rows : emptyRow
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = Table;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(9);
+
+	function sortClass(sortBy, prop) {
+	  if (!sortBy || sortBy.prop !== prop || !sortBy.order) {
+	    return 'sort-off';
+	  }
+	  return sortBy.order === 'asc' ? 'sort-asc' : 'sort-desc';
+	}
+
+	var TableHeader = React.createClass({displayName: 'TableHeader',
+
+	  mixins: [ React.addons.PureRenderMixin ],
+
+	  propTypes: {
+	    columns: React.PropTypes.array.isRequired,
+	    sortBy:  React.PropTypes.object,
+	    onSort:  React.PropTypes.func
+	  },
+
+	  componentDidMount:function() {
+	    // If no width was specified, then set the width that the browser applied
+	    // initially to avoid recalculating width between pages.
+	    for (var i = 0; i < this.props.columns.length; i++) {
+	      var thDom = this.refs['th-' + i].getDOMNode();
+	      if (!thDom.style.width) {
+	        thDom.style.width = thDom.offsetWidth + 'px';
+	      }
+	    }
+	  },
+
+	  render:function() {
+	    var $__0=    this.props,sortBy=$__0.sortBy,onSort=$__0.onSort,columns=$__0.columns;
+	    var headers = columns.map(function(col, idx)  {
+
+	      var event, className = 'sort-disabled';
+	      // Values that are not in the dataset are not sortable.
+	      if (col.sortable !== false && col.prop !== undefined) {
+	        event = onSort.bind(null, col.prop)
+	        className = sortClass(sortBy, col.prop);
+	      }
+
+	      return (
+	        React.DOM.th({
+	          ref: 'th-' + idx, 
+	          key: idx, 
+	          onClick: event, 
+	          style: {width: col.width}}, 
+	          col.title, 
+	          React.DOM.i({className: className})
+	        )
+	      );
+	    });
+
+	    return (
+	      React.DOM.thead(null, 
+	        React.DOM.tr(null, 
+	          headers
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = TableHeader;
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(9);
+	var cx = React.addons.classSet;
+
+	/**
+	 * Used to cancel events.
+	 */
+	var returnFalse = function()  {return false;};
+
+	var ListButton = React.createClass({displayName: 'ListButton',
+
+	  render:function() {
+	    return (
+	      React.DOM.li({className: this.props.className}, 
+	        React.DOM.a({href: "#", onClick: this.props.event}, this.props.children)
+	      )
+	    );
+	  }
+
+	});
+
+	/**
+	 * Pagination component.
+	 */
+	var Pagination = React.createClass({displayName: 'Pagination',
+
+	  mixins: [ React.addons.PureRenderMixin ],
+
+	  propTypes: {
+	    /**
+	     * Event to trigger. Receives the page number.
+	     */
+	    onChangePage: React.PropTypes.func.isRequired,
+
+	    /**
+	     * Total number of pages.
+	     */
+	    totalPages: React.PropTypes.number.isRequired,
+
+	    /**
+	     * Current page being displayed.
+	     */
+	    currentPage: React.PropTypes.number.isRequired,
+
+	    /**
+	     * The number of pages to show. 5 by default.
+	     */
+	    showPages: React.PropTypes.number
+	  },
+
+	  getDefaultProps:function() {
+	    return {
+	      showPages: 5
+	    };
+	  },
+
+	  onChangePage:function(pageNumber) {
+	    this.props.onChangePage(pageNumber);
+	    return false;
+	  },
+
+	  render:function() {
+	    var $__0=    this.props,totalPages=$__0.totalPages,showPages=$__0.showPages,currentPage=$__0.currentPage;
+	    var diff = Math.floor(showPages / 2),
+	        start = currentPage - diff,
+	        end = currentPage + diff + 1;
+
+	    // Edge cases
+	    if (totalPages < showPages) {
+	      start = 0;
+	      end = totalPages;
+	    } else if (start <= 0) {
+	      start = 0;
+	      end = showPages;
+	    } else if (end >= totalPages) {
+	      start = totalPages - showPages;
+	      end = totalPages;
+	    }
+
+	    var buttons = [], btnClass, btnEvent;
+	    for (var i = start; i < end; i++) {
+	      // If the button is for the current page then disable the event.
+	      if (currentPage === i) {
+	        btnClass = 'active';
+	        btnEvent = returnFalse;
+	      } else {
+	        btnClass = null;
+	        btnEvent = this.onChangePage.bind(this, i);
+	      }
+	      buttons.push(
+	        ListButton({
+	          key: i, 
+	          className: btnClass, 
+	          event: btnEvent}, 
+	          i + 1
+	        )
+	      );
+	    }
+
+	    // First and Prev button handlers and class
+	    var isFirst = currentPage === 0;
+	    var firstHandler = isFirst ? returnFalse : this.onChangePage.bind(this, 0);
+	    var firstClass = cx({
+	      'first': true,
+	      'disabled': isFirst
+	    });
+	    var prevHandler = isFirst ? returnFalse : this.onChangePage.bind(this, currentPage - 1);
+	    var prevClass = cx({
+	      'prev': true,
+	      'disabled': isFirst
+	    });
+
+	    // Next and Last button handlers and class
+	    var isLast = currentPage === (totalPages - 1);
+	    var nextHandler = isLast ? returnFalse : this.onChangePage.bind(this, currentPage + 1);
+	    var nextClass = cx({
+	      'next': true,
+	      'disabled': isLast
+	    });
+	    var lastHandler = isLast ? returnFalse : this.onChangePage.bind(this, totalPages - 1);
+	    var lastClass = cx({
+	      'last': true,
+	      'disabled': isLast
+	    });
+
+	    return this.transferPropsTo(
+	      React.DOM.ul(null, 
+	        ListButton({
+	          className: firstClass, 
+	          event: firstHandler}
+	        ), 
+	        ListButton({
+	          className: prevClass, 
+	          event: prevHandler}
+	        ), 
+	        buttons, 
+	        ListButton({
+	          className: nextClass, 
+	          event: nextHandler}
+	        ), 
+	        ListButton({
+	          className: lastClass, 
+	          event: lastHandler}
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Pagination;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var $__0=  __webpack_require__(12),sortByFunc=$__0.sortByFunc;
+
+	function sort(sortBy, data) {
+	  var sortedData = data.sort(sortByFunc(sortBy.prop));
+	  if (sortBy.order === 'desc') {
+	    sortedData.reverse();
+	  }
+	  return sortedData;
+	}
+
+	module.exports = {
+
+	  getInitialState:function() {
+	    return { sortBy: this.props.initialSortBy };
+	  },
+
+	  componentWillMount:function() {
+	    // Do the initial sorting if specified.
+	    var $__0=   this.state,sortBy=$__0.sortBy,data=$__0.data;
+	    if (sortBy) {
+	      this.setState({ data: sort(sortBy, data) });
+	    }
+	  },
+
+	  onSort:function(prop) {
+	    var $__0=   this.state,sortBy=$__0.sortBy,data=$__0.data;
+
+	    // If no state before or it was sorting on another column, then initialize on null.
+	    var prevOrder = !sortBy || sortBy.prop !== prop ? null : sortBy.order;
+
+	    // Move to the next sorting order.
+	    var nextOrder = !prevOrder || prevOrder === 'desc' ? 'asc' : 'desc';
+	    var nextSortBy = { prop: prop, order: nextOrder };
+
+	    // Perform the sort.
+	    var sortedData = sort(nextSortBy, data);
+
+	    this.setState({
+	      sortBy: nextSortBy,
+	      data: sortedData
+	    });
+	  }
+
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */module.exports = {
+
+	  getDefaultProps:function() {
+	    return {
+	      initialPageLength: 10,
+	      pageLengthOptions: [ 5, 10, 20 ]
+	    };
+	  },
+
+	  getInitialState:function() {
+	    return {
+	      currentPage: 0,
+	      pageLength: this.props.initialPageLength
+	    };
+	  },
+
+	  buildPage:function() {
+	    var $__0=    this.state,data=$__0.data,currentPage=$__0.currentPage,pageLength=$__0.pageLength;
+	    var start = pageLength * currentPage;
+
+	    return {
+	      data: data.slice(start, start + pageLength),
+	      currentPage: currentPage,
+	      totalPages: Math.ceil(data.length / pageLength)
+	    };
+	  },
+
+	  onChangePage:function(pageNumber) {
+	    this.setState({ currentPage: pageNumber });
+	  },
+
+	  onPageLengthChange:function(e) {
+	    var newPageLength = +e.target.value;
+	    var pageNumber = this.state.currentPage;
+	    var dataLength = this.state.data.length;
+
+	    // Check if the new page length does not conflict with the page number
+	    if ((newPageLength * pageNumber) >= dataLength) {
+	      pageNumber = Math.ceil(dataLength / newPageLength) - 1;
+	    }
+
+	    this.setState({
+	      pageLength: newPageLength,
+	      currentPage: pageNumber
+	    });
+	  }
+
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var $__0=   __webpack_require__(12),some=$__0.some,containsIgnoreCase=$__0.containsIgnoreCase;
+
+	function filterPass(filters, row) {
+	  return function(filterValue, key) {
+	    var filterDef = filters[key];
+	    var partial = filterDef.filter.bind(null, filterValue);
+	    if (!filterDef.prop) {
+	      // Filter is for all properties
+	      return !some(function(each)  {return partial(each);}, row);
+	    } else {
+	      // Filter is for one property
+	      return !partial(row[filterDef.prop]);
+	    }
+	  };
+	}
+
+	module.exports = {
+
+	  getInitialState:function() {
+	    return { filterValues: {} };
+	  },
+
+	  getDefaultProps:function() {
+	    return {
+	      filters: {
+	        globalSearch: {
+	          filter: containsIgnoreCase
+	        }
+	      }
+	    };
+	  },
+
+	  onFilter:function(prop, e) {
+	    var $__0=  this.state,filterValues=$__0.filterValues;
+	    var $__1=   this.props,initialData=$__1.initialData,filters=$__1.filters;
+	    var filterValue = e.target.value;
+
+	    if (filterValue) {
+	      filterValues[prop] = filterValue;
+	    } else {
+	      delete filterValues[prop];
+	    }
+
+	    var filterFunc = filterPass.bind(null, filters);
+	    var newData = initialData.filter(
+	      function(each)  {return !some(filterFunc(each), filterValues);}
+	    );
+
+	    this.setState({
+	      data: newData,
+	      filterValues: filterValues,
+	      currentPage: 0
+	    });
+	  }
+
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_8__;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(8);
+
+	var SelectField = React.createClass({displayName: 'SelectField',
+
+	  render:function() {
+	    var $__0=      this.props,id=$__0.id,options=$__0.options,label=$__0.label,value=$__0.value,onChange=$__0.onChange;
+	    var mappedOpts =
+	      options.map(function(each)  {return React.DOM.option({key: each, value: each}, each);});
+
+	    return (
+	      React.DOM.div(null, 
+	        React.DOM.label({htmlFor: id}, label), 
+	        React.DOM.select({id: id, value: value, onChange: onChange}, 
+	          mappedOpts
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = SelectField;
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */var React = __webpack_require__(8);
+
+	var SearchField = React.createClass({displayName: 'SearchField',
+
+	  render:function() {
+	    return (
+	      React.DOM.div(null, 
+	        React.DOM.label({htmlFor: this.props.id}, this.props.label), 
+	        React.DOM.input({
+	          id: this.props.id, 
+	          type: "search", 
+	          value: this.props.value, 
+	          onChange: this.props.onChange}
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = SearchField;
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//**
+	 * @param {string} a
+	 * @return {boolean}
+	 */
+	exports.containsIgnoreCase = function(a, b) {
+	  a = (a + '').toLowerCase().trim();
+	  b = (b + '').toLowerCase().trim();
+	  return b.indexOf(a) >= 0;
+	};
+
+	exports.some = function(pred, obj) {
+	  // TODO: support for arrays
+	  for (var key in obj) {
+	    if (pred(obj[key], key) === true) {
+	      return true;
+	    }
+	  }
+	  return false;
+	};
+
+	/**
+	 * @param {object} obj the object to check.
+	 * @return {boolean} true if the object is a function, false otherwise.
+	 */
+	exports.isFunc = function(obj)  {return typeof obj === 'function';};
+
+	/**
+	 * Creates a function to get keys of objects.
+	 * @param {array} keys Array of keys to get.
+	 * @return {function} takes the data to get the keys from.
+	 */
+	exports.keyGetter = function(keys)  {return function(data)  {return keys.map(function(key)  {return data[key];});};};
+
+	/**
+	 * @return {boolean} true if the value is empty.
+	 */
+	exports.isEmpty = function(val)  {return val === undefined || val === null || val === '';};
+
+	/**
+	 * Creates a function with a property to sort on.
+	 * @param {string} the property
+	 * @return {function}
+	 */
+	exports.sortByFunc =
+	    function(prop) 
+	        {return function(a, b)  {return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;};};
+
+
+
+/***/ }
+/******/ ])
+});
