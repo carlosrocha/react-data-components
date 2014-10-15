@@ -4,8 +4,14 @@ module.exports = {
   entry: './index',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'react-data-components.js',
+    library: 'ReactDataComponents',
+    libraryTarget: 'umd'
   },
+  externals: [
+    { 'react': 'React' },
+    { 'react/addons': 'React' }
+  ],
   module: {
     loaders: [
       { test: /\.js$/, loader: 'jsx?harmony&insertPragma=React.DOM' },

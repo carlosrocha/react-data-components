@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var cx = require('react/lib/cx');
+var cx = React.addons.classSet;
 
 /**
  * Used to cancel events.
