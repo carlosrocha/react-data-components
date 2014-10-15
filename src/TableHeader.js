@@ -14,7 +14,7 @@ var TableHeader = React.createClass({
   propTypes: {
     columns: React.PropTypes.array.isRequired,
     sortBy:  React.PropTypes.object,
-    onSort:  React.PropTypes.func.isRequired
+    onSort:  React.PropTypes.func
   },
 
   componentDidMount() {
