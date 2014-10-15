@@ -8,7 +8,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'jsx?harmony' },
+      { test: /\.js$/, loader: 'jsx?harmony&insertPragma=React.DOM' },
       { test: /\.less$/, loader: 'style!css!less' },
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.woff$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
