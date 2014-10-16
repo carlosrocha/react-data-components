@@ -1,10 +1,9 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx React.DOM */
 
 jest.dontMock('../Pagination');
-jest.dontMock('../ListButton');
+
 describe('Pagination', function() {
+
   it('changes to first page', function() {
     var React = require('react/addons');
     var Pagination = require('../Pagination');
@@ -46,4 +45,5 @@ describe('Pagination', function() {
     TestUtils.Simulate.click(lastBtn);
     expect(onChangePage.mock.calls[0][0]).toEqual(99);
   });
+
 });

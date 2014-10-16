@@ -1,9 +1,9 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx React.DOM */
 
 jest.dontMock('../TableHeader');
+
 describe('TableHeader', function() {
+
   it('sorts on col with prop', function() {
     var React = require('react/addons');
     var TableHeader = require('../TableHeader');
@@ -47,4 +47,5 @@ describe('TableHeader', function() {
     TestUtils.Simulate.click(ths[0]);
     expect(onSort.mock.calls.length).toBe(0);
   });
+
 });
