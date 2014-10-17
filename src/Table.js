@@ -64,8 +64,8 @@ var Table = React.createClass({
     var getKeys = keyGetter(keys);
     var rows = mapData(columns, dataArray, getKeys, onRowClicked, selected);
 
-    return this.transferPropsTo(
-      <table>
+    return (
+      <table className={this.props.className}>
         <TableHeader
           columns={columns}
           sortBy={this.props.sortBy}

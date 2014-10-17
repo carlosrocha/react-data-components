@@ -5,7 +5,7 @@ var cx = React.addons.classSet;
 /**
  * Used to cancel events.
  */
-var returnFalse = () => false;
+var preventDefault = (ev) => ev.preventDefault();
 
 var ListButton = React.createClass({
 
@@ -54,9 +54,9 @@ var Pagination = React.createClass({
     };
   },
 
-  onChangePage(pageNumber) {
+  onChangePage(pageNumber, event) {
+    event.preventDefault();
     this.props.onChangePage(pageNumber);
-    return false;
   },
 
   render() {
@@ -82,7 +82,7 @@ var Pagination = React.createClass({
       // If the button is for the current page then disable the event.
       if (currentPage === i) {
         btnClass = 'active';
-        btnEvent = returnFalse;
+        btnEvent = preventDefault;
       } else {
         btnClass = null;
         btnEvent = this.onChangePage.bind(this, i);
@@ -99,12 +99,12 @@ var Pagination = React.createClass({
 
     // First and Prev button handlers and class
     var isFirst = currentPage === 0;
-    var firstHandler = isFirst ? returnFalse : this.onChangePage.bind(this, 0);
+    var firstHandler = isFirst ? preventDefault : this.onChangePage.bind(this, 0);
     var firstClass = cx({
       'first': true,
       'disabled': isFirst
     });
-    var prevHandler = isFirst ? returnFalse : this.onChangePage.bind(this, currentPage - 1);
+    var prevHandler = isFirst ? preventDefault : this.onChangePage.bind(this, currentPage - 1);
     var prevClass = cx({
       'prev': true,
       'disabled': isFirst
@@ -112,19 +112,19 @@ var Pagination = React.createClass({
 
     // Next and Last button handlers and class
     var isLast = currentPage === (totalPages - 1);
-    var nextHandler = isLast ? returnFalse : this.onChangePage.bind(this, currentPage + 1);
+    var nextHandler = isLast ? preventDefault : this.onChangePage.bind(this, currentPage + 1);
     var nextClass = cx({
       'next': true,
       'disabled': isLast
     });
-    var lastHandler = isLast ? returnFalse : this.onChangePage.bind(this, totalPages - 1);
+    var lastHandler = isLast ? preventDefault : this.onChangePage.bind(this, totalPages - 1);
     var lastClass = cx({
       'last': true,
       'disabled': isLast
     });
 
-    return this.transferPropsTo(
-      <ul>
+    return (
+      <ul className={this.props.className}>
         <ListButton
           className={firstClass}
           event={firstHandler}

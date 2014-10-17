@@ -23,8 +23,8 @@ var DataTable = React.createClass({
   render() {
     var page = this.buildPage();
 
-    return this.transferPropsTo(
-      <div>
+    return (
+      <div className={this.props.className}>
         <div className="pull-left">
           <SelectField
             id="page-menu"
