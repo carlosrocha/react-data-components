@@ -61,6 +61,11 @@ var Pagination = React.createClass({
 
   render() {
     var {totalPages, showPages, currentPage} = this.props;
+
+    if (totalPages === 0) {
+      return null;
+    }
+
     var diff = Math.floor(showPages / 2),
         start = currentPage - diff,
         end = currentPage + diff + 1;
