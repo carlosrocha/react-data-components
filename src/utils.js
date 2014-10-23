@@ -8,6 +8,8 @@ exports.containsIgnoreCase = function(a, b) {
   return b.indexOf(a) >= 0;
 };
 
+exports.contains = (arr, val) => arr.indexOf(val) >= 0;
+
 exports.some = function(pred, obj) {
   // TODO: support for arrays
   for (var key in obj) {

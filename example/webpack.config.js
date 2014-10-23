@@ -3,7 +3,8 @@ var path = require('path');
 module.exports = {
   cache: true,
   entry: {
-    table: './example/table/main'
+    table: './example/table/main',
+    datalist: './example/datalist/main'
   },
   output: {
     path: path.join(__dirname, 'dist'),
