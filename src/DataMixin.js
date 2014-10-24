@@ -61,7 +61,7 @@ module.exports = {
   },
 
   onFilter(prop, e) {
-    var {filterValues} = this.state;
+    var {filterValues, sortBy} = this.state;
     var {initialData, filters} = this.props;
     var filterValue = e.target.value;
 
@@ -75,6 +75,10 @@ module.exports = {
     var newData = initialData.filter(
       (each) => !some(filterFunc(each), filterValues)
     );
+
+    if (sortBy) {
+      newData = sort(sortBy, newData);
+    }
 
     this.setState({
       data: newData,
