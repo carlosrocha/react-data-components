@@ -6,13 +6,11 @@ var SelectField = require('./SelectField');
 var SearchField = require('./SearchField');
 var Dropdown = require('./Dropdown');
 
-var SortMixin = require('./SortMixin');
-var PageMixin = require('./PageMixin');
-var FilterMixin = require('./FilterMixin');
+var DataMixin = require('./DataMixin');
 
 var DataList = React.createClass({
 
-  mixins: [ SortMixin, PageMixin, FilterMixin ],
+  mixins: [ DataMixin ],
 
   getInitialState() {
     return {

@@ -5,13 +5,11 @@ var Pagination = require('./Pagination');
 var SelectField = require('./SelectField');
 var SearchField = require('./SearchField');
 
-var SortMixin = require('./SortMixin');
-var PageMixin = require('./PageMixin');
-var FilterMixin = require('./FilterMixin');
+var DataMixin = require('./DataMixin');
 
 var DataTable = React.createClass({
 
-  mixins: [ SortMixin, PageMixin, FilterMixin ],
+  mixins: [ DataMixin ],
 
   getInitialState() {
     return {
