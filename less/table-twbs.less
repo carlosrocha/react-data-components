@@ -1,5 +1,7 @@
-@import "~bootstrap/less/bootstrap.less";
-
+.user-select(@option) {
+  -webkit-user-select: @option;
+          user-select: @option;
+}
 .table {
   th {
     cursor: pointer;
@@ -29,4 +31,9 @@
   .prev a:before { content: '‹'; }
   .next a:before { content: '›'; }
   .last a:before { content: '»'; }
+}
+input[type="search"] {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: 10px;
 }
