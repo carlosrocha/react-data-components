@@ -20,61 +20,9 @@
 .datalist-cell {
   display: inline-block;
 }
-.pagination {
-  .first a:before { content: '«'; }
-  .prev a:before { content: '‹'; }
-  .next a:before { content: '›'; }
-  .last a:before { content: '»'; }
-}
 
 .big {
   color: #333;
   font-weight: bold;
   font-size: 15px;
-}
-
-.dropdown {
-  position: relative;
-}
-.dropdown-list {
-  display: none;
-  position: absolute;
-  background: rgba(255, 255, 255, .97);
-  width: 200px;
-  border-radius: 6px;
-  padding: 5px 1px;
-  box-shadow: 0px 0px 2px;
-  z-index: 1000;
-
-  &.active {
-    display: block;
-  }
-}
-.dropdown-item {
-  border-radius: 3px;
-  padding: 2px 25px;
-  cursor: pointer;
-
-  span {
-    -webkit-user-select: none;
-            user-select: none;
-  }
-
-  &:hover {
-    color: #fff;
-    background-color: rgb(0, 105, 217);
-
-    .dropdown-itemcheck {
-      color: #fff;
-    }
-  }
-}
-.dropdown-itemcheck {
-  float: right;
-  font-weight: bold;
-  color: rgb(100, 100, 101);
-
-  &:after {
-    content: '✓';
-  }
 }

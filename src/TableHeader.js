@@ -56,7 +56,7 @@ var TableHeader = React.createClass({
           onClick={event}
           style={{width: col.width}}>
           {col.title}
-          <i className={className} />
+          <i className={`sort-icon ${className}`} />
         </th>
       );
     });

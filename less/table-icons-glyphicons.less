@@ -1,0 +1,18 @@
+.glyphicon() {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.table {
+  .sort-icon { .glyphicon; }
+  .sort-asc:before  { content: '\e113'; }
+  .sort-desc:before { content: '\e114'; }
+  .sort-off:before  { content: '\e150'; }
+}
