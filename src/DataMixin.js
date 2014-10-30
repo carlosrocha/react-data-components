@@ -60,10 +60,9 @@ module.exports = {
     });
   },
 
-  onFilter(prop, e) {
+  onFilter(prop, filterValue) {
     var {filterValues, sortBy} = this.state;
     var {initialData, filters} = this.props;
-    var filterValue = e.target.value;
 
     if (filterValue) {
       filterValues[prop] = filterValue;
@@ -103,8 +102,8 @@ module.exports = {
     this.setState({ currentPage: pageNumber });
   },
 
-  onPageLengthChange(e) {
-    var newPageLength = +e.target.value;
+  onPageLengthChange(value) {
+    var newPageLength = +value;
     var pageNumber = this.state.currentPage;
     var dataLength = this.state.data.length;
 
