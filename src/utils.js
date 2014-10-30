@@ -10,7 +10,7 @@ exports.containsIgnoreCase = function(a, b) {
 
 exports.contains = (arr, val) => arr.indexOf(val) >= 0;
 
-exports.some = function(pred, obj) {
+var some = exports.some = function(pred, obj) {
   // TODO: support for arrays
   for (var key in obj) {
     if (pred(obj[key], key) === true) {
@@ -43,7 +43,44 @@ exports.isEmpty = (val) => val === undefined || val === null || val === '';
  * @param {string} the property
  * @return {function}
  */
-exports.sortByFunc =
+var sortByFunc = exports.sortByFunc =
     (prop) =>
         (a, b) => a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
 
+
+function sort(sortBy, data) {
+  var sortedData = data.sort(sortByFunc(sortBy.prop));
+  if (sortBy.order === 'desc') {
+    sortedData.reverse();
+  }
+  return sortedData;
+}
+
+exports.sort = sort;
+
+function filterPass(filters, row) {
+  return function(filterValue, key) {
+    var filterDef = filters[key];
+    var partial = filterDef.filter.bind(null, filterValue);
+    if (!filterDef.prop) {
+      // Filter is for all properties
+      return !some(each => partial(each), row);
+    } else {
+      // Filter is for one property
+      return !partial(row[filterDef.prop]);
+    }
+  };
+}
+
+exports.filterPass = filterPass;
+
+function filter(filters, filterValues, data) {
+  var filterFunc = filterPass.bind(null, filters);
+  var newData = data.filter(
+    (each) => !some(filterFunc(each), filterValues)
+  );
+
+  return newData;
+}
+
+exports.filter = filter;

@@ -1,26 +1,4 @@
-var {some, containsIgnoreCase, sortByFunc} = require('./utils');
-
-function sort(sortBy, data) {
-  var sortedData = data.sort(sortByFunc(sortBy.prop));
-  if (sortBy.order === 'desc') {
-    sortedData.reverse();
-  }
-  return sortedData;
-}
-
-function filterPass(filters, row) {
-  return function(filterValue, key) {
-    var filterDef = filters[key];
-    var partial = filterDef.filter.bind(null, filterValue);
-    if (!filterDef.prop) {
-      // Filter is for all properties
-      return !some(each => partial(each), row);
-    } else {
-      // Filter is for one property
-      return !partial(row[filterDef.prop]);
-    }
-  };
-}
+var {containsIgnoreCase, sort, filter} = require('./utils');
 
 module.exports = {
 
@@ -60,21 +38,17 @@ module.exports = {
     });
   },
 
-  onFilter(prop, filterValue) {
+  onFilter(filterName, filterValue) {
     var {filterValues, sortBy} = this.state;
     var {initialData, filters} = this.props;
 
     if (filterValue) {
-      filterValues[prop] = filterValue;
+      filterValues[filterName] = filterValue;
     } else {
-      delete filterValues[prop];
+      delete filterValues[filterName];
     }
 
-    var filterFunc = filterPass.bind(null, filters);
-    var newData = initialData.filter(
-      (each) => !some(filterFunc(each), filterValues)
-    );
-
+    var newData = filter(filters, filterValues, initialData);
     if (sortBy) {
       newData = sort(sortBy, newData);
     }
