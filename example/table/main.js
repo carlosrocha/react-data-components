@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 //require('../../less/table.less');
 require('../../less/table-twbs.less');
 
@@ -29,7 +25,7 @@ var columns = [
 ];
 
 var render = function(data) {
-  React.renderComponent((
+  React.render((
       <DataTable
         className="container"
         keys={[ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ]}

@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 jest.dontMock('../Pagination');
 
 describe('Pagination', function() {

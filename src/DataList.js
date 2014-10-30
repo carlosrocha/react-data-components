@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = require('react');
 var List = require('./List');
 var Pagination = require('./Pagination');

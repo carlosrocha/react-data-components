@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 jest.dontMock('../TableHeader');
 
 describe('TableHeader', function() {

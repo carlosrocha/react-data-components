@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 require('../../less/datalist.less');
 
 var React = require('react');
@@ -27,7 +25,7 @@ var sortOptions = [
 ];
 
 var render = function(data) {
-  React.renderComponent((
+  React.render((
       <DataList
         className="container"
         keys={[ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ]}

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = require('react');
 var TableHeader = require('./TableHeader');
 var {isFunc, isEmpty, keyGetter} = require('./utils');
