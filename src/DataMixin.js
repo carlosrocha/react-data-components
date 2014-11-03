@@ -42,16 +42,9 @@ module.exports = {
     var {filterValues, sortBy} = this.state;
     var {initialData, filters} = this.props;
 
-    if (filterValue) {
-      filterValues[filterName] = filterValue;
-    } else {
-      delete filterValues[filterName];
-    }
-
+    filterValues[filterName] = filterValue;
     var newData = filter(filters, filterValues, initialData);
-    if (sortBy) {
-      newData = sort(sortBy, newData);
-    }
+    newData = sort(sortBy, newData);
 
     this.setState({
       data: newData,
@@ -78,17 +71,12 @@ module.exports = {
 
   onPageLengthChange(value) {
     var newPageLength = +value;
-    var pageNumber = this.state.currentPage;
-    var dataLength = this.state.data.length;
-
-    // Check if the new page length does not conflict with the page number
-    if ((newPageLength * pageNumber) >= dataLength) {
-      pageNumber = Math.ceil(dataLength / newPageLength) - 1;
-    }
+    var {currentPage, pageLength} = this.state;
+    var newPage = Math.floor((currentPage * pageLength) / newPageLength);
 
     this.setState({
       pageLength: newPageLength,
-      currentPage: pageNumber
+      currentPage: newPage
     });
   }
 
