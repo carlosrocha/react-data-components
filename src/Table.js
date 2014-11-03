@@ -54,8 +54,21 @@ var emptyRow = <tr><td colSpan={100} className="text-center">No data</td></tr>;
 var Table = React.createClass({
 
   propTypes: {
-    columns:   React.PropTypes.array.isRequired,
-    dataArray: React.PropTypes.array.isRequired
+    columns: React.PropTypes.arrayOf(React.PropTypes.shape({
+      title: React.PropTypes.string.isRequired,
+      prop: React.PropTypes.string,
+      render: React.PropTypes.func,
+      sortable: React.PropTypes.bool,
+      defaultContent: React.PropTypes.string,
+      className: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.func
+      ])
+    })).isRequired,
+    dataArray: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.object
+    ])).isRequired
   },
 
   render() {
