@@ -4,6 +4,8 @@ module.exports = {
 
   getInitialState() {
     return {
+      // Clone the initialData.
+      data: this.props.initialData.slice(0),
       sortBy: this.props.initialSortBy,
       filterValues: {},
       currentPage: 0,
