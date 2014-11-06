@@ -56,7 +56,10 @@ var Table = React.createClass({
   propTypes: {
     columns: React.PropTypes.arrayOf(React.PropTypes.shape({
       title: React.PropTypes.string.isRequired,
-      prop: React.PropTypes.string,
+      prop: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+      ]),
       render: React.PropTypes.func,
       sortable: React.PropTypes.bool,
       defaultContent: React.PropTypes.string,
