@@ -22,7 +22,13 @@ var TableHeader = React.createClass({
 
   propTypes: {
     columns: React.PropTypes.array.isRequired,
-    sortBy:  React.PropTypes.object,
+    sortBy:  React.PropTypes.shape({
+      prop: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+      ]),
+      order: React.PropTypes.oneOf([ 'asc', 'desc' ])
+    }),
     onSort:  React.PropTypes.func
   },
 
