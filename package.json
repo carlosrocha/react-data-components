@@ -8,6 +8,12 @@
   ],
   "author": "Carlos Rocha",
   "main": "./index",
+  "files": [
+    "index.js",
+    "src",
+    "less",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/carlosrocha/react-data-components"
