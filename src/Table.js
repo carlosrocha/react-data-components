@@ -60,6 +60,10 @@ var Table = React.createClass({
       render: React.PropTypes.func,
       sortable: React.PropTypes.bool,
       defaultContent: React.PropTypes.string,
+      width: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+      ]),
       className: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.func

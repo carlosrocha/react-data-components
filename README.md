@@ -60,4 +60,5 @@ Name             | Type               | Description
 `className`      | string or function | Class for the td.
 `defaultContent` | string             | The default value to display if no data.
 `sortable`       | boolean            | `true` by default.
+`width`          | string or number   | Width for the column.
 
