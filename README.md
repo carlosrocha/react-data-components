@@ -9,7 +9,6 @@ npm install react-data-components --save
 ### Using the default implementation
 
 ```javascript
-/** @jsx React.DOM */
 var React = require('react');
 var DataTable = require('react-data-components').DataTable;
 
@@ -21,10 +20,12 @@ var columns = [
 ];
 
 var data = [
-  { name: 'Some name', city: 'Chicago', address: 'Michigan Ave.', phone: '3123333333' }
+  { name: 'name value', city: 'city value', address: 'address value', phone: 'phone value' }
+  // It also supports arrays
+  // [ 'name value', 'city value', 'address value', 'phone value' ]
 ];
 
-React.renderComponent((
+React.render((
     <DataTable
       className="container"
       keys={[ 'name', 'address' ]}
@@ -37,7 +38,7 @@ React.renderComponent((
   ), document.body);
 ```
 
-See [complete example](example/table/main.js).
+See [complete example](example/table/main.js). Also see [flux example](example/flux/).
 
 ## DataTable options
 
@@ -55,10 +56,9 @@ Name                | Type               | Description
 Name             | Type               | Description
 ---------------- | ------------------ | ----------------------------------
 `title`          | string             | The title to display on the header.
-`prop`           | string             | The name of the property on the data.
+`prop`           | string or number   | The name of the property or index on the data.
 `render`         | function           | Function to customize the render on column.
 `className`      | string or function | Class for the td.
 `defaultContent` | string             | The default value to display if no data.
 `sortable`       | boolean            | `true` by default.
 `width`          | string or number   | Width for the column.
-
