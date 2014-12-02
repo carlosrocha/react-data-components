@@ -21,7 +21,7 @@ describe('TableHeader', function() {
 
     var ths = TestUtils.scryRenderedDOMComponentsWithTag(tableHeader, 'th');
     TestUtils.Simulate.click(ths[0]);
-    expect(onSort.mock.calls[0][0]).toBe('test');
+    expect(onSort.mock.calls[0][0]).toEqual({ order: 'asc', prop: 'test' });
   });
 
   it('does not sort on col without data', function() {
