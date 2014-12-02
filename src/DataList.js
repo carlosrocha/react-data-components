@@ -11,13 +11,6 @@ var DataList = React.createClass({
 
   mixins: [ DataMixin ],
 
-  getInitialState() {
-    return {
-      // Clone the initialData.
-      data: this.props.initialData.slice(0)
-    };
-  },
-
   render() {
     var page = this.buildPage();
 
