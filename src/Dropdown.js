@@ -1,30 +1,47 @@
 var React = require('react/addons');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var {contains} = require('./utils');
-var cx = React.addons.classSet;
-var {PropTypes} = React;
 
 var Dropdown = React.createClass({
 
   propTypes: {
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.any.isRequired
+    options: React.PropTypes.arrayOf(React.PropTypes.shape({
+      label: React.PropTypes.string.isRequired,
+      value: React.PropTypes.any.isRequired
     })).isRequired,
-    label: PropTypes.string.isRequired,
-    multiple: PropTypes.bool,
-    selected: PropTypes.any
+    label: React.PropTypes.string.isRequired,
+    multiple: React.PropTypes.bool,
+    selected: React.PropTypes.any
+  },
+
+  componentDidMount() {
+    window.addEventListener('click', this.hideOnBlur);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.hideOnBlur);
+  },
+
+  hideOnBlur(e) {
+    // Do not hide if the event is inside the container.
+    if (this.getDOMNode().contains(e.target)) {
+      return;
+    }
+
+    this.setState({ isOpen: false });
   },
 
   getInitialState() {
     return { isOpen: false };
   },
 
-  onClick() {
+  toggleOpen() {
     this.setState({ isOpen: !this.state.isOpen });
   },
 
   onSelected(value) {
     var {selected, multiple, onSelected} = this.props;
+    this.toggleOpen();
 
     if (!multiple) {
       // If the same value is clicked twice then unselect
@@ -63,18 +80,17 @@ var Dropdown = React.createClass({
           />
         </div>
     );
-    var classNames = cx({
-      'dropdown-list': true,
-      'active': this.state.isOpen
-    });
+
     return (
       <div className="dropdown">
-        <button className="dropdown-btn" onClick={this.onClick} >
+        <button className="dropdown-btn" onClick={this.toggleOpen} >
           {label} <span className="glyphicon glyphicon-chevron-down" />
         </button>
-        <div className={classNames} role="menu">
-          {compOptions}
-        </div>
+        <ReactCSSTransitionGroup transitionName="fade" transitionEnter={false}>
+          {this.state.isOpen ? <div key="menu" className="dropdown-list" role="menu">
+            {compOptions}
+          </div> : null}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
