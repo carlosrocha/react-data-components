@@ -1,7 +1,16 @@
 .dropdown {
   position: relative;
 }
+.dropdown button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  &:active {
+    background-color: #eee;
+  }
+}
 .dropdown-list {
+  list-style: none;
   position: absolute;
   background: rgba(255, 255, 255, .96);
   width: 200px;

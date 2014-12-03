@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var {contains} = require('./utils');
+var { contains } = require('./utils');
 
 var Dropdown = React.createClass({
 
@@ -40,7 +40,7 @@ var Dropdown = React.createClass({
   },
 
   onSelected(value) {
-    var {selected, multiple, onSelected} = this.props;
+    var { selected, multiple, onSelected } = this.props;
     this.toggleOpen();
 
     if (!multiple) {
@@ -59,16 +59,16 @@ var Dropdown = React.createClass({
   },
 
   isSelected(value) {
-    var {multiple, selected} = this.props;
+    var { multiple, selected } = this.props;
     if (!multiple) return selected === value;
     return contains(selected, value);
   },
 
   render() {
-    var {label, selected, options} = this.props;
+    var { label, selected, options } = this.props;
     var compOptions = options.map(
       (each, i) =>
-        <div
+        <li
           key={i}
           className="dropdown-item"
           role="menuitem"
@@ -78,18 +78,18 @@ var Dropdown = React.createClass({
             className="dropdown-itemcheck"
             style={{display: this.isSelected(each.value) ? 'block' : 'none'}}
           />
-        </div>
+        </li>
     );
 
     return (
       <div className="dropdown">
         <button className="dropdown-btn" onClick={this.toggleOpen} >
-          {label} <span className="glyphicon glyphicon-chevron-down" />
+          {label} <span className="fa fa-angle-down" />
         </button>
         <ReactCSSTransitionGroup transitionName="fade" transitionEnter={false}>
-          {this.state.isOpen ? <div key="menu" className="dropdown-list" role="menu">
+          {this.state.isOpen ? <ul key="menu" className="dropdown-list" role="menu">
             {compOptions}
-          </div> : null}
+          </ul> : null}
         </ReactCSSTransitionGroup>
       </div>
     );
