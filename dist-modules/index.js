@@ -5,5 +5,4 @@ exports.Pagination = require('./Pagination');
 exports.SelectField = require('./SelectField');
 exports.SearchField = require('./SearchField');
 exports.DataMixin = require('./DataMixin');
-exports.DataList = require('./DataList');
 exports.utils = require('./utils');

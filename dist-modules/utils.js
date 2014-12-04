@@ -1,31 +1,11 @@
 /**
- * Compares two values as strings, case insensitive.
- *
- * @param {!*} a
- * @param {!*} b
- * @return {boolean}
- */
-exports.containsIgnoreCase = function(a, b) {
-  a = (a + '').toLowerCase().trim();
-  b = (b + '').toLowerCase().trim();
-  return b.indexOf(a) >= 0;
-};
-
-/**
- * @param {!array} arr
- * @param {?object} val
- * @return {boolean} true if the val is contained in the array
- */
-exports.contains = function(arr, val)  {return arr.indexOf(val) >= 0;};
-
-/**
  * Determines if at least one element in the object matches a truth test.
  *
  * @param {function(val, key)} pred Predicate function.
  * @param {object|array} obj
  * @return {boolean}
  */
-var some = exports.some = function(pred, obj) {
+function some(pred, obj) {
   for (var key in obj) {
     if (pred(obj[key], key) === true) {
       return true;
@@ -35,32 +15,12 @@ var some = exports.some = function(pred, obj) {
 };
 
 /**
- * @param {*} obj Object to check.
- * @return {boolean} True if the object is a function, false otherwise.
- */
-exports.isFunc = function(obj)  {return typeof obj === 'function';};
-
-/**
- * Creates a function to get keys of objects.
- *
- * @param {array} keys Array of keys to get.
- * @return {function(array)} takes the data to get the keys from.
- */
-exports.keyGetter = function(keys)  {return function(data)  {return keys.map(function(key)  {return data[key];});};};
-
-/**
- * @param {*} val
- * @return {boolean} true if the value is empty.
- */
-exports.isEmpty = function(val)  {return val === undefined || val === null || val === '';};
-
-/**
  * Creates a compare function with a property to sort on.
  *
  * @param {string} prop Property to sort.
  * @return {function(object, object)} Compare function.
  */
-var sortByFunc = exports.sortByFunc =
+var sortByFunc =
     function(prop) 
         {return function(a, b)  {return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;};};
 
@@ -76,8 +36,6 @@ function sort(sortBy, data) {
   }
   return sortedData;
 }
-
-exports.sort = sort;
 
 /**
  * @param {!object} filters
@@ -98,8 +56,6 @@ function filterPass(filters, data) {
   };
 }
 
-exports.filterPass = filterPass;
-
 /**
  * Example of filter and filterValues.
  * filters = { globalSearch: { filter: containsIgnoreCase } }
@@ -115,4 +71,4 @@ function filter(filters, filterValues, data) {
   return data.filter(function(each)  {return some(filterFunc(each), filterValues);});
 }
 
-exports.filter = filter;
+module.exports = { filter:filter, filterPass:filterPass, sort:sort, sortByFunc:sortByFunc, some:some };
