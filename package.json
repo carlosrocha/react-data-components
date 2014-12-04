@@ -4,7 +4,9 @@
   "description": "React data components",
   "keywords": [
     "react",
-    "react-component"
+    "react-component",
+    "table",
+    "pagination"
   ],
   "author": "Carlos Rocha",
   "main": "./dist-modules/index",
