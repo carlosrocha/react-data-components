@@ -1,6 +1,8 @@
 var React = require('react');
 var TableHeader = require('./TableHeader');
-var {isFunc, isEmpty, keyGetter} = require('./utils');
+
+// Creates a function to get keys of objects.
+var keyGetter = (keys) => (data) => keys.map((key) => data[key]);
 
 function mapData(columns, data, getKeys, rowClicked, selected) {
   var result = [];
@@ -15,7 +17,7 @@ function mapData(columns, data, getKeys, rowClicked, selected) {
       var className = def.className;
 
       // If prop is defined then it was expecting a value from the data.
-      if (def.prop && isEmpty(value)) {
+      if (def.prop && (value === undefined || value === null || value === '')) {
         value = def.defaultContent;
         className = 'empty-cell';
       }
@@ -24,7 +26,7 @@ function mapData(columns, data, getKeys, rowClicked, selected) {
         value = def.render(value, currentData);
       }
 
-      if (isFunc(className)) {
+      if (typeof className === 'function') {
         className = className(value, currentData);
       }
 
@@ -79,7 +81,7 @@ var Table = React.createClass({
   },
 
   render() {
-    var {columns, keys, dataArray, onRowClicked, selected} = this.props;
+    var { columns, keys, dataArray, onRowClicked, selected } = this.props;
     var getKeys = keyGetter(keys);
     var rows = mapData(columns, dataArray, getKeys, onRowClicked, selected);
 

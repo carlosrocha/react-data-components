@@ -5,7 +5,12 @@ var React = require('react');
 var FluxTable = require('./FluxTable');
 var WebAPIUtils = require('./WebAPIUtils');
 var DataStore = require('./DataStore');
-var {containsIgnoreCase} = require('../../').utils;
+
+var containsIgnoreCase = function(a, b) {
+  a = (a + '').toLowerCase().trim();
+  b = (b + '').toLowerCase().trim();
+  return b.indexOf(a) >= 0;
+};
 
 DataStore.init({
   pageSize: 5,

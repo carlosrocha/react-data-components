@@ -1,6 +1,5 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var { contains } = require('./utils');
 
 var Dropdown = React.createClass({
 
@@ -61,7 +60,7 @@ var Dropdown = React.createClass({
   isSelected(value) {
     var { multiple, selected } = this.props;
     if (!multiple) return selected === value;
-    return contains(selected, value);
+    return selected.indexOf(value) >= 0;
   },
 
   render() {
@@ -87,9 +86,10 @@ var Dropdown = React.createClass({
           {label} <span className="fa fa-angle-down" />
         </button>
         <ReactCSSTransitionGroup transitionName="fade" transitionEnter={false}>
-          {this.state.isOpen ? <ul key="menu" className="dropdown-list" role="menu">
-            {compOptions}
-          </ul> : null}
+          {this.state.isOpen ?
+            <ul key="menu" className="dropdown-list" role="menu">
+              {compOptions}
+            </ul> : null}
         </ReactCSSTransitionGroup>
       </div>
     );

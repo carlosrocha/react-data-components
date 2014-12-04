@@ -1,4 +1,10 @@
-var {containsIgnoreCase, sort, filter} = require('./utils');
+var { sort, filter } = require('./utils');
+
+var containsIgnoreCase = function(a, b) {
+  a = (a + '').toLowerCase().trim();
+  b = (b + '').toLowerCase().trim();
+  return b.indexOf(a) >= 0;
+};
 
 module.exports = {
 

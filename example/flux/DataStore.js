@@ -1,7 +1,7 @@
 var AppDispatcher = require('./AppDispatcher');
-var {ActionTypes} = require('./AppConstants');
-var {EventEmitter} = require('events');
-var {sort, filter, isEmpty} = require('../../').utils;
+var { ActionTypes } = require('./AppConstants');
+var { EventEmitter } = require('events');
+var { sort, filter } = require('../../src').utils;
 var assign = require('react/lib/Object.assign');
 
 var CHANGE_EVENT = 'change';
@@ -17,7 +17,7 @@ var initVals = {
 };
 
 function _buildPage() {
-  var {pageSize, pageNumber, filtered} = _data;
+  var { pageSize, pageNumber, filtered } = _data;
   var start = pageSize * pageNumber;
 
   _data.page = filtered.slice(start, start + pageSize);
@@ -69,14 +69,14 @@ AppDispatcher.register(payload => {
       break;
 
     case ActionTypes.DATA_CHANGE_PAGE_SIZE:
-      var {pageSize} = action;
+      var { pageSize } = action;
       _data.pageNumber =
           Math.floor((_data.pageNumber * _data.pageSize) / pageSize);
       _data.pageSize = pageSize;
       break;
 
     case ActionTypes.DATA_FILTER:
-      var {filterName, filterValue} = action;
+      var { filterName, filterValue } = action;
       _data.filterValues[filterName] = filterValue;
       _data.filtered = filter(_data.filters, _data.filterValues, _rawData);
       _data.filtered = sort(_data.sortBy, _data.filtered);
