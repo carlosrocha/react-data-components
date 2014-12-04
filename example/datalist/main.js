@@ -1,13 +1,13 @@
-require('../../less/datalist.less');
+require('bootstrap/less/bootstrap.less');
+require('../../less/rdc.less');
 
 var React = require('react');
-window.React = React;
-var {csv} = require('d3');
-var {DataList} = require('../../');
+var d3 = require('d3');
+var { DataList } = require('../../src/index');
 
-var csvFile = '/example/table/CTA_-_Map_of_Fare_Media_Sales_Outlets.csv';
+var csvFile = '/table/CTA_-_Map_of_Fare_Media_Sales_Outlets.csv';
 
-csv(csvFile, (error, rows) => render(rows));
+d3.csv(csvFile, (error, rows) => render(rows));
 
 var big = (data) => <a className="big" href="#">{data}</a>;
 
