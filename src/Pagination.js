@@ -1,13 +1,9 @@
 var React = require('react/addons');
-var cx = React.addons.classSet;
 
-/**
- * Used to cancel events.
- */
+// Used to cancel events.
 var preventDefault = (ev) => ev.preventDefault();
 
 var ListButton = React.createClass({
-
   render() {
     return (
       <li className={this.props.className}>
@@ -15,12 +11,8 @@ var ListButton = React.createClass({
       </li>
     );
   }
-
 });
 
-/**
- * Pagination component.
- */
 var Pagination = React.createClass({
 
   mixins: [ React.addons.PureRenderMixin ],
@@ -48,9 +40,7 @@ var Pagination = React.createClass({
   },
 
   getDefaultProps() {
-    return {
-      showPages: 5
-    };
+    return { showPages: 5 };
   },
 
   onChangePage(pageNumber, event) {
@@ -59,7 +49,7 @@ var Pagination = React.createClass({
   },
 
   render() {
-    var {totalPages, showPages, currentPage} = this.props;
+    var { totalPages, showPages, currentPage } = this.props;
 
     if (totalPages === 0) {
       return null;
@@ -102,50 +92,32 @@ var Pagination = React.createClass({
     }
 
     // First and Prev button handlers and class
-    var isFirst = currentPage === 0;
-    var firstHandler = isFirst ? preventDefault : this.onChangePage.bind(this, 0);
-    var firstClass = cx({
-      'first': true,
-      'disabled': isFirst
-    });
-    var prevHandler = isFirst ? preventDefault : this.onChangePage.bind(this, currentPage - 1);
-    var prevClass = cx({
-      'prev': true,
-      'disabled': isFirst
-    });
+    var firstHandler = preventDefault, firstClass = 'first disabled';
+    var prevHandler = preventDefault, prevClass = 'prev disabled';
+    if (currentPage > 0) {
+      firstHandler = this.onChangePage.bind(this, 0);
+      firstClass = 'first';
+      prevHandler = this.onChangePage.bind(this, currentPage - 1);
+      prevClass = 'prev';
+    }
 
     // Next and Last button handlers and class
-    var isLast = currentPage === (totalPages - 1);
-    var nextHandler = isLast ? preventDefault : this.onChangePage.bind(this, currentPage + 1);
-    var nextClass = cx({
-      'next': true,
-      'disabled': isLast
-    });
-    var lastHandler = isLast ? preventDefault : this.onChangePage.bind(this, totalPages - 1);
-    var lastClass = cx({
-      'last': true,
-      'disabled': isLast
-    });
+    var nextHandler = preventDefault, nextClass = 'next disabled';
+    var lastHandler = preventDefault, lastClass = 'last disabled';
+    if (currentPage < totalPages - 1) {
+      nextHandler = this.onChangePage.bind(this, currentPage + 1);
+      nextClass = 'next';
+      lastHandler = this.onChangePage.bind(this, totalPages - 1);
+      lastClass = 'last';
+    }
 
     return (
       <ul className={this.props.className}>
-        <ListButton
-          className={firstClass}
-          event={firstHandler}
-        />
-        <ListButton
-          className={prevClass}
-          event={prevHandler}
-        />
+        <ListButton className={firstClass} event={firstHandler} />
+        <ListButton className={prevClass} event={prevHandler} />
         {buttons}
-        <ListButton
-          className={nextClass}
-          event={nextHandler}
-        />
-        <ListButton
-          className={lastClass}
-          event={lastHandler}
-        />
+        <ListButton className={nextClass} event={nextHandler} />
+        <ListButton className={lastClass} event={lastHandler} />
       </ul>
     );
   }

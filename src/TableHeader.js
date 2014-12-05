@@ -12,8 +12,8 @@ function nextSortOrder(sortBy, prop) {
   var prevOrder = !sortBy || sortBy.prop !== prop ? null : sortBy.order;
 
   // Move to the next sorting order.
-  var nextOrder = !prevOrder || prevOrder === 'desc' ? 'asc' : 'desc';
-  return { prop: prop, order: nextOrder };
+  var order = !prevOrder || prevOrder === 'desc' ? 'asc' : 'desc';
+  return { prop, order };
 }
 
 var TableHeader = React.createClass({
@@ -44,9 +44,9 @@ var TableHeader = React.createClass({
   },
 
   render() {
-    var {sortBy, onSort, columns} = this.props;
-    var headers = columns.map((col, idx) => {
+    var { sortBy, onSort, columns } = this.props;
 
+    var headers = columns.map((col, idx) => {
       var event, className = 'sort-disabled';
       // Values that are not in the dataset are not sortable.
       if (col.sortable !== false && col.prop !== undefined) {
@@ -56,7 +56,7 @@ var TableHeader = React.createClass({
 
       return (
         <th
-          ref={'th-' + idx}
+          ref={`th-${idx}`}
           key={idx}
           onClick={event}
           style={{width: col.width}}>
