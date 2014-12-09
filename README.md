@@ -11,11 +11,6 @@ npm install react-data-components --save
 The default implementation includes a filter for case insensitive global search,
 pagination and page size.
 
-Note that the default implementation is not so flexible and is mostly for static
-data, i.e. not ajax pagination or filtering. If you want more flexibility,
-the suggested approach is using Flux (see [Flux example](example/flux/)), setup your own
-and hook your ajax calls on the actions.
-
 ```javascript
 var React = require('react');
 var DataTable = require('react-data-components').DataTable;
@@ -46,7 +41,7 @@ React.render((
   ), document.body);
 ```
 
-See [complete example](example/table/main.js).
+See [complete example](example/table/main.js), see [Flux example](example/flux/).
 
 ## DataMixin options
 
