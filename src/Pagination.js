@@ -5,10 +5,9 @@ var preventDefault = (ev) => ev.preventDefault();
 
 var ListButton = React.createClass({
   render() {
+    var { className, event, children } = this.props;
     return (
-      <li className={this.props.className}>
-        <a href="#" onClick={this.props.event}>{this.props.children}</a>
-      </li>
+      <li className={className}><a href="#" onClick={event}>{children}</a></li>
     );
   }
 });
@@ -18,24 +17,9 @@ var Pagination = React.createClass({
   mixins: [ React.addons.PureRenderMixin ],
 
   propTypes: {
-    /**
-     * Event to trigger. Receives the page number.
-     */
     onChangePage: React.PropTypes.func.isRequired,
-
-    /**
-     * Total number of pages.
-     */
     totalPages: React.PropTypes.number.isRequired,
-
-    /**
-     * Current page being displayed.
-     */
     currentPage: React.PropTypes.number.isRequired,
-
-    /**
-     * The number of pages to show. 5 by default.
-     */
     showPages: React.PropTypes.number
   },
 
@@ -56,19 +40,11 @@ var Pagination = React.createClass({
     }
 
     var diff = Math.floor(showPages / 2),
-        start = currentPage - diff,
-        end = currentPage + diff + 1;
+        start = Math.max(currentPage - diff, 0),
+        end = Math.min(start + showPages, totalPages);
 
-    // Edge cases
-    if (totalPages < showPages) {
-      start = 0;
-      end = totalPages;
-    } else if (start <= 0) {
-      start = 0;
-      end = showPages;
-    } else if (end >= totalPages) {
+    if (totalPages >= showPages && end >= totalPages) {
       start = totalPages - showPages;
-      end = totalPages;
     }
 
     var buttons = [], btnClass, btnEvent;
