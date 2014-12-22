@@ -1,7 +1,7 @@
 var React = require('react/addons');
 
 // Used to cancel events.
-var preventDefault = (ev) => ev.preventDefault();
+var preventDefault = e => e.preventDefault();
 
 var ListButton = React.createClass({
   render() {

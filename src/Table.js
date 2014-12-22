@@ -93,8 +93,10 @@ var Table = React.createClass({
       var event, className = 'sort-disabled';
       // Values that are not in the dataset are not sortable.
       if (col.sortable !== false && col.prop !== undefined) {
-        var sortVal = { prop: col.prop, order: getNextOrder(sortBy, col.prop) };
-        event = onSort.bind(null, sortVal);
+        event = onSort.bind(null, {
+          prop: col.prop,
+          order: getNextOrder(sortBy, col.prop)
+        });
         className = getSortClass(sortBy, col.prop);
       }
 
@@ -115,8 +117,8 @@ var Table = React.createClass({
       row =>
         <tr key={getKeys(row)} {...buildRowOpts(row)}>
           {columns.map(
-            (col, j) =>
-              <td key={j} className={getCellClass(col, row)}>
+            (col, i) =>
+              <td key={i} className={getCellClass(col, row)}>
                 {getCellValue(col, row)}
               </td>
           )}
