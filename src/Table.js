@@ -93,25 +93,37 @@ var Table = React.createClass({
     }
   },
 
+  sortEvent(val, e) {
+    if (e.keyCode === 13) {
+      this.props.onSort(val);
+    }
+  },
+
   render() {
     var { columns, keys, buildRowOpts, sortBy, onSort } = this.props;
 
     var headers = columns.map((col, idx) => {
-      var event, className = 'sort-disabled';
+      var clickEvent, className = 'sort-disabled', tabIndex = -1, keyDownEvent;
       // Values that are not in the dataset are not sortable.
       if (col.sortable !== false && col.prop !== undefined) {
-        event = onSort.bind(null, {
+        var val = {
           prop: col.prop,
           order: getNextOrder(sortBy, col.prop)
-        });
+        };
+        clickEvent = onSort.bind(null, val);
         className = getSortClass(sortBy, col.prop);
+        tabIndex = 0;
+        keyDownEvent = this.sortEvent.bind(null, val);
       }
 
       return (
         <th
           ref={`th-${idx}`}
           key={idx}
-          onClick={event}
+          onClick={clickEvent}
+          tabIndex={tabIndex}
+          onMouseDown={e => e.preventDefault()}
+          onKeyDown={keyDownEvent}
           style={{width: col.width}}>
           {col.title}
           <i className={`sort-icon ${className}`} />
