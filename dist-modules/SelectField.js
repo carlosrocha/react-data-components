@@ -1,6 +1,6 @@
 var React = require('react');
 
-var SelectField = React.createClass({displayName: 'SelectField',
+var SelectField = React.createClass({displayName: "SelectField",
 
   onChange:function(e) {
     this.props.onChange(e.target.value);

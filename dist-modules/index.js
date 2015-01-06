@@ -1,6 +1,5 @@
 exports.DataTable = require('./DataTable');
 exports.Table = require('./Table');
-exports.TableHeader = require('./TableHeader');
 exports.Pagination = require('./Pagination');
 exports.SelectField = require('./SelectField');
 exports.SearchField = require('./SearchField');

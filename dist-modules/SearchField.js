@@ -1,6 +1,6 @@
 var React = require('react');
 
-var SearchField = React.createClass({displayName: 'SearchField',
+var SearchField = React.createClass({displayName: "SearchField",
 
   onChange:function(e) {
     this.props.onChange(e.target.value);

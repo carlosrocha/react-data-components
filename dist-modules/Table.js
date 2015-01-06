@@ -1,61 +1,40 @@
 var React = require('react');
-var TableHeader = require('./TableHeader');
 
-// Creates a function to get keys of objects.
+var simpleGet = function(key)  {return function(data)  {return data[key];};};
 var keyGetter = function(keys)  {return function(data)  {return keys.map(function(key)  {return data[key];});};};
 
-function mapData(columns, data, getKeys, rowClicked, selected) {
-  var result = [];
+var isEmpty = function(value)  {return value === undefined || value === null || value === '';};
+var isFunc = function(value)  {return typeof value === 'function';};
 
-  for (var i = 0; i < data.length; i++) {
-    var row = [];
-    var currentData = data[i];
+var getSortClass =
+  function(sortBy, prop) 
+    {return sortBy.prop === prop ?
+      (sortBy.order === 'asc' ? 'sort-asc' : 'sort-desc') :
+      'sort-off';};
 
-    for (var j = 0; j < columns.length; j++) {
-      var def = columns[j];
-      var value = currentData[def.prop];
-      var className = def.className;
+var getNextOrder =
+  function(sortBy, prop) 
+    {return sortBy.prop === prop && sortBy.order === 'asc' ? 'desc' : 'asc';};
 
-      // If prop is defined then it was expecting a value from the data.
-      if (def.prop && (value === undefined || value === null || value === '')) {
-        value = def.defaultContent;
-        className = 'empty-cell';
-      }
+var getCellValue =
+  function(col, row) 
+    {return col.prop && isEmpty(row[col.prop]) ? col.defaultContent :
+      col.render ? col.render(row[col.prop], row) :
+      row[col.prop];};
 
-      if (def.render) {
-        value = def.render(value, currentData);
-      }
+var getCellClass =
+  function(col, row) 
+    {return col.prop && isEmpty(row[col.prop]) ? 'empty-cell' :
+      isFunc(col.className) ? col.className(row[col.prop], row) :
+      col.className;};
 
-      if (typeof className === 'function') {
-        className = className(value, currentData);
-      }
-
-      row.push(React.createElement("td", {key: j, className: className}, value));
-    }
-
-    // Use the key to keep track of the selection
-    var key = getKeys(currentData).join(',');
-    var rowClass = selected === key ? 'active' : null;
-    var rowClickedEvent = rowClicked ?
-        rowClicked.bind(null, currentData, key) : null;
-    result.push(
-      React.createElement("tr", {
-        key: key, 
-        className: rowClass, 
-        onClick: rowClickedEvent}, 
-        row
-      )
-    );
-  }
-
-  return result;
-}
-
-var emptyRow = React.createElement("tr", null, React.createElement("td", {colSpan: 100, className: "text-center"}, "No data"));
-
-var Table = React.createClass({displayName: 'Table',
+var Table = React.createClass({displayName: "Table",
 
   propTypes: {
+    keys: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.string),
+      React.PropTypes.string
+    ]).isRequired,
     columns: React.PropTypes.arrayOf(React.PropTypes.shape({
       title: React.PropTypes.string.isRequired,
       prop: React.PropTypes.oneOfType([
@@ -77,23 +56,84 @@ var Table = React.createClass({displayName: 'Table',
     dataArray: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
-    ])).isRequired
+    ])).isRequired,
+    buildRowOpts: React.PropTypes.func,
+    sortBy: React.PropTypes.shape({
+      prop: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+      ]),
+      order: React.PropTypes.oneOf([ 'asc', 'desc' ])
+    }),
+    onSort: React.PropTypes.func
+  },
+
+  getDefaultProps:function() {
+    return {
+      buildRowOpts: function()  {return {};},
+      sortBy: {}
+    };
+  },
+
+  componentDidMount:function() {
+    // If no width was specified, then set the width that the browser applied
+    // initially to avoid recalculating width between pages.
+    for (var i = 0; i < this.props.columns.length; i++) {
+      var thDom = this.refs[("th-" + i)].getDOMNode();
+      if (!thDom.style.width) {
+        thDom.style.width = (thDom.offsetWidth + "px");
+      }
+    }
   },
 
   render:function() {
-    var $__0=        this.props,columns=$__0.columns,keys=$__0.keys,dataArray=$__0.dataArray,onRowClicked=$__0.onRowClicked,selected=$__0.selected;
-    var getKeys = keyGetter(keys);
-    var rows = mapData(columns, dataArray, getKeys, onRowClicked, selected);
+    var $__0=        this.props,columns=$__0.columns,keys=$__0.keys,buildRowOpts=$__0.buildRowOpts,sortBy=$__0.sortBy,onSort=$__0.onSort;
+
+    var headers = columns.map(function(col, idx)  {
+      var event, className = 'sort-disabled';
+      // Values that are not in the dataset are not sortable.
+      if (col.sortable !== false && col.prop !== undefined) {
+        event = onSort.bind(null, {
+          prop: col.prop,
+          order: getNextOrder(sortBy, col.prop)
+        });
+        className = getSortClass(sortBy, col.prop);
+      }
+
+      return (
+        React.createElement("th", {
+          ref: ("th-" + idx), 
+          key: idx, 
+          onClick: event, 
+          style: {width: col.width}}, 
+          col.title, 
+          React.createElement("i", {className: ("sort-icon " + className)})
+        )
+      );
+    });
+
+    var getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
+    var rows = this.props.dataArray.map(
+      function(row) 
+        {return React.createElement("tr", React.__spread({key: getKeys(row)},  buildRowOpts(row)), 
+          columns.map(
+            function(col, i) 
+              {return React.createElement("td", {key: i, className: getCellClass(col, row)}, 
+                getCellValue(col, row)
+              );}
+          )
+        );});
 
     return (
       React.createElement("table", {className: this.props.className}, 
-        React.createElement(TableHeader, {
-          columns: columns, 
-          sortBy: this.props.sortBy, 
-          onSort: this.props.onSort}
+        React.createElement("thead", null, 
+          React.createElement("tr", null, 
+            headers
+          )
         ), 
         React.createElement("tbody", null, 
-          rows.length ? rows : emptyRow
+          rows.length ? rows :
+            React.createElement("tr", null, React.createElement("td", {colSpan: 100, className: "text-center"}, "No data"))
         )
       )
     );

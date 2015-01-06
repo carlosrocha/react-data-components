@@ -6,7 +6,7 @@ var SearchField = require('./SearchField');
 
 var DataMixin = require('./DataMixin');
 
-var DataTable = React.createClass({displayName: 'DataTable',
+var DataTable = React.createClass({displayName: "DataTable",
 
   mixins: [ DataMixin ],
 

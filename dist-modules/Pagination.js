@@ -1,56 +1,30 @@
 var React = require('react/addons');
-var cx = React.addons.classSet;
 
-/**
- * Used to cancel events.
- */
-var preventDefault = function(ev)  {return ev.preventDefault();};
+// Used to cancel events.
+var preventDefault = function(e)  {return e.preventDefault();};
 
-var ListButton = React.createClass({displayName: 'ListButton',
-
+var ListButton = React.createClass({displayName: "ListButton",
   render:function() {
+    var $__0=      this.props,className=$__0.className,event=$__0.event,children=$__0.children;
     return (
-      React.createElement("li", {className: this.props.className}, 
-        React.createElement("a", {href: "#", onClick: this.props.event}, this.props.children)
-      )
+      React.createElement("li", {className: className}, React.createElement("a", {href: "#", onClick: event}, children))
     );
   }
-
 });
 
-/**
- * Pagination component.
- */
-var Pagination = React.createClass({displayName: 'Pagination',
+var Pagination = React.createClass({displayName: "Pagination",
 
   mixins: [ React.addons.PureRenderMixin ],
 
   propTypes: {
-    /**
-     * Event to trigger. Receives the page number.
-     */
     onChangePage: React.PropTypes.func.isRequired,
-
-    /**
-     * Total number of pages.
-     */
     totalPages: React.PropTypes.number.isRequired,
-
-    /**
-     * Current page being displayed.
-     */
     currentPage: React.PropTypes.number.isRequired,
-
-    /**
-     * The number of pages to show. 5 by default.
-     */
     showPages: React.PropTypes.number
   },
 
   getDefaultProps:function() {
-    return {
-      showPages: 5
-    };
+    return { showPages: 5 };
   },
 
   onChangePage:function(pageNumber, event) {
@@ -59,26 +33,18 @@ var Pagination = React.createClass({displayName: 'Pagination',
   },
 
   render:function() {
-    var $__0=    this.props,totalPages=$__0.totalPages,showPages=$__0.showPages,currentPage=$__0.currentPage;
+    var $__0=      this.props,totalPages=$__0.totalPages,showPages=$__0.showPages,currentPage=$__0.currentPage;
 
     if (totalPages === 0) {
       return null;
     }
 
     var diff = Math.floor(showPages / 2),
-        start = currentPage - diff,
-        end = currentPage + diff + 1;
+        start = Math.max(currentPage - diff, 0),
+        end = Math.min(start + showPages, totalPages);
 
-    // Edge cases
-    if (totalPages < showPages) {
-      start = 0;
-      end = totalPages;
-    } else if (start <= 0) {
-      start = 0;
-      end = showPages;
-    } else if (end >= totalPages) {
+    if (totalPages >= showPages && end >= totalPages) {
       start = totalPages - showPages;
-      end = totalPages;
     }
 
     var buttons = [], btnClass, btnEvent;
@@ -102,50 +68,32 @@ var Pagination = React.createClass({displayName: 'Pagination',
     }
 
     // First and Prev button handlers and class
-    var isFirst = currentPage === 0;
-    var firstHandler = isFirst ? preventDefault : this.onChangePage.bind(this, 0);
-    var firstClass = cx({
-      'first': true,
-      'disabled': isFirst
-    });
-    var prevHandler = isFirst ? preventDefault : this.onChangePage.bind(this, currentPage - 1);
-    var prevClass = cx({
-      'prev': true,
-      'disabled': isFirst
-    });
+    var firstHandler = preventDefault, firstClass = 'first disabled';
+    var prevHandler = preventDefault, prevClass = 'prev disabled';
+    if (currentPage > 0) {
+      firstHandler = this.onChangePage.bind(this, 0);
+      firstClass = 'first';
+      prevHandler = this.onChangePage.bind(this, currentPage - 1);
+      prevClass = 'prev';
+    }
 
     // Next and Last button handlers and class
-    var isLast = currentPage === (totalPages - 1);
-    var nextHandler = isLast ? preventDefault : this.onChangePage.bind(this, currentPage + 1);
-    var nextClass = cx({
-      'next': true,
-      'disabled': isLast
-    });
-    var lastHandler = isLast ? preventDefault : this.onChangePage.bind(this, totalPages - 1);
-    var lastClass = cx({
-      'last': true,
-      'disabled': isLast
-    });
+    var nextHandler = preventDefault, nextClass = 'next disabled';
+    var lastHandler = preventDefault, lastClass = 'last disabled';
+    if (currentPage < totalPages - 1) {
+      nextHandler = this.onChangePage.bind(this, currentPage + 1);
+      nextClass = 'next';
+      lastHandler = this.onChangePage.bind(this, totalPages - 1);
+      lastClass = 'last';
+    }
 
     return (
       React.createElement("ul", {className: this.props.className}, 
-        React.createElement(ListButton, {
-          className: firstClass, 
-          event: firstHandler}
-        ), 
-        React.createElement(ListButton, {
-          className: prevClass, 
-          event: prevHandler}
-        ), 
+        React.createElement(ListButton, {className: firstClass, event: firstHandler}), 
+        React.createElement(ListButton, {className: prevClass, event: prevHandler}), 
         buttons, 
-        React.createElement(ListButton, {
-          className: nextClass, 
-          event: nextHandler}
-        ), 
-        React.createElement(ListButton, {
-          className: lastClass, 
-          event: lastHandler}
-        )
+        React.createElement(ListButton, {className: nextClass, event: nextHandler}), 
+        React.createElement(ListButton, {className: lastClass, event: lastHandler})
       )
     );
   }
