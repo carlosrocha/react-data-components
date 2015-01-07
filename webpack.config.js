@@ -1,24 +1,27 @@
-var path = require('path');
-
 module.exports = {
-  entry: './dist-modules/index',
+  entry: './src/index',
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'react-data-components.js',
+    filename: 'dist/react-data-components.min.js',
     library: 'ReactDataComponents',
     libraryTarget: 'umd'
   },
-  externals: [
-    'react',
-    'react/addons'
-  ],
+  externals: {
+    'react': {
+      root: 'React',
+      amd: 'react',
+      commonjs: 'react',
+      commonjs2: 'react'
+    },
+    'react/addons': {
+      root: 'React',
+      amd: 'react',
+      commonjs: 'react',
+      commonjs2: 'react'
+    }
+  },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'jsx?harmony' },
-      { test: /\.less$/, loader: 'style!css!less' },
-      { test: /\.css$/, loader: 'style!css' },
-      { test: /\.woff$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.(ttf|eot|svg)$/, loader: 'file' }
+      { test: /\.js$/, loader: 'jsx?harmony' }
     ]
   }
 };
