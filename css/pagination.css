@@ -1,0 +1,5 @@
+.pagination { margin: 10px 0; }
+.pagination .first a:before { content: '«'; }
+.pagination .prev a:before { content: '‹'; }
+.pagination .next a:before { content: '›'; }
+.pagination .last a:before { content: '»'; }

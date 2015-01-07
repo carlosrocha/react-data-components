@@ -1,5 +1,5 @@
-require('bootstrap/less/bootstrap.less');
-require('../../less/rdc.less');
+require('../../css/table-twbs.css');
+require('../../css/pagination.css');
 
 var React = require('react');
 var FluxTable = require('./FluxTable');

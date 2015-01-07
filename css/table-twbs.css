@@ -1,0 +1,50 @@
+.table th {
+  cursor: pointer;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.table .sort-icon {
+  float: right;
+  color: hsl(20, 0%, 70%);
+}
+.table .empty-cell {
+  font-style: italic;
+  color: darkgray;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* Uncomment to use glyphicons
+.table .sort-icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.table .sort-asc:before  { content: '\e113'; }
+.table .sort-desc:before { content: '\e114'; }
+.table .sort-off:before  { content: '\e150'; }
+*/
+
+.table .sort-icon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.table .sort-asc:before  { content: '\f0de'; }
+.table .sort-desc:before { content: '\f0dd'; }
+.table .sort-off:before  { content: '\f0dc'; }
