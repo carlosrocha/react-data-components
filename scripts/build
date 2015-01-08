@@ -1,3 +1,0 @@
-#!/bin/sh
-
-./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src dist-modules

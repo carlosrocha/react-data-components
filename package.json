@@ -34,6 +34,7 @@
     "webpack-dev-server": "^1.6.6"
   },
   "scripts": {
+    "build": "./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src dist-modules",
     "start": "cd example && webpack-dev-server --progress --colors --hot --inline",
     "test": "jest"
   },
