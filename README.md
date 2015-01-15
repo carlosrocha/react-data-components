@@ -1,5 +1,7 @@
 # react-data-components
 
+DataTable: [Live demo and source](http://jsbin.com/ziyawu/1/).
+
 ## Getting started
 
 ```sh
