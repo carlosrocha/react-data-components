@@ -4,29 +4,36 @@ var simpleGet = key => data => data[key];
 var keyGetter = keys => data => keys.map(key => data[key]);
 
 var isEmpty = value => value === undefined || value === null || value === '';
-var isFunc = value => typeof value === 'function';
 
+// The sort class for the column header.
 var getSortClass =
   (sortBy, prop) =>
     sortBy.prop === prop ?
+      // If the property is the same as the property being sorted,
+      // then it must be asc or desc.
       (sortBy.order === 'asc' ? 'sort-asc' : 'sort-desc') :
+      // Otherwise it's off.
       'sort-off';
 
+// The next order for the header click listeners.
 var getNextOrder =
   (sortBy, prop) =>
     sortBy.prop === prop && sortBy.order === 'asc' ? 'desc' : 'asc';
 
 var getCellValue =
-  (col, row) =>
-    col.prop && isEmpty(row[col.prop]) ? col.defaultContent :
-      col.render ? col.render(row[col.prop], row) :
-      row[col.prop];
+  ({ prop, defaultContent, render }, row) =>
+    // Return `defaultContent` if the value is empty.
+    !isEmpty(prop) && isEmpty(row[prop]) ? defaultContent :
+      // Use the render function for the value.
+      render ? render(row[prop], row) :
+      // Otherwise just return the value.
+      row[prop];
 
 var getCellClass =
-  (col, row) =>
-    col.prop && isEmpty(row[col.prop]) ? 'empty-cell' :
-      isFunc(col.className) ? col.className(row[col.prop], row) :
-      col.className;
+  ({ prop, className }, row) =>
+    !isEmpty(prop) && isEmpty(row[prop]) ? 'empty-cell' :
+      typeof className === 'function' ? className(row[prop], row) :
+      className;
 
 var Table = React.createClass({
 
