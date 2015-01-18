@@ -5,20 +5,14 @@ var keyGetter = keys => data => keys.map(key => data[key]);
 
 var isEmpty = value => value === undefined || value === null || value === '';
 
-// The sort class for the column header.
-var getSortClass =
+var getSortOrder =
   (sortBy, prop) =>
     sortBy.prop === prop ?
       // If the property is the same as the property being sorted,
       // then it must be asc or desc.
-      (sortBy.order === 'asc' ? 'sort-asc' : 'sort-desc') :
+      (sortBy.order === 'asc' ? 'ascending' : 'descending') :
       // Otherwise it's off.
-      'sort-off';
-
-// The next order for the header click listeners.
-var getNextOrder =
-  (sortBy, prop) =>
-    sortBy.prop === prop && sortBy.order === 'asc' ? 'desc' : 'asc';
+      'none';
 
 var getCellValue =
   ({ prop, defaultContent, render }, row) =>
@@ -93,40 +87,39 @@ var Table = React.createClass({
     }
   },
 
-  sortEvent(val, e) {
-    if (e.keyCode === 13) {
-      this.props.onSort(val);
-    }
-  },
-
   render() {
     var { columns, keys, buildRowOpts, sortBy, onSort } = this.props;
 
     var headers = columns.map((col, idx) => {
-      var clickEvent, className = 'sort-disabled', tabIndex = -1, keyDownEvent;
-      // Values that are not in the dataset are not sortable.
-      if (col.sortable !== false && col.prop !== undefined) {
-        var val = {
+      var sortProps, order, nextOrder, sortEvent;
+      // Only add sorting events if the column has a property and is sortable.
+      if (col.sortable !== false && 'prop' in col) {
+        order = getSortOrder(sortBy, col.prop);
+        nextOrder = order === 'ascending' ? 'descending' : 'ascending';
+        sortEvent = onSort.bind(null, {
           prop: col.prop,
-          order: getNextOrder(sortBy, col.prop)
+          order: order === 'ascending' ? 'desc' : 'asc'
+        });
+        sortProps = {
+          'onClick': sortEvent,
+          // Fire the sort event on enter.
+          'onKeyDown': e => { if (e.keyCode === 13) sortEvent(); },
+          // Prevents selection with mouse.
+          'onMouseDown': e => e.preventDefault(),
+          'tabIndex': 0,
+          'className': `sort-${order}`,
+          'aria-sort': order === 'none' ? null : order,
+          'aria-label': `${col.title}: activate to sort column ${nextOrder}`
         };
-        clickEvent = onSort.bind(null, val);
-        className = getSortClass(sortBy, col.prop);
-        tabIndex = 0;
-        keyDownEvent = this.sortEvent.bind(null, val);
       }
 
       return (
         <th
           ref={`th-${idx}`}
           key={idx}
-          onClick={clickEvent}
-          tabIndex={tabIndex}
-          onMouseDown={e => e.preventDefault()}
-          onKeyDown={keyDownEvent}
-          style={{width: col.width}}>
+          style={{width: col.width}}
+          {...sortProps}>
           {col.title}
-          <i className={`sort-icon ${className}`} />
         </th>
       );
     });

@@ -6,10 +6,6 @@
       -ms-user-select: none;
           user-select: none;
 }
-.table .sort-icon {
-  float: right;
-  color: hsl(20, 0%, 70%);
-}
 .table .empty-cell {
   font-style: italic;
   color: darkgray;
@@ -20,8 +16,24 @@
           user-select: none;
 }
 
+.table th:after {
+  float: right;
+  color: hsl(20, 0%, 70%);
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.table th.sort-ascending:after  { content: '\f0de'; }
+.table th.sort-descending:after { content: '\f0dd'; }
+.table th.sort-none:after  { content: '\f0dc'; }
+
 /* Uncomment to use glyphicons
-.table .sort-icon {
+.table th:after {
+  float: right;
+  color: hsl(20, 0%, 70%);
   position: relative;
   top: 1px;
   display: inline-block;
@@ -32,19 +44,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.table .sort-asc:before  { content: '\e113'; }
-.table .sort-desc:before { content: '\e114'; }
-.table .sort-off:before  { content: '\e150'; }
+.table th.sort-ascending:after  { content: '\e113'; }
+.table th.sort-descending:after { content: '\e114'; }
+.table th.sort-none:after  { content: '\e150'; }
 */
-
-.table .sort-icon {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.table .sort-asc:before  { content: '\f0de'; }
-.table .sort-desc:before { content: '\f0dd'; }
-.table .sort-off:before  { content: '\f0dc'; }
