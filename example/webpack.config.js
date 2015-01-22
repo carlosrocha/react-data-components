@@ -1,26 +1,27 @@
-var path = require('path');
-
 module.exports = {
   devtool: 'eval',
   cache: true,
   entry: {
-    docs: './docs',
-    flux: './flux/app'
+    flux: './flux/app',
+    table: './table/main'
   },
   output: {
-    publicPath: '/',
-    path: path.join(__dirname, 'dist'),
     filename: '[name].entry.js'
   },
   resolve: {
     alias: {
-      'react-data-components': '../'
+      'react-data-components': '../../'
     }
   },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'jsx?harmony' },
-      { test: /\.css$/, loader: 'style!css' }
+      { test: /\.css$/, loader: 'style!css' },
+      { test: /\.less$/, loader: 'style!css!less' },
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/font-woff' },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,  loader: 'url?limit=10000&minetype=application/octet-stream' },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,  loader: 'file' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,  loader: 'url?limit=10000&minetype=image/svg+xml' }
     ]
   }
 };

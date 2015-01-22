@@ -1,5 +1,7 @@
-require('../../css/table-twbs.css');
-require('../../css/pagination.css');
+require('bootstrap/less/bootstrap.less');
+require('font-awesome/less/font-awesome.less');
+require('react-data-components/css/table-twbs.css');
+require('react-data-components/css/pagination.css');
 
 var React = require('react');
 var FluxTable = require('./FluxTable');
@@ -22,6 +24,6 @@ DataStore.init({
   }
 });
 
-WebAPIUtils.getCsvFile('table/CTA_-_Map_of_Fare_Media_Sales_Outlets.csv');
+WebAPIUtils.getCsvFile('sample_data.csv');
 
 React.render(<FluxTable />, document.body);
