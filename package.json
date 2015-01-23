@@ -9,11 +9,11 @@
     "pagination"
   ],
   "author": "Carlos Rocha",
-  "main": "./dist-modules/index",
+  "main": "./lib/index",
   "files": [
     "src",
     "css",
-    "dist-modules"
+    "lib"
   ],
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "file-loader": "^0.7.2"
   },
   "scripts": {
-    "build": "./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src dist-modules",
+    "prepublish": "./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src lib",
     "start": "cd example && webpack-dev-server --progress --colors --hot --inline",
     "test": "jest"
   },
