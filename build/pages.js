@@ -1,8 +1,6 @@
-var $__0=  ReactDataComponents,DataTable=$__0.DataTable;
+var $__0=    ReactDataComponents,DataTable=$__0.DataTable;
 
-var byId = function(id)  {return document.getElementById(id);};
-
-function renderTable(data) {
+function buildTable(data) {
   var renderMapUrl =
     function(val, row) 
       {return React.createElement("a", {href: ("https://www.google.com/maps?q=" + row['LAT'] + "," + row['LON'])}, 
@@ -30,5 +28,5 @@ function renderTable(data) {
 }
 
 d3.csv('sample_data.csv', function(error, rows) {
-  React.render(renderTable(rows), byId('datatable'));
+  React.render(buildTable(rows), document.getElementById('datatable'));
 });

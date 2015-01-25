@@ -1,8 +1,6 @@
-var {DataTable} = ReactDataComponents;
+var { DataTable } = ReactDataComponents;
 
-var byId = id => document.getElementById(id);
-
-function renderTable(data) {
+function buildTable(data) {
   var renderMapUrl =
     (val, row) =>
       <a href={`https://www.google.com/maps?q=${row['LAT']},${row['LON']}`}>
@@ -30,5 +28,5 @@ function renderTable(data) {
 }
 
 d3.csv('sample_data.csv', function(error, rows) {
-  React.render(renderTable(rows), byId('datatable'));
+  React.render(buildTable(rows), document.getElementById('datatable'));
 });
