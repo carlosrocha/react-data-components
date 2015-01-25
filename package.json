@@ -9,11 +9,13 @@
     "pagination"
   ],
   "author": "Carlos Rocha",
+  "license": "MIT",
   "main": "./lib/index",
   "files": [
     "src",
     "css",
-    "lib"
+    "lib",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
