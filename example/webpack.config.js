@@ -10,7 +10,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'react-data-components': '../../'
+      // Use uncompiled version
+      'react-data-components': '../../src'
     }
   },
   module: {

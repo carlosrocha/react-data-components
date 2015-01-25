@@ -1,7 +1,7 @@
 require('bootstrap/less/bootstrap.less');
 require('font-awesome/less/font-awesome.less');
-require('react-data-components/css/table-twbs.css');
-require('react-data-components/css/pagination.css');
+require('../../css/table-twbs.css');
+require('../../css/pagination.css');
 
 var React = require('react');
 var { DataTable } = require('react-data-components');
