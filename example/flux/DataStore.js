@@ -1,7 +1,7 @@
 var AppDispatcher = require('./AppDispatcher');
 var { ActionTypes } = require('./AppConstants');
 var { EventEmitter } = require('events');
-var { sort, filter } = require('../../src').utils;
+var { sort, filter } = require('react-data-components').utils;
 var assign = require('react/lib/Object.assign');
 
 var CHANGE_EVENT = 'change';
