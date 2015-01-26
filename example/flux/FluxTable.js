@@ -30,7 +30,7 @@ var FluxTable = React.createClass({
     return getStateFromStore();
   },
 
-  componentWillMount() {
+  componentDidMount() {
     DataStore.addChangeListener(this.handleStoreChange);
   },
 
