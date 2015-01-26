@@ -31,7 +31,7 @@ var sortByFunc =
  */
 function sort(sortBy, data) {
   var sortedData = data.sort(sortByFunc(sortBy.prop));
-  if (sortBy.order === 'desc') {
+  if (sortBy.order === 'descending') {
     sortedData.reverse();
   }
   return sortedData;

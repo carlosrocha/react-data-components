@@ -29,7 +29,7 @@ function buildTable(data) {
       columns={tableColumns}
       initialData={data}
       initialPageLength={5}
-      initialSortBy={{ prop: 'CITY', order: 'desc' }}
+      initialSortBy={{ prop: 'CITY', order: 'descending' }}
       pageLengthOptions={[ 5, 20, 50 ]}
     />
   );

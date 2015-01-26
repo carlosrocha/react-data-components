@@ -5,15 +5,6 @@ var keyGetter = keys => data => keys.map(key => data[key]);
 
 var isEmpty = value => value === undefined || value === null || value === '';
 
-var getSortOrder =
-  (sortBy, prop) =>
-    sortBy.prop === prop ?
-      // If the property is the same as the property being sorted,
-      // then it must be asc or desc.
-      (sortBy.order === 'asc' ? 'ascending' : 'descending') :
-      // Otherwise it's off.
-      'none';
-
 var getCellValue =
   ({ prop, defaultContent, render }, row) =>
     // Return `defaultContent` if the value is empty.
@@ -28,6 +19,23 @@ var getCellClass =
     !isEmpty(prop) && isEmpty(row[prop]) ? 'empty-cell' :
       typeof className === 'function' ? className(row[prop], row) :
       className;
+
+function buildSortProps(col, sortBy, onSort) {
+  var order = sortBy.prop === col.prop ? sortBy.order : 'none';
+  var nextOrder = order === 'ascending' ? 'descending' : 'ascending';
+  var sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
+
+  return {
+    'onClick': sortEvent,
+    // Fire the sort event on enter.
+    'onKeyDown': e => { if (e.keyCode === 13) sortEvent(); },
+    // Prevents selection with mouse.
+    'onMouseDown': e => e.preventDefault(),
+    'tabIndex': 0,
+    'aria-sort': order,
+    'aria-label': `${col.title}: activate to sort column ${nextOrder}`
+  };
+}
 
 var Table = React.createClass({
 
@@ -64,7 +72,7 @@ var Table = React.createClass({
         React.PropTypes.string,
         React.PropTypes.number
       ]),
-      order: React.PropTypes.oneOf([ 'asc', 'desc' ])
+      order: React.PropTypes.oneOf([ 'ascending', 'descending' ])
     }),
     onSort: React.PropTypes.func
   },
@@ -91,26 +99,11 @@ var Table = React.createClass({
     var { columns, keys, buildRowOpts, sortBy, onSort } = this.props;
 
     var headers = columns.map((col, idx) => {
-      var sortProps, order, nextOrder, sortEvent;
+      var sortProps, order;
       // Only add sorting events if the column has a property and is sortable.
       if (col.sortable !== false && 'prop' in col) {
-        order = getSortOrder(sortBy, col.prop);
-        nextOrder = order === 'ascending' ? 'descending' : 'ascending';
-        sortEvent = onSort.bind(null, {
-          prop: col.prop,
-          order: order === 'ascending' ? 'desc' : 'asc'
-        });
-        sortProps = {
-          'onClick': sortEvent,
-          // Fire the sort event on enter.
-          'onKeyDown': e => { if (e.keyCode === 13) sortEvent(); },
-          // Prevents selection with mouse.
-          'onMouseDown': e => e.preventDefault(),
-          'tabIndex': 0,
-          'className': `sort-${order}`,
-          'aria-sort': order === 'none' ? null : order,
-          'aria-label': `${col.title}: activate to sort column ${nextOrder}`
-        };
+        sortProps = buildSortProps(col, sortBy, onSort);
+        order = sortProps['aria-sort'];
       }
 
       return (
@@ -118,8 +111,13 @@ var Table = React.createClass({
           ref={`th-${idx}`}
           key={idx}
           style={{width: col.width}}
+          role="columnheader"
+          scope="col"
           {...sortProps}>
-          {col.title}
+          <span>{col.title}</span>
+          {typeof order !== 'undefined' ?
+            <span className={`sort-icon sort-${order}`} aria-hidden="true" /> :
+            null}
         </th>
       );
     });
@@ -138,13 +136,16 @@ var Table = React.createClass({
 
     return (
       <table className={this.props.className}>
+        <caption className="sr-only" role="alert" aria-live="polite">
+          {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
+        </caption>
         <thead>
           <tr>
             {headers}
           </tr>
         </thead>
         <tbody>
-          {rows.length ? rows :
+          {rows.length > 0 ? rows :
             <tr><td colSpan={100} className="text-center">No data</td></tr>}
         </tbody>
       </table>

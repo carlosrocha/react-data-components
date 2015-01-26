@@ -16,7 +16,7 @@ var containsIgnoreCase = function(a, b) {
 
 DataStore.init({
   pageSize: 5,
-  sortBy: { prop: 'CITY', order: 'desc' },
+  sortBy: { prop: 'CITY', order: 'descending' },
   filters: {
     globalSearch: {
       filter: containsIgnoreCase

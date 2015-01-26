@@ -16,7 +16,7 @@
           user-select: none;
 }
 
-.table th:after {
+.sort-icon:after {
   float: right;
   color: hsl(20, 0%, 70%);
   display: inline-block;
@@ -26,25 +26,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.table th.sort-ascending:after  { content: '\f0de'; }
-.table th.sort-descending:after { content: '\f0dd'; }
-.table th.sort-none:after  { content: '\f0dc'; }
-
-/* Uncomment to use glyphicons
-.table th:after {
-  float: right;
-  color: hsl(20, 0%, 70%);
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.table th.sort-ascending:after  { content: '\e113'; }
-.table th.sort-descending:after { content: '\e114'; }
-.table th.sort-none:after  { content: '\e150'; }
-*/
+.sort-icon.sort-ascending:after  { content: '\f0de'; }
+.sort-icon.sort-descending:after { content: '\f0dd'; }
+.sort-icon.sort-none:after  { content: '\f0dc'; }

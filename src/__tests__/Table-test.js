@@ -13,7 +13,7 @@ describe('Table', function() {
       <Table
         columns={columns}
         onSort={onSort}
-        sortBy={{ order: 'asc', prop: 'test' }}
+        sortBy={{ order: 'ascending', prop: 'test' }}
         dataArray={[]}
         keys="test"
       />
@@ -21,7 +21,10 @@ describe('Table', function() {
 
     var ths = TestUtils.scryRenderedDOMComponentsWithTag(table, 'th');
     TestUtils.Simulate.click(ths[0]);
-    expect(onSort.mock.calls[0][0]).toEqual({ order: 'desc', prop: 'test' });
+    expect(onSort.mock.calls[0][0]).toEqual({
+      order: 'descending',
+      prop: 'test'
+    });
   });
 
   it('does not sort on col without data', function() {
