@@ -146,7 +146,9 @@ var Table = React.createClass({
         </thead>
         <tbody>
           {rows.length > 0 ? rows :
-            <tr><td colSpan={100} className="text-center">No data</td></tr>}
+            <tr>
+              <td colSpan={columns.length} className="text-center">No data</td>
+            </tr>}
         </tbody>
       </table>
     );
