@@ -1,0 +1,5 @@
+lib
+dist
+example
+# disable tests folder for unused `React` variable
+src/__tests__

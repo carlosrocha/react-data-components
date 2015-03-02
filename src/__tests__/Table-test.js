@@ -1,3 +1,5 @@
+'use strict';
+
 jest.dontMock('../Table');
 
 var React = require('react');

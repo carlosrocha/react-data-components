@@ -1,3 +1,5 @@
+'use strict';
+
 jest.dontMock('../Pagination');
 
 var React = require('react');

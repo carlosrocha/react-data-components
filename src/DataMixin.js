@@ -1,3 +1,5 @@
+'use strict';
+
 var { sort, filter } = require('./utils');
 
 var containsIgnoreCase = function(a, b) {

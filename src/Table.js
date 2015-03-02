@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('react');
 
 var simpleGet = key => data => data[key];

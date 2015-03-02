@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Determines if at least one element in the object matches a truth test.
  *
@@ -12,7 +14,7 @@ function some(pred, obj) {
     }
   }
   return false;
-};
+}
 
 /**
  * Creates a compare function with a property to sort on.
