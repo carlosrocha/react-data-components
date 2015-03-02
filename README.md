@@ -47,23 +47,31 @@ See [complete example](example/table/main.js), see [Flux example](example/flux/)
 
 ## DataMixin options
 
-Name                | Type               | Description
-------------------- | ------------------ | ----------------------------------
-`keys`              | array              | Properties that make each row unique, e.g. an id.
-`columns`           | array              | See column options.
-`pageLengthOptions` | array              | Page length options.
-`initialData`       | array              | The data to display.
-`initialPageLength` | number             | Initial page length.
-`initialSortBy`     | object             | Initial sorting, needs `prop` and `order`.
+### `keys: Array<string | number>`
+Properties that make each row unique, e.g. an id.
+
+### `columns: Array<ColumnOption>`
+See `Table` column options.
+
+### `pageLengthOptions: Array<number>`
+### `initialData: Array<object | Array<any>>`
+### `initialPageLength: number`
+### `initialSortBy: { prop: string | number, order: string }`
 
 ## Table column options
 
-Name             | Type               | Description
----------------- | ------------------ | ----------------------------------
-`title`          | string             | The title to display on the header.
-`prop`           | string or number   | The name of the property or index on the data.
-`render`         | function           | Function to customize the render on column.
-`className`      | string or function | Class for the td.
-`defaultContent` | string             | The default value to display if no data.
-`sortable`       | boolean            | `true` by default.
-`width`          | string or number   | Width for the column.
+### `title: string`
+The title to display on the header.
+
+### `prop: string | number`
+The name of the property or index on the data.
+
+### `render: (val: any, row: any) => any`
+Function to render a different component.
+
+### `className: string | (val: any, row: any) => string`
+Class name for the td.
+
+### `defaultContent: string`
+### `sortable: boolean`
+### `width: string | number`
