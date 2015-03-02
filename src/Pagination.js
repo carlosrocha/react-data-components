@@ -1,22 +1,19 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
-var ListButton = React.createClass({
-  render() {
-    var { className, event, children } = this.props;
-    return (
-      <li className={className}><a href="#" onClick={event}>{children}</a></li>
-    );
-  }
-});
-
 var Pagination = React.createClass({
 
-  mixins: [ React.addons.PureRenderMixin ],
+  shouldComponentUpdate(nextProps) {
+    var props = this.props;
+
+    return props.totalPages !== nextProps.totalPages ||
+      props.currentPage !== nextProps.currentPage ||
+      props.showPages !== nextProps.showPages;
+  },
 
   propTypes: {
     onChangePage: React.PropTypes.func.isRequired,
@@ -49,53 +46,79 @@ var Pagination = React.createClass({
       start = totalPages - showPages;
     }
 
-    var buttons = [], btnClass, btnEvent;
+    var buttons = [], btnEvent, isCurrent;
     for (var i = start; i < end; i++) {
+      isCurrent = currentPage === i;
       // If the button is for the current page then disable the event.
-      if (currentPage === i) {
-        btnClass = 'active';
+      if (isCurrent) {
         btnEvent = preventDefault;
       } else {
-        btnClass = null;
         btnEvent = this.onChangePage.bind(this, i);
       }
       buttons.push(
-        <ListButton
-          key={i}
-          className={btnClass}
-          event={btnEvent}>
-          {i + 1}
-        </ListButton>
+        <li key={i} className={isCurrent ? 'active' : null}>
+          <a role="button" href="#" onClick={btnEvent} tabIndex="0">
+            <span>{i + 1}</span>
+            {isCurrent ?
+              <span className="sr-only">(current)</span> : null}
+          </a>
+        </li>
       );
     }
 
-    // First and Prev button handlers and class
-    var firstHandler = preventDefault, firstClass = 'first disabled';
-    var prevHandler = preventDefault, prevClass = 'prev disabled';
-    if (currentPage > 0) {
+    // First and Prev button handlers and class.
+    var firstHandler = preventDefault;
+    var prevHandler = preventDefault;
+    var isNotFirst = currentPage > 0;
+    if (isNotFirst) {
       firstHandler = this.onChangePage.bind(this, 0);
-      firstClass = 'first';
       prevHandler = this.onChangePage.bind(this, currentPage - 1);
-      prevClass = 'prev';
     }
 
-    // Next and Last button handlers and class
-    var nextHandler = preventDefault, nextClass = 'next disabled';
-    var lastHandler = preventDefault, lastClass = 'last disabled';
-    if (currentPage < totalPages - 1) {
+    // Next and Last button handlers and class.
+    var nextHandler = preventDefault;
+    var lastHandler = preventDefault;
+    var isNotLast = currentPage < totalPages - 1;
+    if (isNotLast) {
       nextHandler = this.onChangePage.bind(this, currentPage + 1);
-      nextClass = 'next';
       lastHandler = this.onChangePage.bind(this, totalPages - 1);
-      lastClass = 'last';
     }
 
     return (
-      <ul className={this.props.className}>
-        <ListButton className={firstClass} event={firstHandler} />
-        <ListButton className={prevClass} event={prevHandler} />
+      <ul className={this.props.className} aria-label="Pagination">
+        <li className={!isNotFirst ? 'disabled' : null}>
+          <a role="button" href="#" tabIndex="0"
+            onClick={firstHandler}
+            aria-disabled={!isNotFirst}
+            aria-label="First">
+            <span className="fa fa-angle-double-left" aria-hidden="true" />
+          </a>
+        </li>
+        <li className={!isNotFirst ? 'disabled' : null}>
+          <a role="button" href="#" tabIndex="0"
+            onClick={prevHandler}
+            aria-disabled={!isNotFirst}
+            aria-label="Previous">
+            <span className="fa fa-angle-left" aria-hidden="true" />
+          </a>
+        </li>
         {buttons}
-        <ListButton className={nextClass} event={nextHandler} />
-        <ListButton className={lastClass} event={lastHandler} />
+        <li className={!isNotLast ? 'disabled' : null}>
+          <a role="button" href="#" tabIndex="0"
+            onClick={nextHandler}
+            aria-disabled={!isNotLast}
+            aria-label="Next">
+            <span className="fa fa-angle-right" aria-hidden="true" />
+          </a>
+        </li>
+        <li className={!isNotLast ? 'disabled' : null}>
+          <a role="button" href="#" tabIndex="0"
+            onClick={lastHandler}
+            aria-disabled={!isNotLast}
+            aria-label="Last">
+            <span className="fa fa-angle-double-right" aria-hidden="true" />
+          </a>
+        </li>
       </ul>
     );
   }
