@@ -1,6 +1,6 @@
 # react-data-components
 
-DataTable: [Live demo and source](http://jsbin.com/ziyawu/1/).
+DataTable: [Live demo and source](http://jsbin.com/ziyawu/4/).
 
 ## Getting started
 
@@ -47,31 +47,31 @@ See [complete example](example/table/main.js), see [Flux example](example/flux/)
 
 ## DataMixin options
 
-### `keys: Array<string | number>`
+#### `keys: Array<string | number>`
 Properties that make each row unique, e.g. an id.
 
-### `columns: Array<ColumnOption>`
+#### `columns: Array<ColumnOption>`
 See `Table` column options.
 
-### `pageLengthOptions: Array<number>`
-### `initialData: Array<object | Array<any>>`
-### `initialPageLength: number`
-### `initialSortBy: { prop: string | number, order: string }`
+#### `pageLengthOptions: Array<number>`
+#### `initialData: Array<object | Array<any>>`
+#### `initialPageLength: number`
+#### `initialSortBy: { prop: string | number, order: string }`
 
 ## Table column options
 
-### `title: string`
+#### `title: string`
 The title to display on the header.
 
-### `prop: string | number`
+#### `prop: string | number`
 The name of the property or index on the data.
 
-### `render: (val: any, row: any) => any`
+#### `render: (val: any, row: any) => any`
 Function to render a different component.
 
-### `className: string | (val: any, row: any) => string`
+#### `className: string | (val: any, row: any) => string`
 Class name for the td.
 
-### `defaultContent: string`
-### `sortable: boolean`
-### `width: string | number`
+#### `defaultContent: string`
+#### `sortable: boolean`
+#### `width: string | number`
