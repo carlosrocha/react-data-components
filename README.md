@@ -37,7 +37,7 @@ React.render((
       columns={columns}
       initialData={data}
       initialPageLength={5}
-      initialSortBy={{ prop: 'city', order: 'desc' }}
+      initialSortBy={{ prop: 'city', order: 'descending' }}
       pageLengthOptions={[ 5, 20, 50 ]}
     />
   ), document.body);
