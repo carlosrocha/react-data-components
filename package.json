@@ -33,13 +33,7 @@
     "react-tools": "^0.12.2",
     "style-loader": "^0.7.1",
     "webpack": "^1.4.15",
-    "webpack-dev-server": "^1.6.6",
-    "bootstrap": "^3.2.0",
-    "font-awesome": "^4.2.0",
-    "less": "^1.7.5",
-    "less-loader": "^0.7.7",
-    "url-loader": "^0.5.5",
-    "file-loader": "^0.7.2"
+    "webpack-dev-server": "^1.6.6"
   },
   "scripts": {
     "prepublish": "./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src lib",

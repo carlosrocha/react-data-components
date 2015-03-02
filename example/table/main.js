@@ -1,7 +1,4 @@
-require('bootstrap/less/bootstrap.less');
-require('font-awesome/less/font-awesome.less');
 require('../../css/table-twbs.css');
-require('../../css/pagination.css');
 
 var React = require('react');
 var { DataTable } = require('react-data-components');
@@ -35,6 +32,6 @@ function buildTable(data) {
   );
 }
 
-d3.csv('sample_data.csv', function(error, rows) {
+d3.csv('/sample_data.csv', function(error, rows) {
   React.render(buildTable(rows), document.body);
 });

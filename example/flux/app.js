@@ -1,7 +1,4 @@
-require('bootstrap/less/bootstrap.less');
-require('font-awesome/less/font-awesome.less');
 require('../../css/table-twbs.css');
-require('../../css/pagination.css');
 
 var React = require('react');
 var FluxTable = require('./FluxTable');
@@ -24,6 +21,6 @@ DataStore.init({
   }
 });
 
-WebAPIUtils.getCsvFile('sample_data.csv');
+WebAPIUtils.getCsvFile('/sample_data.csv');
 
 React.render(<FluxTable />, document.body);
