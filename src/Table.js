@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var { PropTypes } = React;
 
 var simpleGet = key => data => data[key];
 var keyGetter = keys => data => keys.map(key => data[key]);
@@ -118,41 +119,41 @@ class Table {
 }
 
 Table.propTypes = {
-  keys: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.string),
-    React.PropTypes.string
+  keys: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string
   ]).isRequired,
-  columns: React.PropTypes.arrayOf(React.PropTypes.shape({
-    title: React.PropTypes.string.isRequired,
-    prop: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    prop: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
     ]),
-    render: React.PropTypes.func,
-    sortable: React.PropTypes.bool,
-    defaultContent: React.PropTypes.string,
-    width: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
+    render: PropTypes.func,
+    sortable: PropTypes.bool,
+    defaultContent: PropTypes.string,
+    width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
     ]),
-    className: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.func
+    className: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func
     ])
   })).isRequired,
-  dataArray: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.object
+  dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
   ])).isRequired,
-  buildRowOpts: React.PropTypes.func,
-  sortBy: React.PropTypes.shape({
-    prop: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
+  buildRowOpts: PropTypes.func,
+  sortBy: PropTypes.shape({
+    prop: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
     ]),
-    order: React.PropTypes.oneOf([ 'ascending', 'descending' ])
+    order: PropTypes.oneOf([ 'ascending', 'descending' ])
   }),
-  onSort: React.PropTypes.func
+  onSort: PropTypes.func
 };
 
 Table.defaultProps = {

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var { PropTypes } = React;
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -114,10 +115,10 @@ class Pagination {
 }
 
 Pagination.propTypes = {
-  onChangePage: React.PropTypes.func.isRequired,
-  totalPages: React.PropTypes.number.isRequired,
-  currentPage: React.PropTypes.number.isRequired,
-  showPages: React.PropTypes.number
+  onChangePage: PropTypes.func.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  showPages: PropTypes.number
 };
 
 Pagination.defaultProps = {
