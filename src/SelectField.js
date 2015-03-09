@@ -2,11 +2,15 @@
 
 var React = require('react');
 
-var SelectField = React.createClass({
+class SelectField {
+
+  constructor() {
+    this.onChange = this.onChange.bind(this);
+  }
 
   onChange(e) {
     this.props.onChange(e.target.value);
-  },
+  }
 
   render() {
     var {id, options, label, value} = this.props;
@@ -23,6 +27,6 @@ var SelectField = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = SelectField;

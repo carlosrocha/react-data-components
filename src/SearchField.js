@@ -2,11 +2,15 @@
 
 var React = require('react');
 
-var SearchField = React.createClass({
+class SearchField {
+
+  constructor() {
+    this.onChange = this.onChange.bind(this);
+  }
 
   onChange(e) {
     this.props.onChange(e.target.value);
-  },
+  }
 
   render() {
     return (
@@ -22,6 +26,6 @@ var SearchField = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = SearchField;

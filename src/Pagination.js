@@ -5,7 +5,7 @@ var React = require('react');
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
-var Pagination = React.createClass({
+class Pagination {
 
   shouldComponentUpdate(nextProps) {
     var props = this.props;
@@ -13,23 +13,12 @@ var Pagination = React.createClass({
     return props.totalPages !== nextProps.totalPages ||
       props.currentPage !== nextProps.currentPage ||
       props.showPages !== nextProps.showPages;
-  },
-
-  propTypes: {
-    onChangePage: React.PropTypes.func.isRequired,
-    totalPages: React.PropTypes.number.isRequired,
-    currentPage: React.PropTypes.number.isRequired,
-    showPages: React.PropTypes.number
-  },
-
-  getDefaultProps() {
-    return { showPages: 5 };
-  },
+  }
 
   onChangePage(pageNumber, event) {
     event.preventDefault();
     this.props.onChangePage(pageNumber);
-  },
+  }
 
   render() {
     var { totalPages, showPages, currentPage } = this.props;
@@ -122,6 +111,18 @@ var Pagination = React.createClass({
       </ul>
     );
   }
-});
+}
+
+Pagination.propTypes = {
+  onChangePage: React.PropTypes.func.isRequired,
+  totalPages: React.PropTypes.number.isRequired,
+  currentPage: React.PropTypes.number.isRequired,
+  showPages: React.PropTypes.number
+};
+
+Pagination.defaultProps = {
+  showPages: 5
+};
+
 
 module.exports = Pagination;

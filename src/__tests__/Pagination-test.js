@@ -46,7 +46,7 @@ describe('Pagination', function() {
       />
     );
 
-    var firstBtn = instance.getDOMNode().firstChild.firstChild;
+    var firstBtn = React.findDOMNode(instance).firstChild.firstChild;
     TestUtils.Simulate.click(firstBtn);
     expect(onChangePage).toBeCalledWith(0);
   });
@@ -130,7 +130,7 @@ describe('Pagination', function() {
       />
     );
 
-    var lastBtn = instance.getDOMNode().lastChild.firstChild;
+    var lastBtn = React.findDOMNode(instance).lastChild.firstChild;
     TestUtils.Simulate.click(lastBtn);
     expect(onChangePage).toBeCalledWith(totalPages - 1);
   });

@@ -39,63 +39,22 @@ function buildSortProps(col, sortBy, onSort) {
   };
 }
 
-var Table = React.createClass({
+class Table {
 
-  propTypes: {
-    keys: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.string),
-      React.PropTypes.string
-    ]).isRequired,
-    columns: React.PropTypes.arrayOf(React.PropTypes.shape({
-      title: React.PropTypes.string.isRequired,
-      prop: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
-      ]),
-      render: React.PropTypes.func,
-      sortable: React.PropTypes.bool,
-      defaultContent: React.PropTypes.string,
-      width: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
-      ]),
-      className: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.func
-      ])
-    })).isRequired,
-    dataArray: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
-      React.PropTypes.array,
-      React.PropTypes.object
-    ])).isRequired,
-    buildRowOpts: React.PropTypes.func,
-    sortBy: React.PropTypes.shape({
-      prop: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
-      ]),
-      order: React.PropTypes.oneOf([ 'ascending', 'descending' ])
-    }),
-    onSort: React.PropTypes.func
-  },
-
-  getDefaultProps() {
-    return {
-      buildRowOpts: () => ({}),
-      sortBy: {}
-    };
-  },
+  constructor() {
+    this._headers = [];
+  }
 
   componentDidMount() {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
-    for (var i = 0; i < this.props.columns.length; i++) {
-      var thDom = this.refs[`th-${i}`].getDOMNode();
+    this._headers.forEach(header => {
+      var thDom = React.findDOMNode(header);
       if (!thDom.style.width) {
         thDom.style.width = `${thDom.offsetWidth}px`;
       }
-    }
-  },
+    });
+  }
 
   render() {
     var { columns, keys, buildRowOpts, sortBy, onSort } = this.props;
@@ -110,7 +69,7 @@ var Table = React.createClass({
 
       return (
         <th
-          ref={`th-${idx}`}
+          ref={c => this._headers[idx] = c}
           key={idx}
           style={{width: col.width}}
           role="columnheader"
@@ -156,6 +115,49 @@ var Table = React.createClass({
     );
   }
 
-});
+}
+
+Table.propTypes = {
+  keys: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.string),
+    React.PropTypes.string
+  ]).isRequired,
+  columns: React.PropTypes.arrayOf(React.PropTypes.shape({
+    title: React.PropTypes.string.isRequired,
+    prop: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    render: React.PropTypes.func,
+    sortable: React.PropTypes.bool,
+    defaultContent: React.PropTypes.string,
+    width: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    className: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.func
+    ])
+  })).isRequired,
+  dataArray: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.object
+  ])).isRequired,
+  buildRowOpts: React.PropTypes.func,
+  sortBy: React.PropTypes.shape({
+    prop: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    order: React.PropTypes.oneOf([ 'ascending', 'descending' ])
+  }),
+  onSort: React.PropTypes.func
+};
+
+Table.defaultProps = {
+  buildRowOpts: () => ({}),
+  sortBy: {}
+};
 
 module.exports = Table;
