@@ -8,6 +8,7 @@ globals:
 
 ecmaFeatures:
   arrowFunctions: true
+  classes: true
   destructuring: true
   objectLiteralShorthandMethods: true
   templateStrings: true
@@ -17,3 +18,4 @@ rules:
   semi: true
   quotes: [ 2, 'single' ]
   curly: [ 2, 'multi-line' ]
+  no-underscore-dangle: false
