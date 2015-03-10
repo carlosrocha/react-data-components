@@ -1,6 +1,7 @@
 # react-data-components
 
 DataTable: [Live demo and source](http://jsbin.com/ziyawu/4/).
+SelectableTable: [Live demo and source](http://jsbin.com/yokara/6/)
 
 ## Getting started
 
@@ -47,15 +48,18 @@ See [complete example](example/table/main.js), see [Flux example](example/flux/)
 
 ## DataMixin options
 
-#### `keys: Array<string | number>`
+#### `keys: Array<string> | string`
 Properties that make each row unique, e.g. an id.
 
 #### `columns: Array<ColumnOption>`
 See `Table` column options.
 
 #### `pageLengthOptions: Array<number>`
+
 #### `initialData: Array<object | Array<any>>`
+
 #### `initialPageLength: number`
+
 #### `initialSortBy: { prop: string | number, order: string }`
 
 ## Table column options
@@ -73,5 +77,7 @@ Function to render a different component.
 Class name for the td.
 
 #### `defaultContent: string`
+
 #### `sortable: boolean`
+
 #### `width: string | number`

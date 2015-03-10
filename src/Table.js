@@ -121,10 +121,12 @@ class Table {
 }
 
 Table.propTypes = {
+
   keys: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string
   ]).isRequired,
+
   columns: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     prop: PropTypes.oneOfType([
@@ -143,11 +145,14 @@ Table.propTypes = {
       PropTypes.func
     ])
   })).isRequired,
+
   dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object
   ])).isRequired,
+
   buildRowOptions: PropTypes.func,
+
   sortBy: PropTypes.shape({
     prop: PropTypes.oneOfType([
       PropTypes.string,
@@ -155,6 +160,7 @@ Table.propTypes = {
     ]),
     order: PropTypes.oneOf([ 'ascending', 'descending' ])
   }),
+
   onSort: PropTypes.func
 };
 
