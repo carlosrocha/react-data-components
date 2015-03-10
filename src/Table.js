@@ -58,7 +58,7 @@ class Table {
   }
 
   render() {
-    var { columns, keys, buildRowOpts, sortBy, onSort } = this.props;
+    var { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
 
     var headers = columns.map((col, idx) => {
       var sortProps, order;
@@ -89,7 +89,7 @@ class Table {
     var getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
     var rows = this.props.dataArray.map(
       row =>
-        <tr key={getKeys(row)} {...buildRowOpts(row)}>
+        <tr key={getKeys(row)} {...buildRowOptions(row)}>
           {columns.map(
             (col, i) =>
               <td key={i} className={getCellClass(col, row)}>
@@ -147,7 +147,7 @@ Table.propTypes = {
     PropTypes.array,
     PropTypes.object
   ])).isRequired,
-  buildRowOpts: PropTypes.func,
+  buildRowOptions: PropTypes.func,
   sortBy: PropTypes.shape({
     prop: PropTypes.oneOfType([
       PropTypes.string,
@@ -159,7 +159,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  buildRowOpts: () => ({}),
+  buildRowOptions: () => ({}),
   sortBy: {}
 };
 
