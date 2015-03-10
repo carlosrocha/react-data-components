@@ -63,7 +63,9 @@ class Table {
     var headers = columns.map((col, idx) => {
       var sortProps, order;
       // Only add sorting events if the column has a property and is sortable.
-      if (col.sortable !== false && 'prop' in col) {
+      if (typeof onSort === 'function' &&
+          col.sortable !== false &&
+          'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
         order = sortProps['aria-sort'];
       }
