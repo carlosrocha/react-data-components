@@ -1,6 +1,7 @@
 # react-data-components
 
-DataTable: [Live demo and source](http://jsbin.com/ziyawu/4/).
+DataTable: [Live demo and source](http://jsbin.com/ziyawu/6/)
+
 SelectableTable: [Live demo and source](http://jsbin.com/yokara/6/)
 
 ## Getting started
