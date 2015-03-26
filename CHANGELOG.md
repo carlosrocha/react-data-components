@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Support for React 0.13.0.
+
 ## 0.2.0
 
 * Add aria- attributes for accessibility.
