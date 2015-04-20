@@ -12,10 +12,10 @@ module.exports = {
 
   getInitialState() {
     return {
-      // Clone the initialData.
-      data: this.props.initialData.slice(0),
       sortBy: this.props.initialSortBy,
-      filterValues: {},
+      filterValues: {
+        globalSearch: ""
+      },
       currentPage: 0,
       pageLength: this.props.initialPageLength
     };
@@ -33,31 +33,17 @@ module.exports = {
     };
   },
 
-  componentWillMount() {
-    // Do the initial sorting if specified.
-    var {sortBy, data} = this.state;
-    if (sortBy) {
-      this.setState({ data: sort(sortBy, data) });
-    }
-  },
-
   onSort(sortBy) {
     this.setState({
-      sortBy: sortBy,
-      data: sort(sortBy, this.state.data)
+      sortBy: sortBy
     });
   },
 
   onFilter(filterName, filterValue) {
-    var {filterValues, sortBy} = this.state;
-    var {initialData, filters} = this.props;
-
+    var {filterValues} = this.state;
     filterValues[filterName] = filterValue;
-    var newData = filter(filters, filterValues, initialData);
-    newData = sort(sortBy, newData);
 
     this.setState({
-      data: newData,
       filterValues: filterValues,
       currentPage: 0
     });
@@ -65,13 +51,18 @@ module.exports = {
 
   // Pagination
   buildPage() {
-    var {data, currentPage, pageLength} = this.state;
+    var {filterValues, sortBy, currentPage, pageLength} = this.state;
+    var {filters} = this.props;
     var start = pageLength * currentPage;
 
+    var pageData = filter(filters, filterValues, this.props.initialData);
+    pageData = sort(sortBy, pageData);
+    pageData = pageData.slice(start, start + pageLength);
+
     return {
-      data: data.slice(start, start + pageLength),
+      data: pageData,
       currentPage: currentPage,
-      totalPages: Math.ceil(data.length / pageLength)
+      totalPages: Math.ceil(pageData.length / pageLength)
     };
   },
 
