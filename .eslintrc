@@ -1,21 +1,22 @@
+plugins:
+  - react
+
 env:
   browser: true
   node: true
   jasmine: true
+  es6: true
 
 globals:
   jest: false
 
 ecmaFeatures:
-  arrowFunctions: true
-  classes: true
-  destructuring: true
-  objectLiteralShorthandMethods: true
-  templateStrings: true
   jsx: true
 
 rules:
   semi: true
   quotes: [ 2, 'single' ]
   curly: [ 2, 'multi-line' ]
+  block-scoped-var: 2
   no-underscore-dangle: false
+  react/jsx-uses-react: 1
