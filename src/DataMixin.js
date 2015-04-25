@@ -57,10 +57,9 @@ module.exports = {
 
     var pageData = filter(filters, filterValues, this.props.initialData);
     pageData = sort(sortBy, pageData);
-    pageData = pageData.slice(start, start + pageLength);
 
     return {
-      data: pageData,
+      data: pageData.slice(start, start + pageLength),
       currentPage: currentPage,
       totalPages: Math.ceil(pageData.length / pageLength)
     };
