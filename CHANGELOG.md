@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Reinitialize state when props change. (Fixes #5).
+
 ## 0.3.0
 
 * Support for React 0.13.0.
