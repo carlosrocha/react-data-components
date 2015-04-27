@@ -29,14 +29,14 @@
     "d3": "^3.4.11",
     "flux": "^2.0.1",
     "jest-cli": "^0.4.0",
-    "jsx-loader": "^0.12.2",
-    "react-tools": "^0.12.2",
+    "jsx-loader": "^0.13.1",
+    "react-tools": "^0.13.2",
     "style-loader": "^0.7.1",
-    "webpack": "^1.4.15",
-    "webpack-dev-server": "^1.6.6"
+    "webpack": "^1.8.9",
+    "webpack-dev-server": "^1.8.2"
   },
   "scripts": {
-    "prepublish": "./node_modules/react-tools/bin/jsx --harmony --no-cache-dir src lib",
+    "prepublish": "jsx --harmony --no-cache-dir src lib",
     "start": "cd example && webpack-dev-server -d --progress --colors --hot --inline",
     "test": "jest"
   },
