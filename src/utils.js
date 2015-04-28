@@ -24,7 +24,12 @@ function some(pred, obj) {
  */
 var sortByFunc =
     (prop) =>
-        (a, b) => a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
+        (a, b) => {
+          if (b[prop] === null && a[prop] === null) { return 0 }
+          if (a[prop] === null) { return -1 }
+          if (b[prop] === null) { return 1 }
+          return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
+        }
 
 /**
  * @param {object} sortBy Object containing `prop` and `order`.
