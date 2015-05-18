@@ -1,4 +1,4 @@
-var keyMirror = require('react/lib/keyMirror');
+var keyMirror = require('keymirror');
 
 module.exports = {
 
@@ -7,11 +7,6 @@ module.exports = {
     DATA_CHANGE_PAGE_NUMBER: null,
     DATA_RECEIVE: null,
     DATA_FILTER: null
-  }),
-
-  PayloadSources: keyMirror({
-    SERVER_ACTION: null,
-    VIEW_ACTION: null
   })
 
 };

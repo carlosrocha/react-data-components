@@ -1,31 +1,31 @@
-var AppDispatcher = require('./AppDispatcher');
+var Dispatcher = require('./Dispatcher');
 var {ActionTypes} = require('./AppConstants');
 
 module.exports = {
 
   sort(sortBy) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.DATA_SORT,
       sortBy: sortBy
     });
   },
 
   changePageNumber(pageNumber) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.DATA_CHANGE_PAGE_NUMBER,
       pageNumber: pageNumber
     });
   },
 
   changePageSize(pageSize) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.DATA_CHANGE_PAGE_SIZE,
       pageSize: pageSize
     });
   },
 
   filter(filterName, filterValue) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.DATA_FILTER,
       filterName: filterName,
       filterValue: filterValue

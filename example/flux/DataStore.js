@@ -1,8 +1,8 @@
-var AppDispatcher = require('./AppDispatcher');
+var Dispatcher = require('./Dispatcher');
 var { ActionTypes } = require('./AppConstants');
 var { EventEmitter } = require('events');
 var { sort, filter } = require('react-data-components').utils;
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var _rawData = [];
@@ -49,9 +49,7 @@ var DataStore = assign(EventEmitter.prototype, {
 
 });
 
-AppDispatcher.register(payload => {
-  var action = payload.action;
-
+Dispatcher.register(action => {
   switch (action.type) {
 
     case ActionTypes.DATA_RECEIVE:

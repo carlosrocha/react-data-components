@@ -1,6 +1,5 @@
 var React = require('react');
-var { Table, Pagination, SelectField, SearchField } =
-  require('react-data-components');
+var RDC = require('react-data-components');
 var DataStore = require('./DataStore');
 var ViewActionCreators = require('./ViewActionCreators');
 
@@ -10,37 +9,38 @@ var renderMapUrl =
       Google Maps
     </a>;
 
+var keys = [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ];
+
+var columns = [
+  { title: 'Name', prop: 'NAME'  },
+  { title: 'City', prop: 'CITY' },
+  { title: 'Street address', prop: 'STREET ADDRESS' },
+  { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
+  { title: 'Map', render: renderMapUrl, className: 'text-center' }
+];
+
 function getStateFromStore() {
   return { data: DataStore.getData() };
 }
 
-var FluxTable = React.createClass({
+class FluxTable extends React.Component {
 
-  keys: [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ],
-
-  columns: [
-    { title: 'Name', prop: 'NAME'  },
-    { title: 'City', prop: 'CITY' },
-    { title: 'Street address', prop: 'STREET ADDRESS' },
-    { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
-    { title: 'Map', render: renderMapUrl, className: 'text-center' }
-  ],
-
-  getInitialState() {
-    return getStateFromStore();
-  },
+  constructor() {
+    this.state = getStateFromStore();
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+  }
 
   componentDidMount() {
     DataStore.addChangeListener(this.handleStoreChange);
-  },
+  }
 
   componentWillUnmount() {
     DataStore.removeChangeListener(this.handleStoreChange);
-  },
+  }
 
   handleStoreChange() {
     this.setState(getStateFromStore());
-  },
+  }
 
   render() {
     var {data} = this.state;
@@ -49,14 +49,14 @@ var FluxTable = React.createClass({
       <div className="container">
         <div className="row">
           <div className="col-xs-4">
-            <SelectField
+            <RDC.SelectField
               id="page-menu"
               label="Page size:"
               value={data.pageSize}
               options={[ 5, 10, 50 ]}
               onChange={ViewActionCreators.changePageSize}
             />
-            <SearchField
+            <RDC.SearchField
               id="search-field"
               label="Search:"
               value={data.filterValues['globalSearch']}
@@ -64,7 +64,7 @@ var FluxTable = React.createClass({
             />
           </div>
           <div className="col-xs-8">
-            <Pagination
+            <RDC.Pagination
               className="pagination pull-right"
               currentPage={data.pageNumber}
               totalPages={data.totalPages}
@@ -72,10 +72,10 @@ var FluxTable = React.createClass({
             />
           </div>
         </div>
-        <Table
+        <RDC.Table
           className="table table-bordered"
-          columns={this.columns}
-          keys={this.keys}
+          columns={columns}
+          keys={keys}
           dataArray={data.page}
           sortBy={data.sortBy}
           onSort={ViewActionCreators.sort}
@@ -84,6 +84,6 @@ var FluxTable = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = FluxTable;
