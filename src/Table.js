@@ -6,7 +6,7 @@ var { PropTypes } = React;
 var simpleGet = key => data => data[key];
 var keyGetter = keys => data => keys.map(key => data[key]);
 
-var isEmpty = value => value === undefined || value === null || value === '';
+var isEmpty = value => value == null || value === '';
 
 var getCellValue =
   ({ prop, defaultContent, render }, row) =>
