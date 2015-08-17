@@ -1,12 +1,20 @@
-'use strict';
-
-var React = require('react');
-var { PropTypes } = React;
+import React, { PropTypes } from 'react';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
-class Pagination {
+export default class Pagination {
+
+  static defaultProps = {
+    showPages: 5,
+  };
+
+  static propTypes = {
+    onChangePage: PropTypes.func.isRequired,
+    totalPages: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    showPages: PropTypes.number,
+  };
 
   shouldComponentUpdate(nextProps) {
     var props = this.props;
@@ -74,56 +82,48 @@ class Pagination {
       lastHandler = this.onChangePage.bind(this, totalPages - 1);
     }
 
+    buttons = [
+      <li className={!isNotFirst ? 'disabled' : null}>
+        <a role="button" href="#" tabIndex="0"
+          onClick={firstHandler}
+          aria-disabled={!isNotFirst}
+          aria-label="First">
+          <span className="fa fa-angle-double-left" aria-hidden="true" />
+        </a>
+      </li>,
+      <li className={!isNotFirst ? 'disabled' : null}>
+        <a role="button" href="#" tabIndex="0"
+          onClick={prevHandler}
+          aria-disabled={!isNotFirst}
+          aria-label="Previous">
+          <span className="fa fa-angle-left" aria-hidden="true" />
+        </a>
+      </li>,
+    ].concat(buttons);
+
+    buttons = buttons.concat([
+      <li className={!isNotLast ? 'disabled' : null}>
+        <a role="button" href="#" tabIndex="0"
+          onClick={nextHandler}
+          aria-disabled={!isNotLast}
+          aria-label="Next">
+          <span className="fa fa-angle-right" aria-hidden="true" />
+        </a>
+      </li>,
+      <li className={!isNotLast ? 'disabled' : null}>
+        <a role="button" href="#" tabIndex="0"
+          onClick={lastHandler}
+          aria-disabled={!isNotLast}
+          aria-label="Last">
+          <span className="fa fa-angle-double-right" aria-hidden="true" />
+        </a>
+      </li>,
+    ]);
+
     return (
       <ul className={this.props.className} aria-label="Pagination">
-        <li className={!isNotFirst ? 'disabled' : null}>
-          <a role="button" href="#" tabIndex="0"
-            onClick={firstHandler}
-            aria-disabled={!isNotFirst}
-            aria-label="First">
-            <span className="fa fa-angle-double-left" aria-hidden="true" />
-          </a>
-        </li>
-        <li className={!isNotFirst ? 'disabled' : null}>
-          <a role="button" href="#" tabIndex="0"
-            onClick={prevHandler}
-            aria-disabled={!isNotFirst}
-            aria-label="Previous">
-            <span className="fa fa-angle-left" aria-hidden="true" />
-          </a>
-        </li>
         {buttons}
-        <li className={!isNotLast ? 'disabled' : null}>
-          <a role="button" href="#" tabIndex="0"
-            onClick={nextHandler}
-            aria-disabled={!isNotLast}
-            aria-label="Next">
-            <span className="fa fa-angle-right" aria-hidden="true" />
-          </a>
-        </li>
-        <li className={!isNotLast ? 'disabled' : null}>
-          <a role="button" href="#" tabIndex="0"
-            onClick={lastHandler}
-            aria-disabled={!isNotLast}
-            aria-label="Last">
-            <span className="fa fa-angle-double-right" aria-hidden="true" />
-          </a>
-        </li>
       </ul>
     );
   }
 }
-
-Pagination.propTypes = {
-  onChangePage: PropTypes.func.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  showPages: PropTypes.number
-};
-
-Pagination.defaultProps = {
-  showPages: 5
-};
-
-
-module.exports = Pagination;

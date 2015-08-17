@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 var Table = require('./Table');
 var Pagination = require('./Pagination');
@@ -53,7 +51,7 @@ var DataTable = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 module.exports = DataTable;

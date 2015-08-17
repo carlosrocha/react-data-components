@@ -1,5 +1,3 @@
-require('../../css/table-twbs.css');
-
 var React = require('react');
 var { DataTable } = require('react-data-components');
 var d3 = require('d3');
@@ -16,7 +14,7 @@ function buildTable(data) {
     { title: 'City', prop: 'CITY' },
     { title: 'Street address', prop: 'STREET ADDRESS' },
     { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
-    { title: 'Map', render: renderMapUrl, className: 'text-center' }
+    { title: 'Map', render: renderMapUrl, className: 'text-center' },
   ];
 
   return (

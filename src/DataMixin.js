@@ -1,5 +1,3 @@
-'use strict';
-
 var { sort, filter } = require('./utils');
 
 var containsIgnoreCase = function(a, b) {
@@ -15,7 +13,7 @@ function buildInitialState(props) {
     sortBy: props.initialSortBy,
     filterValues: {},
     currentPage: 0,
-    pageLength: props.initialPageLength
+    pageLength: props.initialPageLength,
   };
 }
 
@@ -31,9 +29,9 @@ module.exports = {
       pageLengthOptions: [ 5, 10, 20 ],
       filters: {
         globalSearch: {
-          filter: containsIgnoreCase
-        }
-      }
+          filter: containsIgnoreCase,
+        },
+      },
     };
   },
 
@@ -52,7 +50,7 @@ module.exports = {
   onSort(sortBy) {
     this.setState({
       sortBy: sortBy,
-      data: sort(sortBy, this.state.data)
+      data: sort(sortBy, this.state.data),
     });
   },
 
@@ -67,7 +65,7 @@ module.exports = {
     this.setState({
       data: newData,
       filterValues: filterValues,
-      currentPage: 0
+      currentPage: 0,
     });
   },
 
@@ -79,7 +77,7 @@ module.exports = {
     return {
       data: data.slice(start, start + pageLength),
       currentPage: currentPage,
-      totalPages: Math.ceil(data.length / pageLength)
+      totalPages: Math.ceil(data.length / pageLength),
     };
   },
 
@@ -94,8 +92,8 @@ module.exports = {
 
     this.setState({
       pageLength: newPageLength,
-      currentPage: newPage
+      currentPage: newPage,
     });
-  }
+  },
 
 };

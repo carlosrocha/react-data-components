@@ -1,12 +1,10 @@
-var keyMirror = require('keymirror');
-
 module.exports = {
 
-  ActionTypes: keyMirror({
-    DATA_SORT: null,
-    DATA_CHANGE_PAGE_NUMBER: null,
-    DATA_RECEIVE: null,
-    DATA_FILTER: null
-  })
+  ActionTypes: {
+    DATA_SORT: 'DATA_SORT',
+    DATA_CHANGE_PAGE_NUMBER: 'DATA_CHANGE_PAGE_NUMBER',
+    DATA_RECEIVE: 'DATA_RECEIVE',
+    DATA_FILTER: 'DATA_FILTER',
+  },
 
 };

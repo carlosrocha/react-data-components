@@ -1,12 +1,38 @@
-'use strict';
-
 jest.dontMock('../Table');
 
-var React = require('react');
-var TestUtils = require('react/lib/ReactTestUtils');
-var Table = require('../Table');
+var React;
+var TestUtils;
+var Table;
 
 describe('Table', function() {
+
+  beforeEach(function() {
+    React = require('react/addons');
+    TestUtils = React.addons.TestUtils;
+    Table = require('../Table');
+  });
+
+  it.only('shows message when no data', function() {
+    var columns = [ { title: 'Test', prop: 'test' } ];
+    var shallowRenderer = TestUtils.createRenderer();
+    shallowRenderer.render(
+      <Table
+        columns={columns}
+        dataArray={[]}
+        keys="test"
+      />
+    );
+
+    var result = shallowRenderer.getRenderOutput();
+
+    expect(result.props.children[2]).toEqual(
+      <tbody>
+        <tr>
+          <td colSpan={1} className="text-center">No data</td>
+        </tr>
+      </tbody>
+    );
+  });
 
   it('sorts on col with prop', function() {
     var onSort = jest.genMockFunction();
@@ -25,7 +51,7 @@ describe('Table', function() {
     TestUtils.Simulate.click(ths[0]);
     expect(onSort.mock.calls[0][0]).toEqual({
       order: 'descending',
-      prop: 'test'
+      prop: 'test',
     });
   });
 

@@ -1,14 +1,11 @@
-'use strict';
+import React, { PropTypes } from 'react';
 
-var React = require('react');
-var { PropTypes } = React;
+let simpleGet = key => data => data[key];
+let keyGetter = keys => data => keys.map(key => data[key]);
 
-var simpleGet = key => data => data[key];
-var keyGetter = keys => data => keys.map(key => data[key]);
+let isEmpty = value => value == null || value === '';
 
-var isEmpty = value => value == null || value === '';
-
-var getCellValue =
+let getCellValue =
   ({ prop, defaultContent, render }, row) =>
     // Return `defaultContent` if the value is empty.
     !isEmpty(prop) && isEmpty(row[prop]) ? defaultContent :
@@ -17,16 +14,16 @@ var getCellValue =
       // Otherwise just return the value.
       row[prop];
 
-var getCellClass =
+let getCellClass =
   ({ prop, className }, row) =>
     !isEmpty(prop) && isEmpty(row[prop]) ? 'empty-cell' :
-      typeof className === 'function' ? className(row[prop], row) :
+      typeof className == 'function' ? className(row[prop], row) :
       className;
 
 function buildSortProps(col, sortBy, onSort) {
-  var order = sortBy.prop === col.prop ? sortBy.order : 'none';
-  var nextOrder = order === 'ascending' ? 'descending' : 'ascending';
-  var sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
+  let order = sortBy.prop === col.prop ? sortBy.order : 'none';
+  let nextOrder = order === 'ascending' ? 'descending' : 'ascending';
+  let sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 
   return {
     'onClick': sortEvent,
@@ -36,11 +33,60 @@ function buildSortProps(col, sortBy, onSort) {
     'onMouseDown': e => e.preventDefault(),
     'tabIndex': 0,
     'aria-sort': order,
-    'aria-label': `${col.title}: activate to sort column ${nextOrder}`
+    'aria-label': `${col.title}: activate to sort column ${nextOrder}`,
   };
 }
 
-class Table {
+export default class Table {
+
+  static defaultProps = {
+    buildRowOptions: () => ({}),
+    sortBy: {},
+  };
+
+  static propTypes = {
+
+    keys: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string,
+    ]).isRequired,
+
+    columns: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      prop: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      render: PropTypes.func,
+      sortable: PropTypes.bool,
+      defaultContent: PropTypes.string,
+      width: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      className: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.func,
+      ]),
+    })).isRequired,
+
+    dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object,
+    ])).isRequired,
+
+    buildRowOptions: PropTypes.func,
+
+    sortBy: PropTypes.shape({
+      prop: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      order: PropTypes.oneOf([ 'ascending', 'descending' ]),
+    }),
+
+    onSort: PropTypes.func,
+  };
 
   constructor() {
     this._headers = [];
@@ -50,7 +96,7 @@ class Table {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
     this._headers.forEach(header => {
-      var thDom = React.findDOMNode(header);
+      let thDom = React.findDOMNode(header);
       if (!thDom.style.width) {
         thDom.style.width = `${thDom.offsetWidth}px`;
       }
@@ -58,12 +104,12 @@ class Table {
   }
 
   render() {
-    var { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
+    let { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
 
-    var headers = columns.map((col, idx) => {
-      var sortProps, order;
+    let headers = columns.map((col, idx) => {
+      let sortProps, order;
       // Only add sorting events if the column has a property and is sortable.
-      if (typeof onSort === 'function' &&
+      if (typeof onSort == 'function' &&
           col.sortable !== false &&
           'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
@@ -79,15 +125,15 @@ class Table {
           scope="col"
           {...sortProps}>
           <span>{col.title}</span>
-          {typeof order !== 'undefined' ?
+          {typeof order != 'undefined' ?
             <span className={`sort-icon sort-${order}`} aria-hidden="true" /> :
             null}
         </th>
       );
     });
 
-    var getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
-    var rows = this.props.dataArray.map(
+    let getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
+    let rows = this.props.dataArray.map(
       row =>
         <tr key={getKeys(row)} {...buildRowOptions(row)}>
           {columns.map(
@@ -96,7 +142,8 @@ class Table {
                 {getCellValue(col, row)}
               </td>
           )}
-        </tr>);
+        </tr>
+    );
 
     return (
       <table className={this.props.className}>
@@ -109,7 +156,7 @@ class Table {
           </tr>
         </thead>
         <tbody>
-          {rows.length > 0 ? rows :
+          {rows.length ? rows :
             <tr>
               <td colSpan={columns.length} className="text-center">No data</td>
             </tr>}
@@ -119,54 +166,3 @@ class Table {
   }
 
 }
-
-Table.propTypes = {
-
-  keys: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string
-  ]).isRequired,
-
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    prop: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    render: PropTypes.func,
-    sortable: PropTypes.bool,
-    defaultContent: PropTypes.string,
-    width: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    className: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func
-    ])
-  })).isRequired,
-
-  dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ])).isRequired,
-
-  buildRowOptions: PropTypes.func,
-
-  sortBy: PropTypes.shape({
-    prop: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    order: PropTypes.oneOf([ 'ascending', 'descending' ])
-  }),
-
-  onSort: PropTypes.func
-};
-
-Table.defaultProps = {
-  buildRowOptions: () => ({}),
-  sortBy: {}
-};
-
-module.exports = Table;

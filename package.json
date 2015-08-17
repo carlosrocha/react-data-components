@@ -3,50 +3,53 @@
   "version": "0.4.0",
   "description": "React data components",
   "keywords": [
+    "pagination",
     "react",
     "react-component",
-    "table",
-    "pagination"
+    "table"
   ],
   "author": "Carlos Rocha",
   "license": "MIT",
   "main": "./lib/index",
   "files": [
-    "css",
-    "lib",
+    "CHANGELOG.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "css",
+    "lib"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/carlosrocha/react-data-components"
   },
+  "babel": {
+    "stage": 0
+  },
   "peerDependencies": {
     "react": "^0.13.0"
   },
   "devDependencies": {
-    "css-loader": "^0.7.1",
-    "d3": "^3.4.11",
+    "babel": "^5.8.21",
+    "babel-eslint": "^4.0.8",
+    "babel-jest": "^5.3.0",
+    "babel-loader": "^5.3.1",
+    "d3": "^3.5.6",
+    "eslint": "^1.1.0",
+    "eslint-plugin-react": "^3.2.2",
     "flux": "^2.0.3",
-    "jest-cli": "^0.4.0",
-    "jsx-loader": "^0.13.1",
-    "keymirror": "^0.1.1",
-    "object-assign": "^2.0.0",
-    "react-tools": "^0.13.2",
-    "style-loader": "^0.7.1",
-    "webpack": "^1.8.9",
-    "webpack-dev-server": "^1.8.2"
+    "jest-cli": "^0.5.0",
+    "webpack": "^1.11.0",
+    "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
-    "prepublish": "jsx --harmony --no-cache-dir src lib",
-    "start": "cd example && webpack-dev-server -d --progress --colors --hot --inline",
+    "lint": "eslint src",
+    "prepublish": "webpack -p",
+    "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "jest"
   },
   "jest": {
-    "rootDir": "src",
-    "scriptPreprocessor": "../jest/preprocessor.js",
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
-      "../node_modules/react"
+      "<rootDir>/node_modules/react"
     ]
   }
 }

@@ -26,6 +26,7 @@ function getStateFromStore() {
 class FluxTable extends React.Component {
 
   constructor() {
+    super();
     this.state = getStateFromStore();
     this.handleStoreChange = this.handleStoreChange.bind(this);
   }

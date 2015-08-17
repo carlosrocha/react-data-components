@@ -1,9 +1,7 @@
-'use strict';
-
 jest.dontMock('../Pagination');
 
-var React = require('react');
-var TestUtils = require('react/lib/ReactTestUtils');
+var React = require('react/addons');
+var TestUtils = React.addons.TestUtils;
 var Pagination = require('../Pagination');
 
 var onChangePage;
@@ -17,11 +15,13 @@ describe('Pagination', function() {
     onChangePage = jest.genMockFunction();
   });
 
-  it('renders the correct buttons', function() {
+  it.only('renders the correct buttons', function() {
     var showPages = 10;
     currentPage = 5;
     totalPages = 10;
-    instance = TestUtils.renderIntoDocument(
+
+    var shallowRenderer = TestUtils.createRenderer();
+    shallowRenderer.render(
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
@@ -30,9 +30,10 @@ describe('Pagination', function() {
       />
     );
 
-    var buttons = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'a');
+    var result = shallowRenderer.getRenderOutput();
+
     // 4 buttons for first, prev, next and last
-    expect(buttons.length).toBe(showPages + 4);
+    expect(result.props.children.length).toBe(showPages + 4);
   });
 
   it('changes to first page', function() {

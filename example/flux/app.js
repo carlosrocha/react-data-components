@@ -1,5 +1,3 @@
-require('../../css/table-twbs.css');
-
 var React = require('react');
 var FluxTable = require('./FluxTable');
 var WebAPIUtils = require('./WebAPIUtils');

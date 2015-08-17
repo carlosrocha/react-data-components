@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Determines if at least one element in the object matches a truth test.
  *
