@@ -1,10 +1,10 @@
 jest.dontMock('../Table');
 
-var React;
-var TestUtils;
-var Table;
-
 describe('Table', function() {
+
+  var React;
+  var TestUtils;
+  var Table;
 
   beforeEach(function() {
     React = require('react/addons');
@@ -12,7 +12,7 @@ describe('Table', function() {
     Table = require('../Table');
   });
 
-  it.only('shows message when no data', function() {
+  it('shows message when no data', function() {
     var columns = [ { title: 'Test', prop: 'test' } ];
     var shallowRenderer = TestUtils.createRenderer();
     shallowRenderer.render(
@@ -34,42 +34,30 @@ describe('Table', function() {
     );
   });
 
-  it('sorts on col with prop', function() {
-    var onSort = jest.genMockFunction();
+  it('render simple', function() {
     var columns = [ { title: 'Test', prop: 'test' } ];
-    var table = TestUtils.renderIntoDocument(
+    var shallowRenderer = TestUtils.createRenderer();
+    shallowRenderer.render(
       <Table
         columns={columns}
-        onSort={onSort}
-        sortBy={{ order: 'ascending', prop: 'test' }}
-        dataArray={[]}
+        dataArray={[
+          { test: 'Foo' },
+        ]}
         keys="test"
       />
     );
 
-    var ths = TestUtils.scryRenderedDOMComponentsWithTag(table, 'th');
-    TestUtils.Simulate.click(ths[0]);
-    expect(onSort.mock.calls[0][0]).toEqual({
-      order: 'descending',
-      prop: 'test',
-    });
-  });
+    var result = shallowRenderer.getRenderOutput();
 
-  it('does not sort on col without data', function() {
-    var onSort = jest.genMockFunction();
-    var columns = [ { title: 'Test' } ];
-    var table = TestUtils.renderIntoDocument(
-      <Table
-        columns={columns}
-        onSort={onSort}
-        dataArray={[]}
-        keys="test"
-      />
+    expect(result.props.children[2]).toEqual(
+      <tbody>
+        {[
+          <tr key={'Foo'} className={undefined}>{[
+            <td key={0} className={undefined}>{'Foo'}</td>,
+          ]}</tr>,
+        ]}
+      </tbody>
     );
-
-    var ths = TestUtils.scryRenderedDOMComponentsWithTag(table, 'th');
-    TestUtils.Simulate.click(ths[0]);
-    expect(onSort).not.toBeCalled();
   });
 
 });

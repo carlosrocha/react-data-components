@@ -83,7 +83,7 @@ export default class Pagination {
     }
 
     buttons = [
-      <li className={!isNotFirst ? 'disabled' : null}>
+      <li key="first" className={!isNotFirst ? 'disabled' : null}>
         <a role="button" href="#" tabIndex="0"
           onClick={firstHandler}
           aria-disabled={!isNotFirst}
@@ -91,7 +91,7 @@ export default class Pagination {
           <span className="fa fa-angle-double-left" aria-hidden="true" />
         </a>
       </li>,
-      <li className={!isNotFirst ? 'disabled' : null}>
+      <li key="prev" className={!isNotFirst ? 'disabled' : null}>
         <a role="button" href="#" tabIndex="0"
           onClick={prevHandler}
           aria-disabled={!isNotFirst}
@@ -102,7 +102,7 @@ export default class Pagination {
     ].concat(buttons);
 
     buttons = buttons.concat([
-      <li className={!isNotLast ? 'disabled' : null}>
+      <li key="next" className={!isNotLast ? 'disabled' : null}>
         <a role="button" href="#" tabIndex="0"
           onClick={nextHandler}
           aria-disabled={!isNotLast}
@@ -110,7 +110,7 @@ export default class Pagination {
           <span className="fa fa-angle-right" aria-hidden="true" />
         </a>
       </li>,
-      <li className={!isNotLast ? 'disabled' : null}>
+      <li key="last" className={!isNotLast ? 'disabled' : null}>
         <a role="button" href="#" tabIndex="0"
           onClick={lastHandler}
           aria-disabled={!isNotLast}
