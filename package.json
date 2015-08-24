@@ -42,7 +42,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "prepublish": "webpack -p",
+    "preversion": "webpack -p && git add dist",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "jest"
   },
