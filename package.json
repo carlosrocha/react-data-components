@@ -37,12 +37,14 @@
     "eslint-plugin-react": "^3.2.2",
     "flux": "^2.0.3",
     "jest-cli": "^0.5.0",
+    "rimraf": "^2.4.2",
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
     "lint": "eslint src",
     "preversion": "webpack -p && git add dist",
+    "prepublish": "rimraf lib && babel src -d lib",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "jest"
   },
