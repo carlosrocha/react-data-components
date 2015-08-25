@@ -46,7 +46,7 @@
     "preversion": "webpack -p && git add dist",
     "prepublish": "rimraf lib && babel src -d lib",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
-    "test": "jest"
+    "test": "npm run lint && jest"
   },
   "jest": {
     "testPathDirs": [
