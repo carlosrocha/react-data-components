@@ -12,6 +12,11 @@ SelectableTable: [Live demo and source](https://jsbin.com/yokara/edit?js,output)
 npm install react-data-components --save
 ```
 
+This component requires Bootstrap stylesheet and Font Awesome fonts, in addition
+to the [stylesheet for headers](css/table-twbs.css). If you are using Webpack
+and the `css-loader` you can also require the css
+with `require('react-data-components/css/table-twbs.css')`.
+
 ### Using the default implementation
 
 The default implementation includes a filter for case insensitive global search,
