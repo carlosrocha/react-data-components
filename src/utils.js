@@ -20,14 +20,15 @@ function some(pred, obj) {
  * @param {string} prop Property to sort.
  * @return {function(object, object)} Compare function.
  */
-var sortByFunc =
-    (prop) =>
-        (a, b) => {
-          if (b[prop] === null && a[prop] === null) { return 0 }
-          if (a[prop] === null) { return -1 }
-          if (b[prop] === null) { return 1 }
-          return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
-        }
+ var sortByFunc =
+     (prop) =>
+         (a, b) => {
+           if ((b[prop] === null || b[prop] === undefined) && (a[prop] === null || a[prop] === undefined)) { return 0 }
+           if (a[prop] === null || a[prop] === undefined) { return 1 }
+           if (b[prop] === null || b[prop] === undefined) { return -1 }
+
+           return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0;
+         }
 
 /**
  * @param {object} sortBy Object containing `prop` and `order`.
