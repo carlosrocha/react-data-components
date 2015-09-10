@@ -13,8 +13,16 @@ var DataTable = React.createClass({
   render() {
     var page = this.buildPage();
 
-    return (
-      <div className={this.props.className}>
+    // Manage classes
+    var classes = this.props.classes || {};
+    var tableClasses = 'table ' + classes.table;
+
+    // Whether to show / hide the top header (search, pagination, etc)
+    var header;
+    var showHeader = this.props.header === undefined || this.props.header === false ? false : true;
+
+    if (showHeader) {
+      header = (
         <div className="row">
           <div className="col-xs-4">
             <SelectField
@@ -40,8 +48,14 @@ var DataTable = React.createClass({
             />
           </div>
         </div>
+      )
+    }
+
+    return (
+      <div className={classes.container}>
+        {header}
         <Table
-          className="table table-bordered"
+          className={tableClasses}
           dataArray={page.data}
           columns={this.props.columns}
           keys={this.props.keys}
