@@ -146,7 +146,7 @@ export default class Table {
     );
 
     return (
-      <table className={this.props.className}>
+      <table {...this.props}>
         <caption className="sr-only" role="alert" aria-live="polite">
           {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
         </caption>
