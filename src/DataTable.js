@@ -62,6 +62,7 @@ var DataTable = React.createClass({
           buildRowOptions={this.props.buildRowOptions}
           sortBy={this.state.sortBy}
           onSort={this.onSort}
+          customFooter={this.props.customFooter}
         />
       </div>
     );
