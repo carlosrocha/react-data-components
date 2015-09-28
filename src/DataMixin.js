@@ -39,12 +39,20 @@ module.exports = {
     this.setState(buildInitialState(nextProps));
   },
 
-  componentWillMount() {
-    // Do the initial sorting if specified.
-    var {sortBy, data} = this.state;
-    if (sortBy) {
-      this.setState({ data: sort(sortBy, data) });
+  componentWillReceiveProps(nextProps) {
+    //If update is false, then preserve the sortBy order, but update
+    //everything else
+    if (nextProps.update === false ){
+      this.setState({
+        data: sort(this.state.sortBy, nextProps.initialData.slice(0)),
+        sortBy: this.state.sortBy,
+        filterValues: {},
+        currentPage: 0,
+        pageLength: nextProps.initialPageLength,
+      });
+      return;
     }
+    this.setState(buildInitialState(nextProps));
   },
 
   onSort(sortBy) {
