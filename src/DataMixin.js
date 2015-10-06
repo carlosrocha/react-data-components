@@ -6,13 +6,14 @@ var containsIgnoreCase = function(a, b) {
   return b.indexOf(a) >= 0;
 };
 
+// Called for both building initial state and subsequent states
 function buildState(props) {
   let data = props.initialData.slice(0);
   let sortBy = props.initialSortBy;
 
   if (this.state !== null){
     //if there's data
-    if (this.state.data.length !== 0){
+    if (this.state.sortBy && this.state.data.length !== 0){
       //if the data changes
       if (JSON.stringify(data) !== JSON.stringify(this.state.data)) {
         //resort the data
@@ -64,7 +65,7 @@ module.exports = {
   onSort(sortBy) {
     this.setState({
       sortBy: sortBy,
-      data: sort(sortBy, this.state.data)
+      data: sort(sortBy, this.state.data),
     });
   },
 
