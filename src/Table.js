@@ -165,7 +165,7 @@ export default class Table {
         <tbody>
           {rows.length ? rows :
             <tr>
-              <td colSpan={columns.length} className="text-center">No data</td>
+              {rows.length ? rows : <span></span>}
             </tr>}
         </tbody>
 
