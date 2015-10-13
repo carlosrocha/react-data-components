@@ -145,6 +145,13 @@ export default class Table {
         </tr>
     );
 
+    // Add custom footer if defined
+    let footer;
+
+    if (this.props.customFooter) {
+      footer = this.props.customFooter;
+    }
+
     return (
       <table className={this.props.className}>
         <caption className="sr-only" role="alert" aria-live="polite">
@@ -158,9 +165,12 @@ export default class Table {
         <tbody>
           {rows.length ? rows :
             <tr>
-              <td colSpan={columns.length} className="text-center">No data</td>
+              {rows.length ? rows : <span></span>}
             </tr>}
         </tbody>
+
+        {footer}
+
       </table>
     );
   }

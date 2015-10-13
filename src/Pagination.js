@@ -55,7 +55,7 @@ export default class Pagination {
       }
       buttons.push(
         <li key={i} className={isCurrent ? 'active' : null}>
-          <a role="button" href="#" onClick={btnEvent} tabIndex="0">
+          <a role="button" onClick={btnEvent} tabIndex="0">
             <span>{i + 1}</span>
             {isCurrent ?
               <span className="sr-only">(current)</span> : null}
@@ -84,7 +84,7 @@ export default class Pagination {
 
     buttons = [
       <li key="first" className={!isNotFirst ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a role="button" tabIndex="0"
           onClick={firstHandler}
           aria-disabled={!isNotFirst}
           aria-label="First">
@@ -92,7 +92,7 @@ export default class Pagination {
         </a>
       </li>,
       <li key="prev" className={!isNotFirst ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a role="button" tabIndex="0"
           onClick={prevHandler}
           aria-disabled={!isNotFirst}
           aria-label="Previous">
@@ -103,7 +103,7 @@ export default class Pagination {
 
     buttons = buttons.concat([
       <li key="next" className={!isNotLast ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a role="button" tabIndex="0"
           onClick={nextHandler}
           aria-disabled={!isNotLast}
           aria-label="Next">
@@ -111,7 +111,7 @@ export default class Pagination {
         </a>
       </li>,
       <li key="last" className={!isNotLast ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a role="button" tabIndex="0"
           onClick={lastHandler}
           aria-disabled={!isNotLast}
           aria-label="Last">
