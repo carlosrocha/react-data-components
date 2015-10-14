@@ -23,7 +23,7 @@ let getCellClass =
 function buildSortProps(col, sortBy, onSort) {
   let order = sortBy.prop === col.prop ? sortBy.order : 'none';
   let nextOrder = order === 'ascending' ? 'descending' : 'ascending';
-  let sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
+  let sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder});
 
   return {
     'onClick': sortEvent,
@@ -152,6 +152,10 @@ export default class Table {
       footer = this.props.customFooter;
     }
 
+    let emptyText = this.props.emptyText ?
+                    (<tr><td colSpan={columns.length} className="text-center">{this.props.emptyText}</td></tr>) :
+                    (<tr><td colSpan={columns.length} className="text-center">No data</td></tr>)
+
     return (
       <table className={this.props.className}>
         <caption className="sr-only" role="alert" aria-live="polite">
@@ -163,10 +167,7 @@ export default class Table {
           </tr>
         </thead>
         <tbody>
-          {rows.length ? rows :
-            <tr>
-              <td colSpan={columns.length} className="text-center">No data</td>
-            </tr>}
+          {rows.length ? rows : emptyText}
         </tbody>
 
         {footer}
