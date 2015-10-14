@@ -6,11 +6,26 @@ var containsIgnoreCase = function(a, b) {
   return b.indexOf(a) >= 0;
 };
 
-function buildInitialState(props) {
+// Called for both building initial state and subsequent states
+function buildState(props) {
+  let data = props.initialData.slice(0);
+  let sortBy = props.initialSortBy;
+
+  if (this.state !== null){
+    //if there's data
+    if (this.state.sortBy && this.state.data.length !== 0){
+      //if the data changes
+      if (JSON.stringify(data) !== JSON.stringify(this.state.data)) {
+        //resort the data
+        data = sort(this.state.sortBy, data);
+        sortBy = this.state.sortBy;
+      }
+    }
+  }
+
   return {
-    // Clone the initialData.
-    data: props.initialData.slice(0),
-    sortBy: props.initialSortBy,
+    data: data,
+    sortBy: sortBy,
     filterValues: {},
     currentPage: 0,
     pageLength: props.initialPageLength,
@@ -20,7 +35,7 @@ function buildInitialState(props) {
 module.exports = {
 
   getInitialState() {
-    return buildInitialState(this.props);
+    return buildState.call(this, this.props);
   },
 
   getDefaultProps() {
@@ -36,7 +51,7 @@ module.exports = {
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState(buildInitialState(nextProps));
+    this.setState(buildState.call(this, nextProps));
   },
 
   componentWillMount() {
