@@ -10,7 +10,7 @@
   ],
   "author": "Carlos Rocha",
   "license": "MIT",
-  "main": "./src/index",
+  "main": "./lib/index",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
