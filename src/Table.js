@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
+import ReactDOM from 'react-dom';
 
 let simpleGet = key => data => data[key];
 let keyGetter = keys => data => keys.map(key => data[key]);
@@ -37,7 +38,7 @@ function buildSortProps(col, sortBy, onSort) {
   };
 }
 
-export default class Table {
+export default class Table extends Component {
 
   static defaultProps = {
     buildRowOptions: () => ({}),
@@ -88,7 +89,8 @@ export default class Table {
     onSort: PropTypes.func,
   };
 
-  constructor() {
+  constructor(...props) {
+    super(...props);
     this._headers = [];
   }
 
@@ -96,7 +98,7 @@ export default class Table {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
     this._headers.forEach(header => {
-      let thDom = React.findDOMNode(header);
+      let thDom = ReactDOM.findDOMNode(header);
       if (!thDom.style.width) {
         thDom.style.width = `${thDom.offsetWidth}px`;
       }

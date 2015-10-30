@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var { DataTable } = require('react-data-components');
 var d3 = require('d3');
 
@@ -31,5 +32,5 @@ function buildTable(data) {
 }
 
 d3.csv('/sample_data.csv', function(error, rows) {
-  React.render(buildTable(rows), document.body);
+  ReactDOM.render(buildTable(rows), document.getElementById('app'));
 });
