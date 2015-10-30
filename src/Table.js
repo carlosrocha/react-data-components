@@ -39,58 +39,8 @@ function buildSortProps(col, sortBy, onSort) {
 }
 
 export default class Table extends Component {
-
-  static defaultProps = {
-    buildRowOptions: () => ({}),
-    sortBy: {},
-  };
-
-  static propTypes = {
-
-    keys: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.string,
-    ]).isRequired,
-
-    columns: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      prop: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      render: PropTypes.func,
-      sortable: PropTypes.bool,
-      defaultContent: PropTypes.string,
-      width: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      className: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func,
-      ]),
-    })).isRequired,
-
-    dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object,
-    ])).isRequired,
-
-    buildRowOptions: PropTypes.func,
-
-    sortBy: PropTypes.shape({
-      prop: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      order: PropTypes.oneOf([ 'ascending', 'descending' ]),
-    }),
-
-    onSort: PropTypes.func,
-  };
-
-  constructor(...props) {
-    super(...props);
+  constructor(props) {
+    super(props);
     this._headers = [];
   }
 
@@ -168,3 +118,52 @@ export default class Table extends Component {
   }
 
 }
+
+
+Table.defaultProps = {
+  buildRowOptions: () => ({}),
+  sortBy: {},
+};
+
+Table.propTypes = {
+  keys: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]).isRequired,
+
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    prop: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    render: PropTypes.func,
+    sortable: PropTypes.bool,
+    defaultContent: PropTypes.string,
+    width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    className: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
+    ]),
+  })).isRequired,
+
+  dataArray: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ])).isRequired,
+
+  buildRowOptions: PropTypes.func,
+
+  sortBy: PropTypes.shape({
+    prop: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    order: PropTypes.oneOf([ 'ascending', 'descending' ]),
+  }),
+
+  onSort: PropTypes.func,
+};
