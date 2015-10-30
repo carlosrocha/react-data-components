@@ -8,8 +8,8 @@ describe('Pagination', function() {
   var Pagination;
 
   beforeEach(function() {
-    React = require('react/addons');
-    TestUtils = React.addons.TestUtils;
+    React = require('react');
+    TestUtils = require('react-addons-test-utils');
     Pagination = require('../Pagination');
     onChangePage = jest.genMockFunction();
   });
