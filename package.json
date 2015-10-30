@@ -15,6 +15,7 @@
     "CHANGELOG.md",
     "LICENSE",
     "css",
+    "lib",
     "src"
   ],
   "repository": {
