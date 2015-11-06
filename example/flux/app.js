@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var FluxTable = require('./FluxTable');
 var WebAPIUtils = require('./WebAPIUtils');
 var DataStore = require('./DataStore');
@@ -21,4 +22,4 @@ DataStore.init({
 
 WebAPIUtils.getCsvFile('/sample_data.csv');
 
-React.render(<FluxTable />, document.body);
+ReactDOM.render(<FluxTable />, document.getElementById('app'));

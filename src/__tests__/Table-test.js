@@ -7,8 +7,8 @@ describe('Table', function() {
   var Table;
 
   beforeEach(function() {
-    React = require('react/addons');
-    TestUtils = React.addons.TestUtils;
+    React = require('react');
+    TestUtils = require('react-addons-test-utils');
     Table = require('../Table');
   });
 

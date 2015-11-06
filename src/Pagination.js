@@ -1,21 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
-export default class Pagination {
-
-  static defaultProps = {
-    showPages: 5,
-  };
-
-  static propTypes = {
-    onChangePage: PropTypes.func.isRequired,
-    totalPages: PropTypes.number.isRequired,
-    currentPage: PropTypes.number.isRequired,
-    showPages: PropTypes.number,
-  };
-
+export default class Pagination extends Component {
   shouldComponentUpdate(nextProps) {
     var props = this.props;
 
@@ -127,3 +115,14 @@ export default class Pagination {
     );
   }
 }
+
+Pagination.defaultProps = {
+  showPages: 5,
+};
+
+Pagination.propTypes = {
+  onChangePage: PropTypes.func.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  showPages: PropTypes.number,
+};
