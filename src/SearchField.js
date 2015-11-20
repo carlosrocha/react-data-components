@@ -1,8 +1,9 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-class SearchField {
+class SearchField extends Component {
 
-  constructor() {
+  constructor(...props) {
+    super(...props);
     this.onChange = this.onChange.bind(this);
   }
 
