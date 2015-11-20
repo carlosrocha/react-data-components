@@ -1,3 +1,10 @@
+## 0.6.0
+* Support for React 0.14.
+* Use lodash for sorting.
+
+## 0.5.0
+* Pass down `buildRowOptions` to Table.
+
 ## 0.4.0
 
 * Reinitialize state when props change. (Fixes #5).
