@@ -1,8 +1,8 @@
-var Dispatcher = require('./Dispatcher');
-var { ActionTypes } = require('./AppConstants');
-var { EventEmitter } = require('events');
-var { sort, filter } = require('react-data-components').utils;
-var assign = require('object-assign');
+import Dispatcher from './Dispatcher';
+import { ActionTypes } from './AppConstants';
+import { sort, filter } from 'react-data-components';
+import { EventEmitter } from 'events';
+import assign from 'object-assign';
 
 var CHANGE_EVENT = 'change';
 var _rawData = [];
@@ -24,7 +24,7 @@ function _buildPage() {
   _data.totalPages = Math.ceil(filtered.length / pageSize);
 }
 
-var DataStore = assign(EventEmitter.prototype, {
+const DataStore = assign(EventEmitter.prototype, {
 
   addChangeListener(cb) {
     this.on(CHANGE_EVENT, cb);
@@ -90,4 +90,4 @@ Dispatcher.register(action => {
 
 });
 
-module.exports = DataStore;
+export default DataStore;

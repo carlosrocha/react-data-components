@@ -1,29 +1,34 @@
-var React = require('react');
-var RDC = require('react-data-components');
-var DataStore = require('./DataStore');
-var ViewActionCreators = require('./ViewActionCreators');
+import React from 'react';
+import DataStore from './DataStore';
+import * as ViewActionCreators from './ViewActionCreators';
+import {
+  SelectField,
+  Table,
+  Pagination,
+  SearchField,
+} from 'react-data-components';
 
-var renderMapUrl =
+const renderMapUrl =
   (val, row) =>
     <a href={`https://www.google.com/maps?q=${row['LAT']},${row['LON']}`}>
       Google Maps
     </a>;
 
-var keys = [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ];
+const keys = [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ];
 
-var columns = [
+const columns = [
   { title: 'Name', prop: 'NAME'  },
   { title: 'City', prop: 'CITY' },
   { title: 'Street address', prop: 'STREET ADDRESS' },
   { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
-  { title: 'Map', render: renderMapUrl, className: 'text-center' }
+  { title: 'Map', render: renderMapUrl, className: 'text-center' },
 ];
 
 function getStateFromStore() {
   return { data: DataStore.getData() };
 }
 
-class FluxTable extends React.Component {
+export default class FluxTable extends React.Component {
 
   constructor() {
     super();
@@ -44,20 +49,20 @@ class FluxTable extends React.Component {
   }
 
   render() {
-    var {data} = this.state;
+    const {data} = this.state;
 
     return (
       <div className="container">
         <div className="row">
           <div className="col-xs-4">
-            <RDC.SelectField
+            <SelectField
               id="page-menu"
               label="Page size:"
               value={data.pageSize}
               options={[ 5, 10, 50 ]}
               onChange={ViewActionCreators.changePageSize}
             />
-            <RDC.SearchField
+            <SearchField
               id="search-field"
               label="Search:"
               value={data.filterValues['globalSearch']}
@@ -65,7 +70,7 @@ class FluxTable extends React.Component {
             />
           </div>
           <div className="col-xs-8">
-            <RDC.Pagination
+            <Pagination
               className="pagination pull-right"
               currentPage={data.pageNumber}
               totalPages={data.totalPages}
@@ -73,7 +78,7 @@ class FluxTable extends React.Component {
             />
           </div>
         </div>
-        <RDC.Table
+        <Table
           className="table table-bordered"
           columns={columns}
           keys={keys}
@@ -86,5 +91,3 @@ class FluxTable extends React.Component {
   }
 
 }
-
-module.exports = FluxTable;

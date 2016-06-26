@@ -1,10 +1,6 @@
-var d3 = require('d3');
-var {receiveData} = require('./ServerActionCreators');
+import d3 from 'd3';
+import { receiveData } from './ServerActionCreators';
 
-module.exports = {
-
-  getCsvFile(csvFile) {
-    d3.csv(csvFile, (err, data) => receiveData(data));
-  }
-
-};
+export function getCsvFile(csvFile) {
+  d3.csv(csvFile, (err, data) => receiveData(data));
+}

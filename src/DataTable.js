@@ -1,12 +1,11 @@
-var React = require('react');
-var Table = require('./Table');
-var Pagination = require('./Pagination');
-var SelectField = require('./SelectField');
-var SearchField = require('./SearchField');
+import React from 'react';
+import Table from './Table';
+import Pagination from './Pagination';
+import SelectField from './SelectField';
+import SearchField from './SearchField';
+import DataMixin from './DataMixin';
 
-var DataMixin = require('./DataMixin');
-
-var DataTable = React.createClass({
+export default React.createClass({
 
   mixins: [ DataMixin ],
 
@@ -53,5 +52,3 @@ var DataTable = React.createClass({
     );
   },
 });
-
-module.exports = DataTable;

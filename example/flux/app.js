@@ -1,12 +1,12 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var FluxTable = require('./FluxTable');
-var WebAPIUtils = require('./WebAPIUtils');
-var DataStore = require('./DataStore');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { getCsvFile } from './WebAPIUtils';
+import DataStore from './DataStore';
+import FluxTable from './FluxTable';
 
-var containsIgnoreCase = function(a, b) {
-  a = (a + '').toLowerCase().trim();
-  b = (b + '').toLowerCase().trim();
+const containsIgnoreCase = function(a, b) {
+  a = String(a).toLowerCase().trim();
+  b = String(b).toLowerCase().trim();
   return b.indexOf(a) >= 0;
 };
 
@@ -15,11 +15,11 @@ DataStore.init({
   sortBy: { prop: 'CITY', order: 'descending' },
   filters: {
     globalSearch: {
-      filter: containsIgnoreCase
-    }
-  }
+      filter: containsIgnoreCase,
+    },
+  },
 });
 
-WebAPIUtils.getCsvFile('/sample_data.csv');
+getCsvFile('/sample_data.csv');
 
 ReactDOM.render(<FluxTable />, document.getElementById('app'));

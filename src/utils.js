@@ -1,12 +1,12 @@
-var sortBy = require('lodash.sortby');
-var some = require('lodash.some');
+import sortBy from 'lodash.sortby';
+import some from 'lodash.some';
 
 /**
  * @param {object} sortBy Object containing `prop` and `order`.
  * @param {array} data Array to sort.
  * @return {array} Sorted array.
  */
-function sort(sortByValues, data) {
+export function sort(sortByValues, data) {
   var sortedData = sortBy(data, sortByValues.prop);
   if (sortByValues.order === 'descending') {
     sortedData.reverse();
@@ -43,9 +43,7 @@ function filterPass(filters, data) {
  * @param {array} data Array to filter.
  * @return {array} Filtered array.
  */
-function filter(filters, filterValues, data) {
+export function filter(filters, filterValues, data) {
   var filterFunc = filterPass.bind(null, filters);
   return data.filter(each => some(filterValues, filterFunc(each)));
 }
-
-module.exports = { filter, sort };

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-class SearchField extends Component {
+export default class SearchField extends Component {
 
-  constructor(...props) {
-    super(...props);
+  constructor() {
+    super();
     this.onChange = this.onChange.bind(this);
   }
 
@@ -26,5 +26,3 @@ class SearchField extends Component {
   }
 
 }
-
-module.exports = SearchField;

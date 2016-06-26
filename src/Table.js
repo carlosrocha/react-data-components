@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
-let simpleGet = key => data => data[key];
-let keyGetter = keys => data => keys.map(key => data[key]);
+const simpleGet = key => data => data[key];
+const keyGetter = keys => data => keys.map(key => data[key]);
 
-let isEmpty = value => value == null || value === '';
+const isEmpty = value => value == null || value === '';
 
-let getCellValue =
+const getCellValue =
   ({ prop, defaultContent, render }, row) =>
     // Return `defaultContent` if the value is empty.
     !isEmpty(prop) && isEmpty(row[prop]) ? defaultContent :
@@ -15,16 +15,16 @@ let getCellValue =
       // Otherwise just return the value.
       row[prop];
 
-let getCellClass =
+const getCellClass =
   ({ prop, className }, row) =>
     !isEmpty(prop) && isEmpty(row[prop]) ? 'empty-cell' :
       typeof className == 'function' ? className(row[prop], row) :
       className;
 
 function buildSortProps(col, sortBy, onSort) {
-  let order = sortBy.prop === col.prop ? sortBy.order : 'none';
-  let nextOrder = order === 'ascending' ? 'descending' : 'ascending';
-  let sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
+  const order = sortBy.prop === col.prop ? sortBy.order : 'none';
+  const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
+  const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 
   return {
     'onClick': sortEvent,
@@ -40,10 +40,7 @@ function buildSortProps(col, sortBy, onSort) {
 
 export default class Table extends Component {
 
-  constructor(props) {
-    super(props);
-    this._headers = [];
-  }
+  _headers = [];
 
   static defaultProps = {
     buildRowOptions: () => ({}),
@@ -97,7 +94,7 @@ export default class Table extends Component {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
     this._headers.forEach(header => {
-      let thDom = ReactDOM.findDOMNode(header);
+      const thDom = ReactDOM.findDOMNode(header);
       if (!thDom.style.width) {
         thDom.style.width = `${thDom.offsetWidth}px`;
       }
@@ -105,9 +102,9 @@ export default class Table extends Component {
   }
 
   render() {
-    let { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
+    const { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
 
-    let headers = columns.map((col, idx) => {
+    const headers = columns.map((col, idx) => {
       let sortProps, order;
       // Only add sorting events if the column has a property and is sortable.
       if (typeof onSort == 'function' &&
@@ -133,8 +130,8 @@ export default class Table extends Component {
       );
     });
 
-    let getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
-    let rows = this.props.dataArray.map(
+    const getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
+    const rows = this.props.dataArray.map(
       row =>
         <tr key={getKeys(row)} {...buildRowOptions(row)}>
           {columns.map(

@@ -1,35 +1,31 @@
-var Dispatcher = require('./Dispatcher');
-var {ActionTypes} = require('./AppConstants');
+import Dispatcher from './Dispatcher';
+import { ActionTypes } from './AppConstants';
 
-module.exports = {
+export function sort(sortBy) {
+  Dispatcher.dispatch({
+    type: ActionTypes.DATA_SORT,
+    sortBy: sortBy,
+  });
+}
 
-  sort(sortBy) {
-    Dispatcher.dispatch({
-      type: ActionTypes.DATA_SORT,
-      sortBy: sortBy
-    });
-  },
+export function changePageNumber(pageNumber) {
+  Dispatcher.dispatch({
+    type: ActionTypes.DATA_CHANGE_PAGE_NUMBER,
+    pageNumber: pageNumber,
+  });
+}
 
-  changePageNumber(pageNumber) {
-    Dispatcher.dispatch({
-      type: ActionTypes.DATA_CHANGE_PAGE_NUMBER,
-      pageNumber: pageNumber
-    });
-  },
+export function changePageSize(pageSize) {
+  Dispatcher.dispatch({
+    type: ActionTypes.DATA_CHANGE_PAGE_SIZE,
+    pageSize: pageSize,
+  });
+}
 
-  changePageSize(pageSize) {
-    Dispatcher.dispatch({
-      type: ActionTypes.DATA_CHANGE_PAGE_SIZE,
-      pageSize: pageSize
-    });
-  },
-
-  filter(filterName, filterValue) {
-    Dispatcher.dispatch({
-      type: ActionTypes.DATA_FILTER,
-      filterName: filterName,
-      filterValue: filterValue
-    });
-  }
-
-};
+export function filter(filterName, filterValue) {
+  Dispatcher.dispatch({
+    type: ActionTypes.DATA_FILTER,
+    filterName: filterName,
+    filterValue: filterValue,
+  });
+}

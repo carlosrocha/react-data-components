@@ -1,16 +1,16 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var { DataTable } = require('react-data-components');
-var d3 = require('d3');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { DataTable } from 'react-data-components';
+import d3 from 'd3';
 
 function buildTable(data) {
-  var renderMapUrl =
+  const renderMapUrl =
     (val, row) =>
       <a href={`https://www.google.com/maps?q=${row['LAT']},${row['LON']}`}>
         Google Maps
       </a>;
 
-  var tableColumns = [
+  const tableColumns = [
     { title: 'Name', prop: 'NAME' },
     { title: 'City', prop: 'CITY' },
     { title: 'Street address', prop: 'STREET ADDRESS' },

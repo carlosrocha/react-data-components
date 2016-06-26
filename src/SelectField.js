@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SelectField extends Component {
+export default class SelectField extends Component {
 
   constructor(...props) {
     super(...props);
@@ -27,5 +27,3 @@ class SelectField extends Component {
   }
 
 }
-
-module.exports = SelectField;
