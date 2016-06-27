@@ -1,8 +1,8 @@
-var { sort, filter } = require('./utils');
+import { sort, filter } from './utils';
 
-var containsIgnoreCase = function(a, b) {
-  a = (a + '').toLowerCase().trim();
-  b = (b + '').toLowerCase().trim();
+const containsIgnoreCase = function(a, b) {
+  a = String(a).toLowerCase().trim();
+  b = String(b).toLowerCase().trim();
   return b.indexOf(a) >= 0;
 };
 
@@ -41,7 +41,7 @@ module.exports = {
 
   componentWillMount() {
     // Do the initial sorting if specified.
-    var {sortBy, data} = this.state;
+    const {sortBy, data} = this.state;
     if (sortBy) {
       this.setState({ data: sort(sortBy, data) });
     }
@@ -55,11 +55,11 @@ module.exports = {
   },
 
   onFilter(filterName, filterValue) {
-    var {filterValues, sortBy} = this.state;
-    var {initialData, filters} = this.props;
+    const {filterValues, sortBy} = this.state;
+    const {initialData, filters} = this.props;
 
     filterValues[filterName] = filterValue;
-    var newData = filter(filters, filterValues, initialData);
+    let newData = filter(filters, filterValues, initialData);
     newData = sort(sortBy, newData);
 
     this.setState({
@@ -71,8 +71,8 @@ module.exports = {
 
   // Pagination
   buildPage() {
-    var {data, currentPage, pageLength} = this.state;
-    var start = pageLength * currentPage;
+    const {data, currentPage, pageLength} = this.state;
+    const start = pageLength * currentPage;
 
     return {
       data: data.slice(start, start + pageLength),
@@ -86,9 +86,9 @@ module.exports = {
   },
 
   onPageLengthChange(value) {
-    var newPageLength = +value;
-    var {currentPage, pageLength} = this.state;
-    var newPage = Math.floor((currentPage * pageLength) / newPageLength);
+    const newPageLength = +value;
+    const {currentPage, pageLength} = this.state;
+    const newPage = Math.floor((currentPage * pageLength) / newPageLength);
 
     this.setState({
       pageLength: newPageLength,

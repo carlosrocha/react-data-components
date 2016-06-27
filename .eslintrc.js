@@ -1,3 +1,7 @@
+const OFF = 0;
+const WARNING = 1;
+const ERROR = 2;
+
 module.exports = {
   parser: 'babel-eslint',
 
@@ -25,13 +29,17 @@ module.exports = {
   },
 
   rules: {
-    'strict': [ 2, 'global' ],
-    'quotes': [ 2, 'single' ],
-    'curly': [ 2, 'multi-line' ],
-    'eqeqeq': [ 2, 'smart' ],
+    'strict': OFF,
+    'quotes': [2, 'single'],
+    'curly': [2, 'multi-line'],
+    'eqeqeq': [2, 'smart'],
     'block-scoped-var': 2,
-    'comma-dangle': [ 2, 'always-multiline' ],
+    'semi': [WARNING, 'always'],
+    'space-before-blocks': [WARNING, 'always'],
+    'space-in-parens': [OFF, 'never'],
+    'comma-dangle': [2, 'always-multiline'],
     'no-underscore-dangle': 0,
+    'no-delete-var': ERROR,
     'react/jsx-uses-react': 1,
   },
 };

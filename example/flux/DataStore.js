@@ -4,21 +4,21 @@ import { sort, filter } from 'react-data-components';
 import { EventEmitter } from 'events';
 import assign from 'object-assign';
 
-var CHANGE_EVENT = 'change';
-var _rawData = [];
-var _data = {};
-var initVals = {
+const CHANGE_EVENT = 'change';
+const initVals = {
   filtered: [],
   page: [],
   filterValues: {},
   sortBy: {},
   totalPages: 0,
-  pageNumber: 0
+  pageNumber: 0,
 };
+let _rawData = [];
+let _data = {};
 
 function _buildPage() {
-  var { pageSize, pageNumber, filtered } = _data;
-  var start = pageSize * pageNumber;
+  const { pageSize, pageNumber, filtered } = _data;
+  const start = pageSize * pageNumber;
 
   _data.page = filtered.slice(start, start + pageSize);
   _data.totalPages = Math.ceil(filtered.length / pageSize);
@@ -39,13 +39,13 @@ const DataStore = assign(EventEmitter.prototype, {
   },
 
   init(config) {
-    var merged = assign(initVals, config);
+    const merged = assign(initVals, config);
     _data = merged;
   },
 
   getData() {
     return _data;
-  }
+  },
 
 });
 
@@ -67,14 +67,14 @@ Dispatcher.register(action => {
       break;
 
     case ActionTypes.DATA_CHANGE_PAGE_SIZE:
-      var { pageSize } = action;
+      const { pageSize } = action;
       _data.pageNumber =
           Math.floor((_data.pageNumber * _data.pageSize) / pageSize);
       _data.pageSize = pageSize;
       break;
 
     case ActionTypes.DATA_FILTER:
-      var { filterName, filterValue } = action;
+      const { filterName, filterValue } = action;
       _data.filterValues[filterName] = filterValue;
       _data.filtered = filter(_data.filters, _data.filterValues, _rawData);
       _data.filtered = sort(_data.sortBy, _data.filtered);
