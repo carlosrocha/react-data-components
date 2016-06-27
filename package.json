@@ -23,8 +23,8 @@
     "url": "https://github.com/carlosrocha/react-data-components"
   },
   "peerDependencies": {
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react": "^0.14.0 || ^15.0.0-0",
+    "react-dom": "^0.14.0 || ^15.0.0-0"
   },
   "dependencies": {
     "lodash.some": "^4.4.0",
@@ -44,7 +44,9 @@
     "eslint-plugin-react": "^5.2.2",
     "flux": "^2.1.1",
     "jest": "^13.0.0",
+    "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.1.0",
     "rimraf": "^2.4.3",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
