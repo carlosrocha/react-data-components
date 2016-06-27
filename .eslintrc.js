@@ -5,6 +5,14 @@ module.exports = {
     'react',
   ],
 
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+
   env: {
     browser: true,
     node: true,
@@ -14,11 +22,6 @@ module.exports = {
 
   globals: {
     jest: false,
-  },
-
-  ecmaFeatures: {
-    modules: true,
-    jsx: true,
   },
 
   rules: {
