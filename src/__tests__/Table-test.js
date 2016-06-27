@@ -1,20 +1,14 @@
-jest.dontMock('../Table');
+jest.unmock('../Table');
 
-describe('Table', function() {
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
+import Table from '../Table';
 
-  var React;
-  var TestUtils;
-  var Table;
+describe('Table', () => {
 
-  beforeEach(function() {
-    React = require('react');
-    TestUtils = require('react-addons-test-utils');
-    Table = require('../Table');
-  });
-
-  it('shows message when no data', function() {
-    var columns = [ { title: 'Test', prop: 'test' } ];
-    var shallowRenderer = TestUtils.createRenderer();
+  it('shows message when no data', () => {
+    const columns = [ { title: 'Test', prop: 'test' } ];
+    const shallowRenderer = TestUtils.createRenderer();
     shallowRenderer.render(
       <Table
         columns={columns}
@@ -23,7 +17,7 @@ describe('Table', function() {
       />
     );
 
-    var result = shallowRenderer.getRenderOutput();
+    const result = shallowRenderer.getRenderOutput();
 
     expect(result.props.children[2]).toEqual(
       <tbody>
@@ -34,9 +28,9 @@ describe('Table', function() {
     );
   });
 
-  it('render simple', function() {
-    var columns = [ { title: 'Test', prop: 'test' } ];
-    var shallowRenderer = TestUtils.createRenderer();
+  it('render simple', () => {
+    const columns = [ { title: 'Test', prop: 'test' } ];
+    const shallowRenderer = TestUtils.createRenderer();
     shallowRenderer.render(
       <Table
         columns={columns}
@@ -47,7 +41,7 @@ describe('Table', function() {
       />
     );
 
-    var result = shallowRenderer.getRenderOutput();
+    const result = shallowRenderer.getRenderOutput();
 
     expect(result.props.children[2]).toEqual(
       <tbody>
