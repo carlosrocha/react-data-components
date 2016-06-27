@@ -1,12 +1,7 @@
 import React from 'react';
 import DataStore from './DataStore';
 import * as ViewActionCreators from './ViewActionCreators';
-import {
-  SelectField,
-  Table,
-  Pagination,
-  SearchField,
-} from 'react-data-components';
+import { Table, Pagination } from 'react-data-components';
 
 const renderMapUrl =
   (val, row) =>
@@ -15,6 +10,7 @@ const renderMapUrl =
     </a>;
 
 const keys = [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ];
+const pageLengthOptions = [ 5, 10, 50 ];
 
 const columns = [
   { title: 'Name', prop: 'NAME'  },
@@ -55,19 +51,31 @@ export default class FluxTable extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-xs-4">
-            <SelectField
-              id="page-menu"
-              label="Page size:"
-              value={data.pageSize}
-              options={[ 5, 10, 50 ]}
-              onChange={ViewActionCreators.changePageSize}
-            />
-            <SearchField
-              id="search-field"
-              label="Search:"
-              value={data.filterValues['globalSearch']}
-              onChange={ViewActionCreators.filter.bind(this, 'globalSearch')}
-            />
+            <div>
+              <label htmlFor="page-menu">Page size:</label>
+              <select
+                id="page-menu"
+                value={data.pageSize}
+                onChange={e =>
+                  ViewActionCreators.changePageSize(e.target.value)
+                }
+              >
+                {pageLengthOptions.map(opt =>
+                  <option key={opt} value={opt}>{opt}</option>
+                )}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="search-field">Search:</label>
+              <input
+                id="search-field"
+                type="search"
+                value={data.filterValues['globalSearch']}
+                onChange={e =>
+                  ViewActionCreators.filter('globalSearch', e.target.value)
+                }
+              />
+            </div>
           </div>
           <div className="col-xs-8">
             <Pagination

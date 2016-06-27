@@ -1,8 +1,6 @@
 import React from 'react';
 import Table from './Table';
 import Pagination from './Pagination';
-import SelectField from './SelectField';
-import SearchField from './SearchField';
 import DataMixin from './DataMixin';
 
 export default React.createClass({
@@ -16,19 +14,27 @@ export default React.createClass({
       <div className={this.props.className}>
         <div className="row">
           <div className="col-xs-4">
-            <SelectField
-              id="page-menu"
-              label="Page size:"
-              value={this.state.pageLength}
-              options={this.props.pageLengthOptions}
-              onChange={this.onPageLengthChange}
-            />
-            <SearchField
-              id="search-field"
-              label="Search:"
-              value={this.state.filterValues.globalSearch}
-              onChange={this.onFilter.bind(this, 'globalSearch')}
-            />
+            <div>
+              <label htmlFor="page-menu">Page size:</label>
+              <select
+                id="page-menu"
+                value={this.state.pageLength}
+                onChange={e => this.onPageLengthChange(e.target.value)}
+              >
+                {this.props.pageLengthOptions.map(opt =>
+                  <option key={opt} value={opt}>{opt}</option>
+                )}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="search-field">Search:</label>
+              <input
+                id="search-field"
+                type="search"
+                value={this.state.filterValues.globalSearch}
+                onChange={e => this.onFilter('globalSearch', e.target.value)}
+              />
+            </div>
           </div>
           <div className="col-xs-8">
             <Pagination

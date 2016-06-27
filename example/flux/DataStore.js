@@ -8,7 +8,7 @@ const CHANGE_EVENT = 'change';
 const initVals = {
   filtered: [],
   page: [],
-  filterValues: {},
+  filterValues: { globalSearch: '' },
   sortBy: {},
   totalPages: 0,
   pageNumber: 0,

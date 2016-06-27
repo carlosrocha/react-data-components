@@ -11,7 +11,7 @@ function buildInitialState(props) {
     // Clone the initialData.
     data: props.initialData.slice(0),
     sortBy: props.initialSortBy,
-    filterValues: {},
+    filterValues: { globalSearch: '' },
     currentPage: 0,
     pageLength: props.initialPageLength,
   };
