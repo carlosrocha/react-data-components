@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataTable } from 'react-data-components';
-import d3 from 'd3';
+import { csv } from 'd3-request';
 
 function buildTable(data) {
   const renderMapUrl =
@@ -31,6 +31,6 @@ function buildTable(data) {
   );
 }
 
-d3.csv('/sample_data.csv', function(error, rows) {
+csv('/sample_data.csv', function(error, rows) {
   ReactDOM.render(buildTable(rows), document.getElementById('app'));
 });

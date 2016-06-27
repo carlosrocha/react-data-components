@@ -1,6 +1,6 @@
-import d3 from 'd3';
+import { csv } from 'd3-request';
 import { receiveData } from './ServerActionCreators';
 
 export function getCsvFile(csvFile) {
-  d3.csv(csvFile, (err, data) => receiveData(data));
+  csv(csvFile, (err, data) => receiveData(data));
 }
