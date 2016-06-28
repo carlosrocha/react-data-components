@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DataStore from './DataStore';
 import * as ViewActionCreators from './ViewActionCreators';
 import { Table, Pagination } from 'react-data-components';
@@ -24,12 +24,11 @@ function getStateFromStore() {
   return { data: DataStore.getData() };
 }
 
-export default class FluxTable extends React.Component {
+export default class FluxTable extends Component {
 
   constructor() {
     super();
     this.state = getStateFromStore();
-    this.handleStoreChange = this.handleStoreChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,9 +39,9 @@ export default class FluxTable extends React.Component {
     DataStore.removeChangeListener(this.handleStoreChange);
   }
 
-  handleStoreChange() {
+  handleStoreChange = () => {
     this.setState(getStateFromStore());
-  }
+  };
 
   render() {
     const {data} = this.state;
