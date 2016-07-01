@@ -1,25 +1,69 @@
-import React from 'react';
+/**
+ * @flow
+ */
+
+import React, {Component} from 'react';
 import Table from './Table';
 import Pagination from './Pagination';
-import DataMixin from './DataMixin';
+import dataReducer from './dataReducer';
+import {
+  dataLoaded,
+  dataSort,
+  dataFilter,
+  pageNumberChange,
+  pageSizeChange,
+} from './actions';
+import type {State} from './types';
 
-export default React.createClass({
+type Props = {
+  pageLengthOptions: Array<number>;
+  initialData: Array<any>;
+  columns: Array<any>;
+  keys: Array<any>;
+  buildRowOptions: any;
+};
 
-  mixins: [ DataMixin ],
+export default class DataTable extends Component {
+  state: State;
+  props: Props;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = dataReducer(undefined, dataLoaded(props.initialData));
+  }
+
+  onPageNumberChange = (value: number) => {
+    this.setState(state => dataReducer(state, pageNumberChange(value)));
+  };
+
+  onPageSizeChange = value => {
+    this.setState(state => dataReducer(state, pageSizeChange(value)));
+  };
+
+  onSort = value => {
+    this.setState(state => dataReducer(state, dataSort(value)));
+  };
+
+  onFilter = (key, value) => {
+    this.setState(state => dataReducer(state, dataFilter(key, value)));
+  };
 
   render() {
-    var page = this.buildPage();
+    const {
+      page, pageSize, pageNumber,
+      totalPages, sortBy, filterValues,
+    } = this.state;
 
     return (
-      <div className={this.props.className}>
+      <div className="container">
         <div className="row">
           <div className="col-xs-4">
             <div>
               <label htmlFor="page-menu">Page size:</label>
               <select
                 id="page-menu"
-                value={this.state.pageLength}
-                onChange={e => this.onPageLengthChange(e.target.value)}
+                value={pageSize}
+                onChange={e => this.onPageSizeChange(e.target.value)}
               >
                 {this.props.pageLengthOptions.map(opt =>
                   <option key={opt} value={opt}>{opt}</option>
@@ -31,7 +75,7 @@ export default React.createClass({
               <input
                 id="search-field"
                 type="search"
-                value={this.state.filterValues.globalSearch}
+                value={filterValues.globalSearch}
                 onChange={e => this.onFilter('globalSearch', e.target.value)}
               />
             </div>
@@ -39,22 +83,23 @@ export default React.createClass({
           <div className="col-xs-8">
             <Pagination
               className="pagination pull-right"
-              currentPage={page.currentPage}
-              totalPages={page.totalPages}
-              onChangePage={this.onChangePage}
+              currentPage={pageNumber}
+              totalPages={totalPages}
+              onChangePage={this.onPageNumberChange}
             />
           </div>
         </div>
         <Table
           className="table table-bordered"
-          dataArray={page.data}
+          dataArray={page}
           columns={this.props.columns}
           keys={this.props.keys}
           buildRowOptions={this.props.buildRowOptions}
-          sortBy={this.state.sortBy}
+          sortBy={sortBy}
           onSort={this.onSort}
         />
       </div>
     );
-  },
-});
+  }
+
+}
