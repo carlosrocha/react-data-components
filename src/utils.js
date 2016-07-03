@@ -1,7 +1,19 @@
-import sortBy from 'lodash.sortby';
+function sortBy(data, prop) {
+  return data.sort((rowA, rowB) => {
+    const a = rowA[prop];
+    const b = rowB[prop];
+
+    if (a !== b) {
+      if (a > b || a === undefined) return 1;
+      if (a < b || b === undefined) return -1;
+    }
+
+    return 0;
+  });
+}
 
 export function sort(sortByValues, data) {
-  var sortedData = sortBy(data, sortByValues.prop);
+  const sortedData = sortBy(data, sortByValues.prop);
   if (sortByValues.order === 'descending') {
     sortedData.reverse();
   }
