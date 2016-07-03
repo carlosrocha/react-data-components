@@ -27,7 +27,6 @@
     "react-dom": "^0.14.0 || ^15.0.0-0"
   },
   "dependencies": {
-    "lodash.some": "^4.4.0",
     "lodash.sortby": "^4.5.0"
   },
   "devDependencies": {
