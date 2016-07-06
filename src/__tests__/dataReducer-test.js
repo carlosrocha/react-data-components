@@ -1,10 +1,12 @@
 jest.unmock('../dataReducer');
 jest.unmock('../utils');
 jest.unmock('../actions');
-jest.unmock('lodash.sortby');
 
 import dataReducer from '../dataReducer';
-import {pageNumberChange, pageSizeChange, dataSort} from '../actions';
+import {
+  pageNumberChange, pageSizeChange,
+  dataSort, dataFilter,
+} from '../actions';
 
 const data = [ [1, 2], [3, 4] ];
 
@@ -80,6 +82,28 @@ describe('dataReducer', () => {
       sortBy,
       data: [ [3, 4], [1, 2] ],
       page: [ [3, 4] ],
+    };
+
+    expect(dataReducer(state, action)).toEqual(expected);
+  });
+
+  it('filters', () => {
+    const data = [ ['carlos', 'r'], [3, 4] ];
+    const state = {
+      data,
+      initialData: data,
+      page: data.slice(0, 1),
+      pageNumber: 0,
+      pageSize: 1,
+      totalPages: 2,
+    };
+    const action = dataFilter('globalSearch', 'c');
+    const expected = {
+      ...state,
+      filterValues: { globalSearch: 'c' },
+      data: [ ['carlos', 'r'] ],
+      page: [ ['carlos', 'r'] ],
+      totalPages: 1,
     };
 
     expect(dataReducer(state, action)).toEqual(expected);

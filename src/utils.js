@@ -1,3 +1,5 @@
+import type {SortBy, AppData} from './types';
+
 function sortBy(data, prop) {
   return data.sort((rowA, rowB) => {
     const a = rowA[prop];
@@ -12,7 +14,7 @@ function sortBy(data, prop) {
   });
 }
 
-export function sort(sortByValues, data) {
+export function sort(sortByValues: SortBy, data: AppData) {
   const sortedData = sortBy(data, sortByValues.prop);
   if (sortByValues.order === 'descending') {
     sortedData.reverse();

@@ -7,11 +7,8 @@ import Table from './Table';
 import Pagination from './Pagination';
 import dataReducer from './dataReducer';
 import {
-  dataLoaded,
-  dataSort,
-  dataFilter,
-  pageNumberChange,
-  pageSizeChange,
+  dataLoaded, dataSort, dataFilter,
+  pageNumberChange, pageSizeChange,
 } from './actions';
 import type {State} from './types';
 
@@ -32,11 +29,11 @@ export default class DataTable extends Component {
     this.state = dataReducer(undefined, dataLoaded(props.initialData));
   }
 
-  onPageNumberChange = (value: number) => {
+  onPageNumberChange = value => {
     this.setState(state => dataReducer(state, pageNumberChange(value)));
   };
 
-  onPageSizeChange = value => {
+  onPageSizeChange = ({target: {value}}) => {
     this.setState(state => dataReducer(state, pageSizeChange(value)));
   };
 
@@ -44,7 +41,7 @@ export default class DataTable extends Component {
     this.setState(state => dataReducer(state, dataSort(value)));
   };
 
-  onFilter = (key, value) => {
+  onFilter = (key, {target: {value}}) => {
     this.setState(state => dataReducer(state, dataFilter(key, value)));
   };
 
@@ -63,7 +60,7 @@ export default class DataTable extends Component {
               <select
                 id="page-menu"
                 value={pageSize}
-                onChange={e => this.onPageSizeChange(e.target.value)}
+                onChange={this.onPageSizeChange}
               >
                 {this.props.pageLengthOptions.map(opt =>
                   <option key={opt} value={opt}>{opt}</option>
@@ -76,7 +73,7 @@ export default class DataTable extends Component {
                 id="search-field"
                 type="search"
                 value={filterValues.globalSearch}
-                onChange={e => this.onFilter('globalSearch', e.target.value)}
+                onChange={this.onFilter.bind(null, 'globalSearch')}
               />
             </div>
           </div>

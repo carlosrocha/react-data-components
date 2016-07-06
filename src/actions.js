@@ -24,13 +24,10 @@ export function dataSort(value: SortBy): Action {
   return { value, type: ActionTypes.DATA_SORT };
 }
 
-export function dataLoaded(value: any): Action {
+export function dataLoaded(value: Array<any>): Action {
   return { value, type: ActionTypes.DATA_LOADED };
 }
 
-export function dataFilter(key: string, value: string): Action {
-  return {
-    value: [ key, value ],
-    type: ActionTypes.DATA_FILTER,
-  };
+export function dataFilter(key: string, value: string | number): Action {
+  return { value: {key, value}, type: ActionTypes.DATA_FILTER };
 }

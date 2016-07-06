@@ -6,24 +6,23 @@ import {sort, filter} from './utils';
 import {ActionTypes} from './actions';
 import type {State, Action, SortBy} from './types';
 
-const containsIgnoreCase = (a, b) => {
-  a = String(a).toLowerCase().trim();
-  b = String(b).toLowerCase().trim();
-  return b.indexOf(a) >= 0;
-};
-
 const filters = {
   globalSearch: {
-    filter: containsIgnoreCase,
+    filter(a, b) {
+      a = String(a).toLowerCase().trim();
+      b = String(b).toLowerCase().trim();
+      return b.indexOf(a) >= 0;
+    },
   },
 };
 
-const initialState = {
+const initialState: State = {
+  initialData: [],
   data: [],
   page: [],
   filterValues: { globalSearch: '' },
   totalPages: 1,
-  sortBy: {},
+  sortBy: null,
   currentPage: 0,
   pageNumber: 0,
   pageSize: 5,
@@ -35,12 +34,10 @@ function calculatePage(data, pageSize, pageNumber) {
 }
 
 function pageNumberChange(state, {value: pageNumber}) {
-  const {data, pageSize} = state;
-
   return {
     ...state,
     pageNumber,
-    page: calculatePage(data, pageSize, pageNumber),
+    page: calculatePage(state.data, state.pageSize, pageNumber),
   };
 }
 
@@ -69,16 +66,20 @@ function dataSort(state, {value: sortBy}) {
   };
 }
 
-function dataFilter(state, {value: [key, value]}) {
+function dataFilter(state, {value: {key, value}}) {
   const newFilterValues = { ...state.filterValues, [key]: value };
-  let filtered = filter(filters, newFilterValues, state.data);
-  filtered = sort(state.sortBy, filtered);
+  let data = filter(filters, newFilterValues, state.initialData);
+  if (state.sortBy) {
+    data = sort(state.sortBy, data);
+  }
 
   return {
     ...state,
-    filtered,
+    data,
     filterValues: newFilterValues,
-    page: calculatePage(filtered, state.pageSize, state.pageNumber),
+    page: calculatePage(data, state.pageSize, state.pageNumber),
+    pageNumber: 0,
+    totalPages: Math.ceil(data.length / state.pageSize),
   };
 }
 
@@ -86,6 +87,7 @@ function dataLoaded(state, {value: data}) {
   return {
     ...state,
     data,
+    initialData: data,
     page: calculatePage(data, state.pageSize, state.pageNumber),
     totalPages: Math.ceil(data.length / state.pageSize),
   };

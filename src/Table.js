@@ -22,7 +22,7 @@ const getCellClass =
       className;
 
 function buildSortProps(col, sortBy, onSort) {
-  const order = sortBy.prop === col.prop ? sortBy.order : 'none';
+  const order = sortBy && sortBy.prop === col.prop ? sortBy.order : 'none';
   const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
   const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 
@@ -44,7 +44,6 @@ export default class Table extends Component {
 
   static defaultProps = {
     buildRowOptions: () => ({}),
-    sortBy: {},
   };
 
   static propTypes = {
@@ -145,9 +144,11 @@ export default class Table extends Component {
 
     return (
       <table {...this.props}>
-        <caption className="sr-only" role="alert" aria-live="polite">
-          {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
-        </caption>
+        {sortBy ?
+          <caption className="sr-only" role="alert" aria-live="polite">
+            {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
+          </caption> : null
+        }
         <thead>
           <tr>
             {headers}

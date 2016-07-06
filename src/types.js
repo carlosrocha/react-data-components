@@ -4,10 +4,15 @@
 
 import {ActionTypes} from './actions';
 
+type Row = {[key: string]: string};
+
+export type AppData = Array<Array<string> | Row>;
+
 export type State = {
-  data: Array<any>;
-  page: Array<any>;
-  sortBy: SortBy;
+  initialData: AppData;
+  data: AppData;
+  page: AppData;
+  sortBy: ?SortBy;
   pageSize: number;
   pageNumber: number;
   totalPages: number;
@@ -21,8 +26,7 @@ export type Action = {
   value: any;
 };
 
-// FIXME: should be null from state.
 export type SortBy = {
-  prop?: string | number;
-  order?: 'ascending' | 'descending';
+  prop: string | number;
+  order: 'ascending' | 'descending';
 };
