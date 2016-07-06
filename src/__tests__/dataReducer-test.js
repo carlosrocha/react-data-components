@@ -5,12 +5,28 @@ jest.unmock('../actions');
 import dataReducer from '../dataReducer';
 import {
   pageNumberChange, pageSizeChange,
-  dataSort, dataFilter,
+  dataSort, dataFilter, dataLoaded,
 } from '../actions';
 
 const data = [ [1, 2], [3, 4] ];
 
 describe('dataReducer', () => {
+
+  it('loads data', () => {
+    const action = dataLoaded(data);
+    const expected = {
+      data,
+      initialData: data,
+      page: data,
+      filterValues: { globalSearch: '' },
+      sortBy: null,
+      pageNumber: 0,
+      pageSize: 5,
+      totalPages: 1,
+    };
+
+    expect(dataReducer(undefined, action)).toEqual(expected);
+  });
 
   it('changes page number', () => {
     const state = {

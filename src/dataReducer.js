@@ -23,7 +23,6 @@ const initialState: State = {
   filterValues: { globalSearch: '' },
   totalPages: 1,
   sortBy: null,
-  currentPage: 0,
   pageNumber: 0,
   pageSize: 5,
 };
