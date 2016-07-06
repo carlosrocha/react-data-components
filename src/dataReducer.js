@@ -6,16 +6,6 @@ import {sort, filter} from './utils';
 import {ActionTypes} from './actions';
 import type {State, Action, SortBy} from './types';
 
-const filters = {
-  globalSearch: {
-    filter(a, b) {
-      a = String(a).toLowerCase().trim();
-      b = String(b).toLowerCase().trim();
-      return b.indexOf(a) >= 0;
-    },
-  },
-};
-
 const initialState: State = {
   initialData: [],
   data: [],
@@ -65,7 +55,7 @@ function dataSort(state, {value: sortBy}) {
   };
 }
 
-function dataFilter(state, {value: {key, value}}) {
+function dataFilter(state, {value: {key, value, filters}}) {
   const newFilterValues = { ...state.filterValues, [key]: value };
   let data = filter(filters, newFilterValues, state.initialData);
   if (state.sortBy) {

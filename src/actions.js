@@ -28,6 +28,11 @@ export function dataLoaded(value: Array<any>): Action {
   return { value, type: ActionTypes.DATA_LOADED };
 }
 
-export function dataFilter(key: string, value: string | number): Action {
-  return { value: {key, value}, type: ActionTypes.DATA_FILTER };
+// Probably a bad idea to send down `filters` here.
+export function dataFilter(
+  key: string,
+  value: string | number,
+  filters: { [name: string]: (a: any, b: any) => Boolean }
+): Action {
+  return { value: {key, value, filters}, type: ActionTypes.DATA_FILTER };
 }

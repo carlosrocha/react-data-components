@@ -12,17 +12,30 @@ import {
 } from './actions';
 import type {State} from './types';
 
+const filters = {
+  globalSearch: {
+    filter(a, b) {
+      a = String(a).toLowerCase().trim();
+      b = String(b).toLowerCase().trim();
+      return b.indexOf(a) >= 0;
+    },
+  },
+};
+
 type Props = {
   pageLengthOptions: Array<number>;
   initialData: Array<any>;
   columns: Array<any>;
   keys: Array<any>;
   buildRowOptions: any;
+  filters: any;
 };
 
 export default class DataTable extends Component {
   state: State;
   props: Props;
+
+  static defaultProps = { filters };
 
   constructor(props: Props) {
     super(props);
@@ -42,7 +55,9 @@ export default class DataTable extends Component {
   };
 
   onFilter = (key, {target: {value}}) => {
-    this.setState(state => dataReducer(state, dataFilter(key, value)));
+    this.setState(
+      state => dataReducer(state, dataFilter(key, value, this.props.filters))
+    );
   };
 
   render() {
