@@ -4,24 +4,29 @@ import {
   dataLoaded, dataSort, dataFilter,
   pageNumberChange, pageSizeChange,
 } from './actions';
-import type {State} from './types';
 import {containsIgnoreCase} from './utils';
+import type {State} from './types';
 
 type Props = {
   pageLengthOptions: Array<number>;
   initialData: Array<any>;
+  initialPageLength: number;
   columns: Array<any>;
-  keys: Array<any>;
+  keys: Array<string>;
   buildRowOptions: any;
   filters: any;
 };
 
+const mapPropsToState = (props) => ({
+  pageSize: props.initialPageLength,
+  sortBy: props.initialSortBy,
+});
+
 export default function enhanceDataTable(ComposedComponent) {
   return class DataTableEnhancer extends Component {
-    state: State;
-    props: Props;
-
     static defaultProps = {
+      initialPageLength: 10,
+      pageLengthOptions: [ 5, 10, 20 ],
       filters: {
         globalSearch: { filter: containsIgnoreCase },
       },
@@ -29,7 +34,10 @@ export default function enhanceDataTable(ComposedComponent) {
 
     constructor(props: Props) {
       super(props);
-      this.state = dataReducer(undefined, dataLoaded(props.initialData));
+      this.state = dataReducer(
+        mapPropsToState(props),
+        dataLoaded(props.initialData)
+      );
     }
 
     onPageNumberChange = value => {

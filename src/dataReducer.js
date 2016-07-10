@@ -11,7 +11,7 @@ const initialState: State = {
   data: [],
   page: [],
   filterValues: { globalSearch: '' },
-  totalPages: 1,
+  totalPages: 0,
   sortBy: null,
   pageNumber: 0,
   pageSize: 5,
@@ -73,12 +73,16 @@ function dataFilter(state, {value: {key, value, filters}}) {
 }
 
 function dataLoaded(state, {value: data}) {
+  // Filled missing properties.
+  const filledState = { ...initialState, ...state };
+  const {pageSize, pageNumber} = filledState;
+
   return {
-    ...state,
+    ...filledState,
     data,
     initialData: data,
-    page: calculatePage(data, state.pageSize, state.pageNumber),
-    totalPages: Math.ceil(data.length / state.pageSize),
+    page: calculatePage(data, pageSize, pageNumber),
+    totalPages: Math.ceil(data.length / pageSize),
   };
 }
 

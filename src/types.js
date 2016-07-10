@@ -4,9 +4,9 @@
 
 import {ActionTypes} from './actions';
 
-type Row = {[key: string]: string};
+export type Row = {[key: string]: string} | Array<string>;
 
-export type AppData = Array<Array<string> | Row>;
+export type AppData = Array<Row>;
 
 export type State = {
   initialData: AppData;
