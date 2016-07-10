@@ -5,6 +5,7 @@ import {
   pageNumberChange, pageSizeChange,
 } from './actions';
 import type {State} from './types';
+import {containsIgnoreCase} from './utils';
 
 type Props = {
   pageLengthOptions: Array<number>;
@@ -15,22 +16,16 @@ type Props = {
   filters: any;
 };
 
-const filters = {
-  globalSearch: {
-    filter(a, b) {
-      a = String(a).toLowerCase().trim();
-      b = String(b).toLowerCase().trim();
-      return b.indexOf(a) >= 0;
-    },
-  },
-};
-
 export default function enhanceDataTable(ComposedComponent) {
   return class DataTableEnhancer extends Component {
     state: State;
     props: Props;
 
-    static defaultProps = { filters };
+    static defaultProps = {
+      filters: {
+        globalSearch: { filter: containsIgnoreCase },
+      },
+    };
 
     constructor(props: Props) {
       super(props);

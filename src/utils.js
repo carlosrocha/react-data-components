@@ -58,3 +58,9 @@ export function filter(filters, filterValues, data) {
     )
   );
 }
+
+export function containsIgnoreCase(a, b) {
+  a = String(a).toLowerCase().trim();
+  b = String(b).toLowerCase().trim();
+  return b.indexOf(a) >= 0;
+}

@@ -7,17 +7,12 @@ import {
   pageNumberChange, pageSizeChange,
   dataSort, dataFilter, dataLoaded,
 } from '../actions';
+import {containsIgnoreCase} from '../utils';
 
 const data = [ [1, 2], [3, 4] ];
 
 const filters = {
-  globalSearch: {
-    filter(a, b) {
-      a = String(a).toLowerCase().trim();
-      b = String(b).toLowerCase().trim();
-      return b.indexOf(a) >= 0;
-    },
-  },
+  globalSearch: { filter: containsIgnoreCase },
 };
 
 describe('dataReducer', () => {
