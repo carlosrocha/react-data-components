@@ -10,6 +10,16 @@ import {
 
 const data = [ [1, 2], [3, 4] ];
 
+const filters = {
+  globalSearch: {
+    filter(a, b) {
+      a = String(a).toLowerCase().trim();
+      b = String(b).toLowerCase().trim();
+      return b.indexOf(a) >= 0;
+    },
+  },
+};
+
 describe('dataReducer', () => {
 
   it('loads data', () => {
@@ -113,7 +123,7 @@ describe('dataReducer', () => {
       pageSize: 1,
       totalPages: 2,
     };
-    const action = dataFilter('globalSearch', 'c');
+    const action = dataFilter('globalSearch', 'c', filters);
     const expected = {
       ...state,
       filterValues: { globalSearch: 'c' },
