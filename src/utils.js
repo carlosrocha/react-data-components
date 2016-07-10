@@ -1,25 +1,21 @@
 import type {SortBy, AppData} from './types';
 
-function sortBy(data, prop) {
-  return data.sort((rowA, rowB) => {
-    const a = rowA[prop];
-    const b = rowB[prop];
+function sortCompareFunction(prop, desc, rowA, rowB) {
+  const a = rowA[prop];
+  const b = rowB[prop];
 
-    if (a !== b) {
-      if (a > b || a === undefined) return 1;
-      if (a < b || b === undefined) return -1;
-    }
+  if (a !== b) {
+    if (a > b || a === undefined) return desc ? -1 : 1;
+    if (a < b || b === undefined) return desc ? 1 : -1;
+  }
 
-    return 0;
-  });
+  return 0;
 }
 
-export function sort(sortByValues: SortBy, data: AppData) {
-  const sortedData = sortBy(data, sortByValues.prop);
-  if (sortByValues.order === 'descending') {
-    sortedData.reverse();
-  }
-  return sortedData;
+export function sort({prop, order}: SortBy, data: AppData) {
+  const sortFunction =
+    sortCompareFunction.bind(null, prop, order === 'descending');
+  return data.sort(sortFunction);
 }
 
 function some(data, test) {
