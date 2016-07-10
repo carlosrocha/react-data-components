@@ -27,24 +27,34 @@ function some(data, test) {
     return data.some(test);
   } else {
     // Assume object.
-    return Object.keys(data).some(key => test(data[key], key));
+    for (let key in data) {
+      if (test(data[key], key, data)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
-/**
- * Example of filter and filterValues.
- * filters = { globalSearch: { filter: (a, b) => a === b } }
- * filterValues = { globalSearch: 'filter value' }
- */
 export function filter(filters, filterValues, data) {
-  return data.filter(row => some(filterValues, (filterValue, key) => {
-    const {filter: f, prop} = filters[key];
-    if (!prop) {
-      // Filter is for all properties
-      return some(row, value => f(filterValue, value));
-    } else {
-      // Filter is for one property
-      return f(filterValue, row[prop]);
-    }
-  }));
+  const filterAndVals = {};
+  for (let key in filterValues) {
+    filterAndVals[key] = {
+      value: filterValues[key],
+      filter: filters[key].filter,
+    };
+  }
+
+  return data.filter(
+    row => some(
+      filterAndVals,
+      ({filter, value, prop}) => {
+        if (!prop) {
+          return some(row, filter.bind(null, value));
+        } else {
+          return filter(value, row[key]);
+        }
+      }
+    )
+  );
 }
