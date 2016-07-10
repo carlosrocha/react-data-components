@@ -1,70 +1,15 @@
-/**
- * @flow
- */
-
 import React, {Component} from 'react';
 import Table from './Table';
+import enhanceDataTable from './enhanceDataTable';
 import Pagination from './Pagination';
-import dataReducer from './dataReducer';
-import {
-  dataLoaded, dataSort, dataFilter,
-  pageNumberChange, pageSizeChange,
-} from './actions';
-import type {State} from './types';
 
-const filters = {
-  globalSearch: {
-    filter(a, b) {
-      a = String(a).toLowerCase().trim();
-      b = String(b).toLowerCase().trim();
-      return b.indexOf(a) >= 0;
-    },
-  },
-};
-
-type Props = {
-  pageLengthOptions: Array<number>;
-  initialData: Array<any>;
-  columns: Array<any>;
-  keys: Array<any>;
-  buildRowOptions: any;
-  filters: any;
-};
-
-export default class DataTable extends Component {
-  state: State;
-  props: Props;
-
-  static defaultProps = { filters };
-
-  constructor(props: Props) {
-    super(props);
-    this.state = dataReducer(undefined, dataLoaded(props.initialData));
-  }
-
-  onPageNumberChange = value => {
-    this.setState(state => dataReducer(state, pageNumberChange(value)));
-  };
-
-  onPageSizeChange = ({target: {value}}) => {
-    this.setState(state => dataReducer(state, pageSizeChange(value)));
-  };
-
-  onSort = value => {
-    this.setState(state => dataReducer(state, dataSort(value)));
-  };
-
-  onFilter = (key, {target: {value}}) => {
-    this.setState(
-      state => dataReducer(state, dataFilter(key, value, this.props.filters))
-    );
-  };
+class DataTable extends Component {
 
   render() {
     const {
       page, pageSize, pageNumber,
       totalPages, sortBy, filterValues,
-    } = this.state;
+    } = this.props.data;
 
     return (
       <div className="container">
@@ -75,7 +20,7 @@ export default class DataTable extends Component {
               <select
                 id="page-menu"
                 value={pageSize}
-                onChange={this.onPageSizeChange}
+                onChange={this.props.onPageSizeChange}
               >
                 {this.props.pageLengthOptions.map(opt =>
                   <option key={opt} value={opt}>{opt}</option>
@@ -88,7 +33,7 @@ export default class DataTable extends Component {
                 id="search-field"
                 type="search"
                 value={filterValues.globalSearch}
-                onChange={this.onFilter.bind(null, 'globalSearch')}
+                onChange={this.props.onFilter.bind(null, 'globalSearch')}
               />
             </div>
           </div>
@@ -97,7 +42,7 @@ export default class DataTable extends Component {
               className="pagination pull-right"
               currentPage={pageNumber}
               totalPages={totalPages}
-              onChangePage={this.onPageNumberChange}
+              onChangePage={this.props.onPageNumberChange}
             />
           </div>
         </div>
@@ -108,10 +53,12 @@ export default class DataTable extends Component {
           keys={this.props.keys}
           buildRowOptions={this.props.buildRowOptions}
           sortBy={sortBy}
-          onSort={this.onSort}
+          onSort={this.props.onSort}
         />
       </div>
     );
   }
 
 }
+
+export default enhanceDataTable(DataTable);
