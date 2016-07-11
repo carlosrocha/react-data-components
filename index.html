@@ -1,6 +1,8 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/css/table-twbs.css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/css/pagination.css">
@@ -13,6 +15,11 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-left: 10px;
+  }
+  .page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
   }
 </style>
 <title>React Data Components</title>
@@ -31,42 +38,38 @@
     <h2>DataTable</h2>
     <div id="datatable"></div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.min.js"></script>
   <script src="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/dist/react-data-components.min.js"></script>
+  <script src="data.js"></script>
   <script>
     function buildTable(data) {
       var renderMapUrl = function(val, row) {
-        return React.createElement(
-          "a", {
-            href: ("https://www.google.com/maps?q=" + row['LAT'] + "," + row['LON'])
-          }, 
-          "Google Maps"
+        return React.createElement('a', {
+            href: ('https://www.google.com/maps?q=' + row['lat'] + ',' + row['long'])
+          },
+          'Google Maps'
         );
       };
 
       var tableColumns = [
-        { title: 'Name', prop: 'NAME' },
-        { title: 'City', prop: 'CITY' },
-        { title: 'Street address', prop: 'STREET ADDRESS' },
-        { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
+        { title: 'Name', prop: 'name' },
+        { title: 'City', prop: 'city' },
+        { title: 'Street address', prop: 'street' },
+        { title: 'Phone', prop: 'phone', defaultContent: '<no phone>' },
         { title: 'Map', render: renderMapUrl, className: 'text-center' }
       ];
 
       return (
         React.createElement(ReactDataComponents.DataTable, {
-          keys: [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS'], 
+          keys: 'id',
           columns: tableColumns,
           initialData: data,
           initialPageLength: 5,
-          initialSortBy: { prop: 'CITY', order: 'desc'},
-          pageLengthOptions: [ 5, 20, 50]}
-        )
+          initialSortBy: { prop: 'city', order: 'desc'}
+        })
       );
     }
 
-    d3.csv('sample_data.csv', function(error, rows) {
-      React.render(buildTable(rows), document.getElementById('datatable'));
-    });
+    React.render(buildTable(data), document.getElementById('datatable'));
   </script>
 </body>
