@@ -12,10 +12,9 @@
   "license": "MIT",
   "main": "./lib/index",
   "files": [
-    "CHANGELOG.md",
-    "LICENSE",
     "css",
     "lib",
+    "dist",
     "src"
   ],
   "repository": {
@@ -48,8 +47,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "preversion": "webpack -p && git add dist",
-    "prepublish": "rimraf lib && babel src -d lib",
+    "prepublish": "webpack -p && rimraf lib && babel src -d lib",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "npm run lint && jest"
   },

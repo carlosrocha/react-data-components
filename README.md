@@ -1,7 +1,6 @@
 # react-data-components
 
 [![Build Status](https://travis-ci.org/carlosrocha/react-data-components.svg?branch=master)](https://travis-ci.org/carlosrocha/react-data-components)
-![](https://badge-size.herokuapp.com/carlosrocha/react-data-components/master/dist/react-data-components.min.js)
 
 DataTable: [Live demo and source](https://jsbin.com/ziyawu/9/edit?js,output)
 
