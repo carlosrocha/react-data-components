@@ -5,18 +5,17 @@ import { Table, Pagination } from 'react-data-components';
 
 const renderMapUrl =
   (val, row) =>
-    <a href={`https://www.google.com/maps?q=${row['LAT']},${row['LON']}`}>
+    <a href={`https://www.google.com/maps?q=${row['lat']},${row['long']}`}>
       Google Maps
     </a>;
 
-const keys = [ 'NAME', 'OUTLET TYPE', 'STREET ADDRESS' ];
 const pageLengthOptions = [ 5, 10, 50 ];
 
 const columns = [
-  { title: 'Name', prop: 'NAME'  },
-  { title: 'City', prop: 'CITY' },
-  { title: 'Street address', prop: 'STREET ADDRESS' },
-  { title: 'Phone', prop: 'PHONE NUMBER', defaultContent: '<no phone>' },
+  { title: 'Name', prop: 'name'  },
+  { title: 'City', prop: 'city' },
+  { title: 'Street address', prop: 'street' },
+  { title: 'Phone', prop: 'phone', defaultContent: '<no phone>' },
   { title: 'Map', render: renderMapUrl, className: 'text-center' },
 ];
 
@@ -88,7 +87,7 @@ export default class FluxTable extends Component {
         <Table
           className="table table-bordered"
           columns={columns}
-          keys={keys}
+          keys="id"
           dataArray={data.page}
           sortBy={data.sortBy}
           onSort={ViewActionCreators.sort}

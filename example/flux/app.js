@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getCsvFile } from './WebAPIUtils';
+import { getData } from './WebAPIUtils';
 import DataStore from './DataStore';
 import FluxTable from './FluxTable';
 
@@ -20,6 +20,6 @@ DataStore.init({
   },
 });
 
-getCsvFile('/sample_data.csv');
+getData('/data.json');
 
 ReactDOM.render(<FluxTable />, document.getElementById('app'));

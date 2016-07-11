@@ -1,6 +1,7 @@
-import { csv } from 'd3-request';
 import { receiveData } from './ServerActionCreators';
 
-export function getCsvFile(csvFile) {
-  csv(csvFile, (err, data) => receiveData(data));
+export function getData(csvFile) {
+  fetch(csvFile)
+    .then(res => res.json())
+    .then(data => receiveData(data));
 }
