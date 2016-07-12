@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
 
 const simpleGet = key => data => data[key];
 const keyGetter = keys => data => keys.map(key => data[key]);
@@ -93,9 +92,8 @@ export default class Table extends Component {
     // If no width was specified, then set the width that the browser applied
     // initially to avoid recalculating width between pages.
     this._headers.forEach(header => {
-      const thDom = ReactDOM.findDOMNode(header);
-      if (!thDom.style.width) {
-        thDom.style.width = `${thDom.offsetWidth}px`;
+      if (!header.style.width) {
+        header.style.width = `${header.offsetWidth}px`;
       }
     });
   }
