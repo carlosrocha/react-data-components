@@ -7,6 +7,11 @@ class DataTable extends Component {
 
   render() {
     const {
+      onFilter, onPageSizeChange, onPageNumberChange, onSort,
+      pageLengthOptions, columns, keys, buildRowOptions,
+    } = this.props;
+
+    const {
       page, pageSize, pageNumber,
       totalPages, sortBy, filterValues,
     } = this.props.data;
@@ -20,9 +25,9 @@ class DataTable extends Component {
               <select
                 id="page-menu"
                 value={pageSize}
-                onChange={this.props.onPageSizeChange}
+                onChange={onPageSizeChange}
               >
-                {this.props.pageLengthOptions.map(opt =>
+                {pageLengthOptions.map(opt =>
                   <option key={opt} value={opt}>{opt}</option>
                 )}
               </select>
@@ -33,7 +38,7 @@ class DataTable extends Component {
                 id="search-field"
                 type="search"
                 value={filterValues.globalSearch}
-                onChange={this.props.onFilter.bind(null, 'globalSearch')}
+                onChange={onFilter.bind(null, 'globalSearch')}
               />
             </div>
           </div>
@@ -42,18 +47,18 @@ class DataTable extends Component {
               className="pagination pull-right"
               currentPage={pageNumber}
               totalPages={totalPages}
-              onChangePage={this.props.onPageNumberChange}
+              onChangePage={onPageNumberChange}
             />
           </div>
         </div>
         <Table
           className="table table-bordered"
           dataArray={page}
-          columns={this.props.columns}
-          keys={this.props.keys}
-          buildRowOptions={this.props.buildRowOptions}
+          columns={columns}
+          keys={keys}
+          buildRowOptions={buildRowOptions}
           sortBy={sortBy}
-          onSort={this.props.onSort}
+          onSort={onSort}
         />
       </div>
     );

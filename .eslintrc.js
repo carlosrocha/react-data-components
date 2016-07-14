@@ -31,6 +31,7 @@ module.exports = {
   rules: {
     'strict': OFF,
     'quotes': [2, 'single'],
+    'max-len': [2, 80],
     'curly': [2, 'multi-line'],
     'eqeqeq': [2, 'smart'],
     'block-scoped-var': 2,

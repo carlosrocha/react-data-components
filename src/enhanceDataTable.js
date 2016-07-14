@@ -40,21 +40,21 @@ export default function enhanceDataTable(ComposedComponent) {
       );
     }
 
-    onPageNumberChange = value => {
-      this.setState(state => dataReducer(state, pageNumberChange(value)));
+    onPageNumberChange = (value) => {
+      this.setState((state) => dataReducer(state, pageNumberChange(value)));
     };
 
     onPageSizeChange = ({target: {value}}) => {
-      this.setState(state => dataReducer(state, pageSizeChange(value)));
+      this.setState((state) => dataReducer(state, pageSizeChange(value)));
     };
 
-    onSort = value => {
-      this.setState(state => dataReducer(state, dataSort(value)));
+    onSort = (value) => {
+      this.setState((state) => dataReducer(state, dataSort(value)));
     };
 
     onFilter = (key, {target: {value}}) => {
-      this.setState(
-        state => dataReducer(state, dataFilter(key, value, this.props.filters))
+      this.setState((state) =>
+        dataReducer(state, dataFilter(key, value, this.props.filters))
       );
     };
 
@@ -70,5 +70,6 @@ export default function enhanceDataTable(ComposedComponent) {
         />
       );
     }
+
   };
 }

@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 
 const simpleGet = key => data => data[key];
 const keyGetter = keys => data => keys.map(key => data[key]);
@@ -6,7 +6,7 @@ const keyGetter = keys => data => keys.map(key => data[key]);
 const isEmpty = value => value == null || value === '';
 
 const getCellValue =
-  ({ prop, defaultContent, render }, row) =>
+  ({prop, defaultContent, render}, row) =>
     // Return `defaultContent` if the value is empty.
     !isEmpty(prop) && isEmpty(row[prop]) ? defaultContent :
       // Use the render function for the value.
@@ -15,7 +15,7 @@ const getCellValue =
       row[prop];
 
 const getCellClass =
-  ({ prop, className }, row) =>
+  ({prop, className}, row) =>
     !isEmpty(prop) && isEmpty(row[prop]) ? 'empty-cell' :
       typeof className == 'function' ? className(row[prop], row) :
       className;
@@ -38,12 +38,7 @@ function buildSortProps(col, sortBy, onSort) {
 }
 
 export default class Table extends Component {
-
   _headers = [];
-
-  static defaultProps = {
-    buildRowOptions: () => ({}),
-  };
 
   static propTypes = {
     keys: PropTypes.oneOfType([
@@ -99,14 +94,12 @@ export default class Table extends Component {
   }
 
   render() {
-    const { columns, keys, buildRowOptions, sortBy, onSort } = this.props;
+    const {columns, keys, buildRowOptions, sortBy, onSort} = this.props;
 
     const headers = columns.map((col, idx) => {
       let sortProps, order;
       // Only add sorting events if the column has a property and is sortable.
-      if (typeof onSort == 'function' &&
-          col.sortable !== false &&
-          'prop' in col) {
+      if (onSort && col.sortable !== false && 'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
         order = sortProps['aria-sort'];
       }
@@ -120,33 +113,33 @@ export default class Table extends Component {
           scope="col"
           {...sortProps}>
           <span>{col.title}</span>
-          {typeof order != 'undefined' ?
-            <span className={`sort-icon sort-${order}`} aria-hidden="true" /> :
-            null}
+          {!order ? null :
+            <span className={`sort-icon sort-${order}`} aria-hidden="true" />}
         </th>
       );
     });
 
     const getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
-    const rows = this.props.dataArray.map(
-      row =>
-        <tr key={getKeys(row)} {...buildRowOptions(row)}>
-          {columns.map(
-            (col, i) =>
-              <td key={i} className={getCellClass(col, row)}>
-                {getCellValue(col, row)}
-              </td>
+    const rows = this.props.dataArray.map(row => {
+      const trProps = buildRowOptions ? buildRowOptions(row) : {};
+
+      return (
+        <tr key={getKeys(row)} {...trProps}>
+          {columns.map((col, i) =>
+            <td key={i} className={getCellClass(col, row)}>
+              {getCellValue(col, row)}
+            </td>
           )}
         </tr>
-    );
+      );
+    });
 
     return (
       <table {...this.props}>
-        {sortBy ?
+        {!sortBy ? null :
           <caption className="sr-only" role="alert" aria-live="polite">
             {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
-          </caption> : null
-        }
+          </caption>}
         <thead>
           <tr>
             {headers}
