@@ -22,8 +22,7 @@
     "url": "https://github.com/carlosrocha/react-data-components"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0-0",
-    "react-dom": "^0.14.0 || ^15.0.0-0"
+    "react": "^0.14.0 || ^15.0.0-0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
@@ -47,8 +46,9 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
+    "clean": "rimraf lib dist coverage",
     "lint": "eslint src",
-    "prepublish": "webpack -p && rimraf lib && babel src -d lib",
+    "prepublish": "npm run clean && webpack && babel src -d lib",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "npm run lint && jest"
   },

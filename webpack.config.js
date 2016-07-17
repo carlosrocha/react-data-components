@@ -1,7 +1,13 @@
+'use strict';
+
+const path = require('path');
+const webpack = require('webpack');
+
 module.exports = {
   entry: './src/index',
   output: {
-    filename: 'dist/react-data-components.min.js',
+    path: path.join(__dirname, 'dist'),
+    filename: 'react-data-components.min.js',
     library: 'ReactDataComponents',
     libraryTarget: 'umd',
   },
@@ -12,16 +18,22 @@ module.exports = {
       commonjs: 'react',
       commonjs2: 'react',
     },
-    'react-dom': {
-      root: 'ReactDOM',
-      amd: 'react-dom',
-      commonjs: 'react-dom',
-      commonjs2: 'react-dom',
-    },
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader' },
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
     ],
   },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true,
+        warnings: false,
+      },
+    }),
+  ],
 };
