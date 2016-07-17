@@ -94,7 +94,10 @@ export default class Table extends Component {
   }
 
   render() {
-    const {columns, keys, buildRowOptions, sortBy, onSort} = this.props;
+    const {
+      columns, keys, buildRowOptions, sortBy,
+      onSort, dataArray, ...otherProps,
+    } = this.props;
 
     const headers = columns.map((col, idx) => {
       let sortProps, order;
@@ -120,7 +123,7 @@ export default class Table extends Component {
     });
 
     const getKeys = Array.isArray(keys) ? keyGetter(keys) : simpleGet(keys);
-    const rows = this.props.dataArray.map(row => {
+    const rows = dataArray.map(row => {
       const trProps = buildRowOptions ? buildRowOptions(row) : {};
 
       return (
@@ -135,7 +138,7 @@ export default class Table extends Component {
     });
 
     return (
-      <table {...this.props}>
+      <table {...otherProps}>
         {!sortBy ? null :
           <caption className="sr-only" role="alert" aria-live="polite">
             {`Sorted by ${sortBy.prop}: ${sortBy.order} order`}
