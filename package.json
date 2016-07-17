@@ -36,7 +36,6 @@
     "babel-preset-stage-1": "^6.5.0",
     "eslint": "^2.13.1",
     "eslint-plugin-react": "^5.2.2",
-    "flux": "^2.1.1",
     "jest": "^13.0.0",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",

@@ -24,6 +24,7 @@ pagination and page size.
 
 ```javascript
 var React = require('react');
+var ReactDOM = require('react-dom');
 var DataTable = require('react-data-components').DataTable;
 
 var columns = [
@@ -39,53 +40,16 @@ var data = [
   // [ 'name value', 'city value', 'address value', 'phone value' ]
 ];
 
-React.render((
+ReactDOM.render((
     <DataTable
-      className="container"
-      keys={[ 'name', 'address' ]}
+      keys="name"
       columns={columns}
       initialData={data}
       initialPageLength={5}
       initialSortBy={{ prop: 'city', order: 'descending' }}
-      pageLengthOptions={[ 5, 20, 50 ]}
     />
-  ), document.body);
+  ), document.getElementById('root'));
 ```
 
-See [complete example](example/table/main.js), see [Flux example](example/flux/).
+See [complete example](example/table/main.js).
 
-## DataMixin options
-
-#### `keys: Array<string> | string`
-Properties that make each row unique, e.g. an id.
-
-#### `columns: Array<ColumnOption>`
-See `Table` column options.
-
-#### `pageLengthOptions: Array<number>`
-
-#### `initialData: Array<object | Array<any>>`
-
-#### `initialPageLength: number`
-
-#### `initialSortBy: { prop: string | number, order: string }`
-
-## Table column options
-
-#### `title: string`
-The title to display on the header.
-
-#### `prop: string | number`
-The name of the property or index on the data.
-
-#### `render: (val: any, row: any) => any`
-Function to render a different component.
-
-#### `className: string | (val: any, row: any) => string`
-Class name for the td.
-
-#### `defaultContent: string`
-
-#### `sortable: boolean`
-
-#### `width: string | number`

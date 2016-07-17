@@ -6,7 +6,6 @@ module.exports = {
     contentBase: __dirname,
   },
   entry: {
-    flux: './flux/app',
     table: './table/main',
     redux: './redux/index',
   },
