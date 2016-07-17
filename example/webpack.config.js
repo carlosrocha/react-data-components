@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   context: __dirname,
   devServer: {
@@ -6,6 +8,7 @@ module.exports = {
   entry: {
     flux: './flux/app',
     table: './table/main',
+    redux: './redux/index',
   },
   output: {
     filename: '[name].entry.js',
@@ -13,7 +16,7 @@ module.exports = {
   resolve: {
     alias: {
       // Use uncompiled version
-      'react-data-components': '../../src',
+      'react-data-components': path.join(__dirname, '../src'),
     },
   },
   module: {
