@@ -4,8 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/css/table-twbs.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/css/pagination.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/v1.0.0/css/table-twbs.css">
 <style>
   body {
     font-family: 'PT Sans', sans-serif;
@@ -30,16 +29,16 @@
     </div>
 
     <p class="lead">
-      Reusable <a href="https://facebook.github.io/react/">React</a>
-      components for displaying data, also compatible with Flux.
+      <a href="https://facebook.github.io/react/">React</a> components for sorting, filtering and pagination of data.
       See the <a href="https://github.com/carlosrocha/react-data-components">source code.</a>
     </p>
 
     <h2>DataTable</h2>
     <div id="datatable"></div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.min.js"></script>
-  <script src="https://cdn.rawgit.com/carlosrocha/react-data-components/v0.1.1/dist/react-data-components.min.js"></script>
+  <script src="https://npmcdn.com/react@15.2.1/dist/react.min.js"></script>
+  <script src="https://npmcdn.com/react-dom@15.2.1/dist/react-dom.min.js"></script>
+  <script src="https://npmcdn.com/react-data-components@1.0.0/dist/react-data-components.min.js"></script>
   <script src="data.js"></script>
   <script>
     function buildTable(data) {
@@ -70,6 +69,6 @@
       );
     }
 
-    React.render(buildTable(data), document.getElementById('datatable'));
+    ReactDOM.render(buildTable(data), document.getElementById('datatable'));
   </script>
 </body>
