@@ -1,3 +1,9 @@
+## 1.0.0
+Overall just internal changes.
+* Remove DataMixin in favor of a component.
+* Use a reducer for changes of data.
+* Use React 15.
+
 ## 0.6.0
 * Support for React 0.14.
 * Use lodash for sorting.
