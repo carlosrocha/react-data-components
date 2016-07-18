@@ -51,9 +51,10 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
+    "build": "webpack && babel src -d lib",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src",
-    "prepublish": "npm run clean && webpack && babel src -d lib",
+    "prepublish": "npm run clean && npm run build",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "npm run lint && jest"
   },
