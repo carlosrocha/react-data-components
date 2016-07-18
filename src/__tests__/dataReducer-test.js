@@ -1,3 +1,4 @@
+jest.unmock('lodash');
 jest.unmock('../dataReducer');
 jest.unmock('../utils');
 jest.unmock('../actions');
