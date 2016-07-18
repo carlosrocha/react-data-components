@@ -1,29 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {PartialTable} from 'react-data-components';
-import {containsIgnoreCase} from 'react-data-components/utils';
-import {
-  dataFilter, dataSort, pageSizeChange, pageNumberChange,
-} from 'react-data-components/actions';
+import {PartialTable, utils, actions} from 'react-data-components';
 
 const filters = {
-  globalSearch: { filter: containsIgnoreCase },
+  globalSearch: { filter: utils.containsIgnoreCase },
 };
 
 const mapStateToProps = (state) => ({ data: state });
 
 const mapDispatchToProps = (dispatch) => ({
   onFilter(key, {target: {value}}) {
-    dispatch(dataFilter(key, value, filters));
+    dispatch(actions.dataFilter(key, value, filters));
   },
   onSort(value) {
-    dispatch(dataSort(value));
+    dispatch(actions.dataSort(value));
   },
   onPageSizeChange({target: {value}}) {
-    dispatch(pageSizeChange(value));
+    dispatch(actions.pageSizeChange(value));
   },
   onPageNumberChange(value) {
-    dispatch(pageNumberChange(value));
+    dispatch(actions.pageNumberChange(value));
   },
 });
 

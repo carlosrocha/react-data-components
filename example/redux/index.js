@@ -2,8 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {dataReducer} from 'react-data-components';
-import {dataLoaded} from 'react-data-components/actions';
+import {dataReducer, actions} from 'react-data-components';
 import DataTable from './containers/DataTable';
 
 const store = createStore(dataReducer);
@@ -34,5 +33,5 @@ render(
 fetch('/data.json')
   .then(res => res.json())
   .then(data => {
-    store.dispatch(dataLoaded(data));
+    store.dispatch(actions.dataLoaded(data));
   });
