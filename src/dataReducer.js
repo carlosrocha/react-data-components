@@ -58,6 +58,7 @@ function dataSort(state, {value: sortBy}) {
 function dataFilter(state, {value: {key, value, filters}}) {
   const newFilterValues = { ...state.filterValues, [key]: value };
   let data = filter(filters, newFilterValues, state.initialData);
+
   if (state.sortBy) {
     data = sort(state.sortBy, data);
   }
@@ -76,6 +77,10 @@ function dataLoaded(state, {value: data}) {
   // Filled missing properties.
   const filledState = { ...initialState, ...state };
   const {pageSize, pageNumber} = filledState;
+
+  if (state.sortBy) {
+    data = sort(state.sortBy, data);
+  }
 
   return {
     ...filledState,
