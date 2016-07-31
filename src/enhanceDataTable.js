@@ -40,6 +40,12 @@ export default function enhanceDataTable(ComposedComponent) {
       );
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState((state) =>
+        dataReducer(state, dataLoaded(nextProps.initialData))
+      );
+    }
+
     onPageNumberChange = (value) => {
       this.setState((state) => dataReducer(state, pageNumberChange(value)));
     };
