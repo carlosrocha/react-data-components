@@ -33,5 +33,5 @@ function buildTable(data) {
 fetch('/data.json')
   .then(res => res.json())
   .then((rows) => {
-    ReactDOM.render(buildTable(rows), document.getElementById('app'));
+    ReactDOM.render(buildTable(rows), document.getElementById('root'));
   });
