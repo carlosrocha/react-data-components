@@ -46,6 +46,7 @@ describe('dataReducer', () => {
       ...state,
       page: data.slice(1, 2),
       pageNumber: 1,
+      totalPages: 2,
     };
 
     expect(dataReducer(state, action)).toEqual(expected);

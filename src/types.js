@@ -4,6 +4,14 @@
 
 import {ActionTypes} from './actions';
 
+export type Value = string | number;
+
+export type Filters = {
+  [name: string]: {
+    filter: (a: Value, b: Value) => Boolean;
+  };
+};
+
 export type Row = {[key: string]: string} | Array<string>;
 
 export type AppData = Array<Row>;
@@ -27,6 +35,6 @@ export type Action = {
 };
 
 export type SortBy = {
-  prop: string | number;
+  prop: Value;
   order: 'ascending' | 'descending';
 };

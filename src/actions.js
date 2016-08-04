@@ -2,7 +2,7 @@
  * @flow
  */
 
-import type {Action, SortBy} from './types';
+import type {Action, SortBy, Value, Filters} from './types';
 
 export const ActionTypes = {
   DATA_LOADED: 'DATA_LOADED',
@@ -31,8 +31,8 @@ export function dataLoaded(value: Array<any>): Action {
 // Probably a bad idea to send down `filters` here.
 export function dataFilter(
   key: string,
-  value: string | number,
-  filters: { [name: string]: (a: any, b: any) => Boolean }
+  value: Value,
+  filters: Filters
 ): Action {
   return { value: {key, value, filters}, type: ActionTypes.DATA_FILTER };
 }

@@ -18,29 +18,37 @@ const initialState: State = {
 };
 
 function calculatePage(data, pageSize, pageNumber) {
+  if (pageSize === 0) {
+    return { page: data, totalPages: 0 };
+  }
+
   const start = pageSize * pageNumber;
-  return data.slice(start, start + pageSize);
+
+  return {
+    page: data.slice(start, start + pageSize),
+    totalPages: Math.ceil(data.length / pageSize),
+  };
 }
 
 function pageNumberChange(state, {value: pageNumber}) {
   return {
     ...state,
+    ...calculatePage(state.data, state.pageSize, pageNumber),
     pageNumber,
-    page: calculatePage(state.data, state.pageSize, pageNumber),
   };
 }
 
 function pageSizeChange(state, action) {
   const newPageSize = Number(action.value);
   const {pageNumber, pageSize} = state;
-  const newPageNumber = Math.floor((pageNumber * pageSize) / newPageSize);
+  const newPageNumber = newPageSize ?
+    Math.floor((pageNumber * pageSize) / newPageSize) : 0;
 
   return {
     ...state,
-    page: calculatePage(state.data, newPageSize, newPageNumber),
+    ...calculatePage(state.data, newPageSize, newPageNumber),
     pageSize: newPageSize,
     pageNumber: newPageNumber,
-    totalPages: Math.ceil(state.data.length / newPageSize),
   };
 }
 
@@ -49,9 +57,9 @@ function dataSort(state, {value: sortBy}) {
 
   return {
     ...state,
+    ...calculatePage(data, state.pageSize, state.pageNumber),
     sortBy,
     data,
-    page: calculatePage(data, state.pageSize, state.pageNumber),
   };
 }
 
@@ -65,11 +73,10 @@ function dataFilter(state, {value: {key, value, filters}}) {
 
   return {
     ...state,
+    ...calculatePage(data, state.pageSize, state.pageNumber),
     data,
     filterValues: newFilterValues,
-    page: calculatePage(data, state.pageSize, state.pageNumber),
     pageNumber: 0,
-    totalPages: Math.ceil(data.length / state.pageSize),
   };
 }
 
@@ -84,10 +91,9 @@ function dataLoaded(state, {value: data}) {
 
   return {
     ...filledState,
+    ...calculatePage(data, pageSize, pageNumber),
     data,
     initialData: data,
-    page: calculatePage(data, pageSize, pageNumber),
-    totalPages: Math.ceil(data.length / pageSize),
   };
 }
 

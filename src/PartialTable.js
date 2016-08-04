@@ -27,7 +27,9 @@ export default class PartialTable extends Component {
                 onChange={onPageSizeChange}
               >
                 {pageLengthOptions.map(opt =>
-                  <option key={opt} value={opt}>{opt}</option>
+                  <option key={opt} value={opt}>
+                    {opt === 0 ? 'All' : opt}
+                  </option>
                 )}
               </select>
             </div>
