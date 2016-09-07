@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/carlosrocha/react-data-components.svg?branch=master)](https://travis-ci.org/carlosrocha/react-data-components)
 
-DataTable: [Live demo and source](https://jsbin.com/ziyawu/9/edit?js,output)
+DataTable: [Live demo and source](https://jsbin.com/ziyawu/edit?js,output)
 
 SelectableTable: [Live demo and source](https://jsbin.com/yokara/edit?js,output)
 
