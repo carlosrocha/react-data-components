@@ -132,4 +132,30 @@ describe('dataReducer', () => {
     expect(dataReducer(state, action)).toEqual(expected);
   });
 
+  it('filters on different page', () => {
+    const data = [ ['carlos', 'r'], [3, 4] ];
+    const state = {
+      data,
+      initialData: data,
+      page: data.slice(0, 1),
+      pageSize: 1,
+      totalPages: 2,
+    };
+    const initState = {
+      ...state,
+      pageNumber: 1,
+    };
+    const action = dataFilter('globalSearch', 'c', filters);
+    const expected = {
+      ...state,
+      pageNumber: 0,
+      filterValues: { globalSearch: 'c' },
+      data: [ ['carlos', 'r'] ],
+      page: [ ['carlos', 'r'] ],
+      totalPages: 1,
+    };
+
+    expect(dataReducer(state, action)).toEqual(expected);
+  });
+
 });

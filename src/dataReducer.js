@@ -73,7 +73,7 @@ function dataFilter(state, {value: {key, value, filters}}) {
 
   return {
     ...state,
-    ...calculatePage(data, state.pageSize, state.pageNumber),
+    ...calculatePage(data, state.pageSize, 0),
     data,
     filterValues: newFilterValues,
     pageNumber: 0,
