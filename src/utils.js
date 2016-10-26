@@ -1,4 +1,5 @@
-import {orderBy, some} from 'lodash';
+import orderBy from 'lodash/orderBy';
+import some from 'lodash/some';
 import type {SortBy, AppData, Value, Filters} from './types';
 
 export function sort({prop, order}: SortBy, data: AppData) {
