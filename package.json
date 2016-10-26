@@ -39,6 +39,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
+    "flow-bin": "^0.33.0",
     "jest": "^16.0.2",
     "lodash-webpack-plugin": "^0.10.2",
     "react": "^15.1.0",
@@ -52,11 +53,12 @@
   },
   "scripts": {
     "build": "webpack && babel src -d lib",
+    "check": "flow check",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src",
     "prepublish": "npm run clean && npm run build",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
-    "test": "npm run lint && jest"
+    "test": "npm run lint && npm run check && jest"
   },
   "jest": {
     "testPathDirs": [
