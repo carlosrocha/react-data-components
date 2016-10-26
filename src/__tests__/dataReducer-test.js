@@ -1,8 +1,3 @@
-jest.unmock('lodash');
-jest.unmock('../dataReducer');
-jest.unmock('../utils');
-jest.unmock('../actions');
-
 import dataReducer from '../dataReducer';
 import {
   pageNumberChange, pageSizeChange,

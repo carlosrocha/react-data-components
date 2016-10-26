@@ -1,5 +1,3 @@
-jest.unmock('../Table');
-
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import Table from '../Table';
