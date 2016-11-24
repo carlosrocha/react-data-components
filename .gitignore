@@ -5,3 +5,4 @@ lib
 coverage
 dist
 npm-debug.log
+.idea/

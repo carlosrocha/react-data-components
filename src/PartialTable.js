@@ -7,7 +7,7 @@ export default class PartialTable extends Component {
   render() {
     const {
       onFilter, onPageSizeChange, onPageNumberChange, onSort,
-      pageLengthOptions, columns, keys, buildRowOptions,
+      pageLengthOptions, columns, keys, buildRowOptions, hideSearch = false,
     } = this.props;
 
     const {
@@ -33,15 +33,16 @@ export default class PartialTable extends Component {
                 )}
               </select>
             </div>
-            <div>
-              <label htmlFor="search-field">Search:</label>
-              <input
-                id="search-field"
-                type="search"
-                value={filterValues.globalSearch}
-                onChange={onFilter.bind(null, 'globalSearch')}
-              />
-            </div>
+            { hideSearch ? null :
+              <div>
+                <label htmlFor="search-field">Search:</label>
+                <input
+                  id="search-field"
+                  type="search"
+                  value={filterValues.globalSearch}
+                  onChange={onFilter.bind(null, 'globalSearch')}
+                />
+              </div> }
           </div>
           <div className="col-xs-8">
             <Pagination
