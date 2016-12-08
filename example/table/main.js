@@ -19,9 +19,9 @@ function buildTable(data) {
 
   return (
     <DataTable
-      dropdown={true}
-      pagination={true}
-      search={true}
+      dropdown
+      pagination
+      search
       className="container"
       keys="id"
       columns={tableColumns}
