@@ -6,7 +6,7 @@ export default class PartialTable extends Component {
 
   render() {
     const {
-      onFilter, onPageSizeChange, onPageNumberChange, onSort,
+      className, onFilter, onPageSizeChange, onPageNumberChange, onSort,
       pageLengthOptions, columns, keys, buildRowOptions,
     } = this.props;
 
@@ -16,7 +16,7 @@ export default class PartialTable extends Component {
     } = this.props.data;
 
     return (
-      <div className="container">
+      <div className={className}>
         <div className="row">
           <div className="col-xs-4">
             <div>
