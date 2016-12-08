@@ -7,6 +7,7 @@ import {ActionTypes} from './actions';
 import type {State, Action, SortBy} from './types';
 
 const initialState: State = {
+  name: '',
   initialData: [],
   data: [],
   page: [],
@@ -97,7 +98,7 @@ function dataLoaded(state, {value: data}) {
   };
 }
 
-export default function dataReducer(
+export function dataReducer(
   state: State = initialState,
   action: Action
 ): State {
@@ -119,4 +120,17 @@ export default function dataReducer(
   }
 
   return state;
+}
+
+export function namedDataReducer(name: string) {
+  const namedInitialState = {
+    ...initialState,
+    name
+  };
+  return (state: State = namedInitialState, action: Action) => {
+    if (action.name === state.name) {
+      return dataReducer(state, action);
+    }
+    return state;
+  };
 }

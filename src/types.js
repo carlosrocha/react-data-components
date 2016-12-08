@@ -17,6 +17,7 @@ export type Row = {[key: string]: string} | Array<string>;
 export type AppData = Array<Row>;
 
 export type State = {
+  name: string;
   initialData: AppData;
   data: AppData;
   page: AppData;
@@ -32,6 +33,7 @@ export type State = {
 export type Action = {
   type: $Keys<typeof ActionTypes>;
   value: any;
+  name: string;
 };
 
 export type SortBy = {

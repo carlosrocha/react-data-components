@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import dataReducer from './dataReducer';
+import {dataReducer} from './dataReducer';
 import {
   dataLoaded, dataSort, dataFilter,
   pageNumberChange, pageSizeChange,
