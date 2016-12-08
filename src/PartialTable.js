@@ -17,7 +17,7 @@ export default class PartialTable extends Component {
     } = this.props.data;
 
     return (
-      <div className={className}>
+      <div className={className || 'container'}>
         <div className="row">
           <div className="col-xs-4">
             {dropdown ? <div>
