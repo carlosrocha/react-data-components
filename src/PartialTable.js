@@ -6,7 +6,8 @@ export default class PartialTable extends Component {
 
   render() {
     const {
-      search, dropdown, pagination, className, onFilter, onPageSizeChange, onPageNumberChange, onSort,
+      search, dropdown, pagination, className,
+      onFilter, onPageSizeChange, onPageNumberChange, onSort,
       pageLengthOptions, columns, keys, buildRowOptions,
     } = this.props;
 
