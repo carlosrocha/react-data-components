@@ -13,19 +13,19 @@ export const ActionTypes = {
 };
 
 export function pageNumberChange(value: number): Action {
-  return { value, type: ActionTypes.PAGE_NUMBER_CHANGE };
+  return { value, type: ActionTypes.PAGE_NUMBER_CHANGE, name: '' };
 }
 
 export function pageSizeChange(value: number): Action {
-  return { value, type: ActionTypes.PAGE_SIZE_CHANGE };
+  return { value, type: ActionTypes.PAGE_SIZE_CHANGE, name: '' };
 }
 
 export function dataSort(value: SortBy): Action {
-  return { value, type: ActionTypes.DATA_SORT };
+  return { value, type: ActionTypes.DATA_SORT, name: '' };
 }
 
 export function dataLoaded(value: Array<any>): Action {
-  return { value, type: ActionTypes.DATA_LOADED };
+  return { value, type: ActionTypes.DATA_LOADED, name: '' };
 }
 
 // Probably a bad idea to send down `filters` here.
@@ -34,5 +34,9 @@ export function dataFilter(
   value: Value,
   filters: Filters
 ): Action {
-  return { value: {key, value, filters}, type: ActionTypes.DATA_FILTER };
+  return {
+    value: {key, value, filters},
+    type: ActionTypes.DATA_FILTER,
+    name: ''
+  };
 }

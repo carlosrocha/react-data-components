@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     table: './table/main',
     redux: './redux/index',
+    reduxTables: './redux-tables/index',
   },
   output: {
     filename: '[name].entry.js',

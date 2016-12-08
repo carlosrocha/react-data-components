@@ -1,4 +1,4 @@
-import dataReducer from '../dataReducer';
+import {dataReducer} from '../dataReducer';
 import {
   pageNumberChange, pageSizeChange,
   dataSort, dataFilter, dataLoaded,
@@ -16,6 +16,7 @@ describe('dataReducer', () => {
   it('loads data', () => {
     const action = dataLoaded(data);
     const expected = {
+      name: '',
       data,
       initialData: data,
       page: data,
