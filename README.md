@@ -42,6 +42,10 @@ var data = [
 
 ReactDOM.render((
     <DataTable
+      dropdown
+      pagination
+      search
+      className="container"
       keys="name"
       columns={columns}
       initialData={data}
@@ -52,4 +56,3 @@ ReactDOM.render((
 ```
 
 See [complete example](example/table/main.js).
-
