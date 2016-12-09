@@ -6,7 +6,7 @@ export default class PartialTable extends Component {
 
   render() {
     const {
-      search, dropdown, pagination, className,
+      search, dropdown, pagination, className, onClick,
       onFilter, onPageSizeChange, onPageNumberChange, onSort,
       pageLengthOptions, columns, keys, buildRowOptions,
     } = this.props;
@@ -54,6 +54,7 @@ export default class PartialTable extends Component {
           </div> : null}
         </div>
         <Table
+          onClick={onClick}
           className="table table-bordered"
           dataArray={page}
           columns={columns}
