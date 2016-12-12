@@ -128,11 +128,18 @@ export default class Table extends Component {
 
       return (
         <tr onClick={onClick} data-index={getKeys(row)} key={getKeys(row)} {...trProps}>
-          {columns.map((col, i) =>
-            <td key={i} className={getCellClass(col, row)}>
-              {getCellValue(col, row)}
+          {columns.map((col, i) => {
+            let val = getCellValue(col, row)
+            switch (typeof val) {
+              case 'boolean':
+                val = String(val)
+              case 'object':
+                val = JSON.stringify(val, null, ' ')
+            }
+            return <td key={i} className={getCellClass(col, row)}>
+              {val}
             </td>
-          )}
+          })}
         </tr>
       );
     });
