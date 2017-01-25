@@ -96,7 +96,7 @@ export default class Table extends Component {
   render() {
     const {
       columns, keys, buildRowOptions, sortBy,
-      onSort, dataArray, ...otherProps,
+      onClick, onSort, dataArray, ...otherProps,
     } = this.props;
 
     const headers = columns.map((col, idx) => {
@@ -127,12 +127,24 @@ export default class Table extends Component {
       const trProps = buildRowOptions ? buildRowOptions(row) : {};
 
       return (
-        <tr key={getKeys(row)} {...trProps}>
-          {columns.map((col, i) =>
-            <td key={i} className={getCellClass(col, row)}>
-              {getCellValue(col, row)}
+        <tr onClick={onClick} data-index={getKeys(row)} key={getKeys(row)} {...trProps}>
+          {columns.map((col, i) => {
+            let val = getCellValue(col, row)
+            // truncate long strings
+            const trimAt = 40
+            if (columns.length > 1 && val && val.length > trimAt && val.indexOf('\n') === -1) {
+              val = val.substring(0, trimAt) + '...'
+            }
+            switch (typeof val) {
+              case 'boolean':
+                val = String(val)
+              case 'object':
+                val = JSON.stringify(val, null, ' ')
+            }
+            return <td key={i} className={getCellClass(col, row)}>
+              {val}
             </td>
-          )}
+          })}
         </tr>
       );
     });

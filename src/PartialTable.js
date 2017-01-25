@@ -6,6 +6,7 @@ export default class PartialTable extends Component {
 
   render() {
     const {
+      search, dropdown, pagination, className, onClick,
       onFilter, onPageSizeChange, onPageNumberChange, onSort,
       pageLengthOptions, columns, keys, buildRowOptions,
     } = this.props;
@@ -16,10 +17,10 @@ export default class PartialTable extends Component {
     } = this.props.data;
 
     return (
-      <div className="container">
+      <div className={className || 'container'}>
         <div className="row">
           <div className="col-xs-4">
-            <div>
+            {dropdown ? <div>
               <label htmlFor="page-menu">Page size:</label>
               <select
                 id="page-menu"
@@ -32,8 +33,8 @@ export default class PartialTable extends Component {
                   </option>
                 )}
               </select>
-            </div>
-            <div>
+            </div> : null}
+            {search ? <div>
               <label htmlFor="search-field">Search:</label>
               <input
                 id="search-field"
@@ -41,18 +42,19 @@ export default class PartialTable extends Component {
                 value={filterValues.globalSearch}
                 onChange={onFilter.bind(null, 'globalSearch')}
               />
-            </div>
+            </div> : null}
           </div>
-          <div className="col-xs-8">
+          {pagination ? <div className="col-xs-8">
             <Pagination
               className="pagination pull-right"
               currentPage={pageNumber}
               totalPages={totalPages}
               onChangePage={onPageNumberChange}
             />
-          </div>
+          </div> : null}
         </div>
         <Table
+          onClick={onClick}
           className="table table-bordered"
           dataArray={page}
           columns={columns}

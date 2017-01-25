@@ -1,6 +1,6 @@
 {
-  "name": "react-data-components",
-  "version": "1.1.0",
+  "name": "@viaforensics/react-data-components",
+  "version": "1.1.2",
   "description": "React data components",
   "keywords": [
     "pagination",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/carlosrocha/react-data-components"
+    "url": "git+https://github.com/viaforensics/react-data-components.git"
   },
   "dependencies": {
     "lodash": "^4.13.1"
