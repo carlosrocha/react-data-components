@@ -130,6 +130,11 @@ export default class Table extends Component {
         <tr onClick={onClick} data-index={getKeys(row)} key={getKeys(row)} {...trProps}>
           {columns.map((col, i) => {
             let val = getCellValue(col, row)
+            // truncate long strings
+            const trimAt = 40
+            if (columns.length > 1 && val.length > trimAt && val.indexOf('\n') === -1) {
+              val = val.substring(0, trimAt) + '...'
+            }
             switch (typeof val) {
               case 'boolean':
                 val = String(val)
