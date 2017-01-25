@@ -132,7 +132,7 @@ export default class Table extends Component {
             let val = getCellValue(col, row)
             // truncate long strings
             const trimAt = 40
-            if (columns.length > 1 && val.length > trimAt && val.indexOf('\n') === -1) {
+            if (columns.length > 1 && val && val.length > trimAt && val.indexOf('\n') === -1) {
               val = val.substring(0, trimAt) + '...'
             }
             switch (typeof val) {
