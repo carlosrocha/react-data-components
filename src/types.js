@@ -24,6 +24,8 @@ export type State = {
   pageSize: number;
   pageNumber: number;
   totalPages: number;
+  searchText: string;
+  pageSizeText: string;
   filterValues: {
     [key: string]: string;
   };

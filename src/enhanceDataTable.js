@@ -15,6 +15,8 @@ type Props = {
   keys: Array<string>;
   buildRowOptions: any;
   filters: any;
+  searchText: string;
+  pageSizeText: string;
 };
 
 const mapPropsToState = (props) => ({
@@ -30,6 +32,8 @@ export default function enhanceDataTable(ComposedComponent) {
       filters: {
         globalSearch: { filter: containsIgnoreCase },
       },
+      searchText: "Search",
+      pageSizeText: "Page size",
     };
 
     constructor(props: Props) {
