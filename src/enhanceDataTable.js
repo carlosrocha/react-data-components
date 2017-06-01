@@ -32,8 +32,8 @@ export default function enhanceDataTable(ComposedComponent) {
       filters: {
         globalSearch: { filter: containsIgnoreCase },
       },
-      searchText: "Search",
-      pageSizeText: "Page size",
+      searchText: 'Search',
+      pageSizeText: 'Page size',
     };
 
     constructor(props: Props) {
