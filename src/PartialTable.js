@@ -7,7 +7,7 @@ export default class PartialTable extends Component {
   render() {
     const {
       onFilter, onPageSizeChange, onPageNumberChange, onSort,
-      pageLengthOptions, columns, keys, searchText
+      pageLengthOptions, columns, keys, searchText,
       pageSizeText, buildRowOptions,
     } = this.props;
 
@@ -21,7 +21,7 @@ export default class PartialTable extends Component {
         <div className="row">
           <div className="col-xs-4">
             <div>
-              <label htmlFor="page-menu">{searchText}:</label>
+              <label htmlFor="page-menu">{pageSizeText}:</label>
               <select
                 id="page-menu"
                 value={pageSize}
@@ -35,7 +35,7 @@ export default class PartialTable extends Component {
               </select>
             </div>
             <div>
-              <label htmlFor="search-field">{pageSizeText}:</label>
+              <label htmlFor="search-field">{searchText}:</label>
               <input
                 id="search-field"
                 type="search"
