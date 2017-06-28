@@ -40,8 +40,11 @@
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
     "flow-bin": "^0.33.0",
+    "husky": "^0.14.1",
     "jest": "^16.0.2",
+    "lint-staged": "^4.0.0",
     "lodash-webpack-plugin": "^0.10.2",
+    "prettier": "^1.5.2",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
@@ -56,9 +59,16 @@
     "check": "flow check",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src",
+    "precommit": "lint-staged",
     "prepublish": "npm run clean && npm run build",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
     "test": "npm run lint && npm run check && jest"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --single-quote --trailing-comma all",
+      "git add"
+    ]
   },
   "jest": {
     "testPathDirs": [
