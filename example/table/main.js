@@ -26,6 +26,8 @@ function buildTable(data) {
       initialPageLength={5}
       initialSortBy={{ prop: 'city', order: 'descending' }}
       pageLengthOptions={[ 5, 20, 50 ]}
+      searchText='Search Everything'
+      pageSizeText='Per page'
     />
   );
 }

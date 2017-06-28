@@ -24,6 +24,8 @@ describe('dataReducer', () => {
       pageNumber: 0,
       pageSize: 5,
       totalPages: 1,
+      searchText: 'Search',
+      pageSizeText: 'Page size',
     };
 
     expect(dataReducer(undefined, action)).toEqual(expected);
