@@ -1,23 +1,26 @@
-import React, {Component} from 'react';
-import dataReducer from './dataReducer';
+import React, { Component } from 'react';
+import { dataReducer } from './dataReducer';
 import {
-  dataLoaded, dataSort, dataFilter,
-  pageNumberChange, pageSizeChange,
+  dataLoaded,
+  dataSort,
+  dataFilter,
+  pageNumberChange,
+  pageSizeChange,
 } from './actions';
-import {containsIgnoreCase} from './utils';
-import type {State} from './types';
+import { containsIgnoreCase } from './utils';
+import type { State } from './types';
 
 type Props = {
-  pageLengthOptions: Array<number>;
-  initialData: Array<any>;
-  initialPageLength: number;
-  columns: Array<any>;
-  keys: Array<string>;
-  buildRowOptions: any;
-  filters: any;
+  pageLengthOptions: Array<number>,
+  initialData: Array<any>,
+  initialPageLength: number,
+  columns: Array<any>,
+  keys: Array<string>,
+  buildRowOptions: any,
+  filters: any,
 };
 
-const mapPropsToState = (props) => ({
+const mapPropsToState = props => ({
   pageSize: props.initialPageLength,
   sortBy: props.initialSortBy,
 });
@@ -26,7 +29,7 @@ export default function enhanceDataTable(ComposedComponent) {
   return class DataTableEnhancer extends Component {
     static defaultProps = {
       initialPageLength: 10,
-      pageLengthOptions: [ 5, 10, 20 ],
+      pageLengthOptions: [5, 10, 20],
       filters: {
         globalSearch: { filter: containsIgnoreCase },
       },
@@ -36,31 +39,31 @@ export default function enhanceDataTable(ComposedComponent) {
       super(props);
       this.state = dataReducer(
         mapPropsToState(props),
-        dataLoaded(props.initialData)
+        dataLoaded(props.initialData),
       );
     }
 
     componentWillReceiveProps(nextProps) {
-      this.setState((state) =>
-        dataReducer(state, dataLoaded(nextProps.initialData))
+      this.setState(state =>
+        dataReducer(state, dataLoaded(nextProps.initialData)),
       );
     }
 
-    onPageNumberChange = (value) => {
-      this.setState((state) => dataReducer(state, pageNumberChange(value)));
+    onPageNumberChange = value => {
+      this.setState(state => dataReducer(state, pageNumberChange(value)));
     };
 
-    onPageSizeChange = ({target: {value}}) => {
-      this.setState((state) => dataReducer(state, pageSizeChange(value)));
+    onPageSizeChange = ({ target: { value } }) => {
+      this.setState(state => dataReducer(state, pageSizeChange(value)));
     };
 
-    onSort = (value) => {
-      this.setState((state) => dataReducer(state, dataSort(value)));
+    onSort = value => {
+      this.setState(state => dataReducer(state, dataSort(value)));
     };
 
-    onFilter = (key, {target: {value}}) => {
-      this.setState((state) =>
-        dataReducer(state, dataFilter(key, value, this.props.filters))
+    onFilter = (key, { target: { value } }) => {
+      this.setState(state =>
+        dataReducer(state, dataFilter(key, value, this.props.filters)),
       );
     };
 
@@ -76,6 +79,5 @@ export default function enhanceDataTable(ComposedComponent) {
         />
       );
     }
-
   };
 }
