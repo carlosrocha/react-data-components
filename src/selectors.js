@@ -1,5 +1,2 @@
-import { DOMAIN } from './actions';
-import { Domain } from './types';
-
-export const selectDataTable = (state, domain: Domain = DOMAIN) =>
-  state[domain];
+export const selectDataTable = (table: string) => state =>
+  state.datatable[table];

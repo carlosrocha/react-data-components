@@ -16,8 +16,8 @@ export type Row = { [key: string]: string } | Array<string>;
 
 export type AppData = Array<Row>;
 
-export type Domain = string;
 export type State = {
+  initialized: boolean,
   initialData: AppData,
   data: AppData,
   page: AppData,
@@ -31,9 +31,10 @@ export type State = {
 };
 
 export type Action = {
-  type: $Keys<typeof ActionTypes>,
-  value: any,
-  meta: { domain: Domain },
+  type: string,
+  payload: any,
+  meta: { table: string },
+  error?: any,
 };
 
 export type SortBy = {

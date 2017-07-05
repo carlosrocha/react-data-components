@@ -19,6 +19,7 @@ describe('dataReducer', () => {
     const action = dataLoaded(data);
     const expected = {
       data,
+      initialized: false,
       initialData: data,
       page: data,
       filterValues: { globalSearch: '' },

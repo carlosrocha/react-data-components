@@ -7,6 +7,7 @@ import { ActionTypes, DOMAIN } from './actions';
 import type { State, Action, SortBy } from './types';
 
 const initialState: State = {
+  initialized: false,
   initialData: [],
   data: [],
   page: [],
@@ -17,12 +18,8 @@ const initialState: State = {
   pageSize: 5,
 };
 
-const initialDomainState = {
-  [DOMAIN]: initialState,
-};
-
 function calculatePage(data, pageSize, pageNumber) {
-  if (pageSize === 0) {
+  if (pageSize === 0 || !data.length) {
     return { page: data, totalPages: 0 };
   }
 
@@ -34,7 +31,7 @@ function calculatePage(data, pageSize, pageNumber) {
   };
 }
 
-function pageNumberChange(state, { value: pageNumber }) {
+function pageNumberChange(state, { payload: pageNumber }) {
   return {
     ...state,
     ...calculatePage(state.data, state.pageSize, pageNumber),
@@ -43,7 +40,7 @@ function pageNumberChange(state, { value: pageNumber }) {
 }
 
 function pageSizeChange(state, action) {
-  const newPageSize = Number(action.value);
+  const newPageSize = Number(action.payload);
   const { pageNumber, pageSize } = state;
   const newPageNumber = newPageSize
     ? Math.floor(pageNumber * pageSize / newPageSize)
@@ -57,7 +54,7 @@ function pageSizeChange(state, action) {
   };
 }
 
-function dataSort(state, { value: sortBy }) {
+function dataSort(state, { payload: sortBy }) {
   const data = sort(sortBy, state.data);
 
   return {
@@ -68,7 +65,7 @@ function dataSort(state, { value: sortBy }) {
   };
 }
 
-function dataFilter(state, { value: { key, value, filters } }) {
+function dataFilter(state, { payload: { key, value, filters } }) {
   const newFilterValues = { ...state.filterValues, [key]: value };
   let data = filter(filters, newFilterValues, state.initialData);
 
@@ -85,7 +82,18 @@ function dataFilter(state, { value: { key, value, filters } }) {
   };
 }
 
-function dataLoaded(state, { value: data }) {
+function dataInit(state, action) {
+  const { payload } = action;
+
+  return {
+    ...state,
+    initialized: true,
+    initialData: payload,
+    data: payload,
+  };
+}
+
+function dataLoaded(state, { payload: data }) {
   // Filled missing properties.
   const filledState = { ...initialState, ...state };
   const { pageSize, pageNumber } = filledState;
@@ -97,8 +105,8 @@ function dataLoaded(state, { value: data }) {
   return {
     ...filledState,
     ...calculatePage(data, pageSize, pageNumber),
-    data,
     initialData: data,
+    data,
   };
 }
 
@@ -107,6 +115,9 @@ export function dataReducer(
   action: Action,
 ): State {
   switch (action.type) {
+    case ActionTypes.INITIALIZE:
+      return dataInit(state, action);
+
     case ActionTypes.DATA_LOADED:
       return dataLoaded(state, action);
 
@@ -126,52 +137,19 @@ export function dataReducer(
   return state;
 }
 
-export default function domainReducer(
-  state: Object = initialDomainState,
-  action: Action,
-) {
+export default function tableReducer(state: Object = {}, action: Action) {
   switch (action.type) {
-    case ActionTypes.DATA_LOADED: {
-      const { meta: { domain } } = action;
-
-      return {
-        ...state,
-        [domain]: dataReducer(state[domain], action),
-      };
-    }
-    case ActionTypes.PAGE_NUMBER_CHANGE: {
-      const { meta: { domain } } = action;
-
-      return {
-        ...state,
-        [domain]: dataReducer(state[domain], action),
-      };
-    }
-
-    case ActionTypes.PAGE_SIZE_CHANGE: {
-      const { meta: { domain } } = action;
-
-      return {
-        ...state,
-        [domain]: dataReducer(state[domain], action),
-      };
-    }
-
-    case ActionTypes.DATA_FILTER: {
-      const { meta: { domain } } = action;
-
-      return {
-        ...state,
-        [domain]: dataReducer(state[domain], action),
-      };
-    }
-
+    case ActionTypes.INITIALIZE:
+    case ActionTypes.DATA_LOADED:
+    case ActionTypes.PAGE_NUMBER_CHANGE:
+    case ActionTypes.PAGE_SIZE_CHANGE:
+    case ActionTypes.DATA_FILTER:
     case ActionTypes.DATA_SORT: {
-      const { meta: { domain } } = action;
+      const { meta: { table } } = action;
 
       return {
         ...state,
-        [domain]: dataReducer(state[domain], action),
+        [table]: dataReducer(state[table], action),
       };
     }
   }
