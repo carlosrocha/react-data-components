@@ -127,9 +127,9 @@ export function dataReducer(
 }
 
 export default function domainReducer(
-  state = initialDomainState,
+  state: Object = initialDomainState,
   action: Action,
-): State {
+) {
   switch (action.type) {
     case ActionTypes.DATA_LOADED: {
       const { meta: { domain } } = action;

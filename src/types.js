@@ -33,6 +33,7 @@ export type State = {
 export type Action = {
   type: $Keys<typeof ActionTypes>,
   value: any,
+  meta: { domain: Domain },
 };
 
 export type SortBy = {
