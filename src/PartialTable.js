@@ -1,18 +1,32 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Table from './Table';
 import Pagination from './Pagination';
 
 export default class PartialTable extends Component {
-
   render() {
     const {
-      onFilter, onPageSizeChange, onPageNumberChange, onSort,
-      pageLengthOptions, columns, keys, buildRowOptions,
+      onFilter,
+      onPageSizeChange,
+      onPageNumberChange,
+      onSort,
+      pageLengthOptions,
+      columns,
+      keys,
+      buildRowOptions,
     } = this.props;
 
+    // Protect against unloaded data.
+    if (!this.props.data) {
+      return null;
+    }
+
     const {
-      page, pageSize, pageNumber,
-      totalPages, sortBy, filterValues,
+      page,
+      pageSize,
+      pageNumber,
+      totalPages,
+      sortBy,
+      filterValues,
     } = this.props.data;
 
     return (
@@ -29,7 +43,7 @@ export default class PartialTable extends Component {
                 {pageLengthOptions.map(opt =>
                   <option key={opt} value={opt}>
                     {opt === 0 ? 'All' : opt}
-                  </option>
+                  </option>,
                 )}
               </select>
             </div>
@@ -64,5 +78,4 @@ export default class PartialTable extends Component {
       </div>
     );
   }
-
 }

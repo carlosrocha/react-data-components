@@ -1,22 +1,25 @@
-import dataReducer from '../dataReducer';
+import { dataReducer } from '../dataReducer';
 import {
-  pageNumberChange, pageSizeChange,
-  dataSort, dataFilter, dataLoaded,
+  pageNumberChange,
+  pageSizeChange,
+  dataSort,
+  dataFilter,
+  dataLoaded,
 } from '../actions';
-import {containsIgnoreCase} from '../utils';
+import { containsIgnoreCase } from '../utils';
 
-const data = [ [1, 2], [3, 4] ];
+const data = [[1, 2], [3, 4]];
 
 const filters = {
   globalSearch: { filter: containsIgnoreCase },
 };
 
 describe('dataReducer', () => {
-
   it('loads data', () => {
     const action = dataLoaded(data);
     const expected = {
       data,
+      initialized: false,
       initialData: data,
       page: data,
       filterValues: { globalSearch: '' },
@@ -67,8 +70,8 @@ describe('dataReducer', () => {
 
   it('sorts descending', () => {
     const state = {
-      data: [ [3, 4], [1, 2] ],
-      page: [ [3, 4] ],
+      data: [[3, 4], [1, 2]],
+      page: [[3, 4]],
       pageNumber: 0,
       pageSize: 1,
       totalPages: 2,
@@ -78,8 +81,8 @@ describe('dataReducer', () => {
     const expected = {
       ...state,
       sortBy,
-      data: [ [1, 2], [3, 4] ],
-      page: [ [1, 2] ],
+      data: [[1, 2], [3, 4]],
+      page: [[1, 2]],
     };
 
     expect(dataReducer(state, action)).toEqual(expected);
@@ -87,8 +90,8 @@ describe('dataReducer', () => {
 
   it('sorts descending', () => {
     const state = {
-      data: [ [1, 2], [3, 4] ],
-      page: [ [1, 2] ],
+      data: [[1, 2], [3, 4]],
+      page: [[1, 2]],
       pageNumber: 0,
       pageSize: 1,
       totalPages: 2,
@@ -98,15 +101,15 @@ describe('dataReducer', () => {
     const expected = {
       ...state,
       sortBy,
-      data: [ [3, 4], [1, 2] ],
-      page: [ [3, 4] ],
+      data: [[3, 4], [1, 2]],
+      page: [[3, 4]],
     };
 
     expect(dataReducer(state, action)).toEqual(expected);
   });
 
   it('filters', () => {
-    const data = [ ['carlos', 'r'], [3, 4] ];
+    const data = [['carlos', 'r'], [3, 4]];
     const state = {
       data,
       initialData: data,
@@ -119,8 +122,8 @@ describe('dataReducer', () => {
     const expected = {
       ...state,
       filterValues: { globalSearch: 'c' },
-      data: [ ['carlos', 'r'] ],
-      page: [ ['carlos', 'r'] ],
+      data: [['carlos', 'r']],
+      page: [['carlos', 'r']],
       totalPages: 1,
     };
 
@@ -128,7 +131,7 @@ describe('dataReducer', () => {
   });
 
   it('filters on different page', () => {
-    const data = [ ['carlos', 'r'], [3, 4] ];
+    const data = [['carlos', 'r'], [3, 4]];
     const state = {
       data,
       initialData: data,
@@ -145,12 +148,11 @@ describe('dataReducer', () => {
       ...state,
       pageNumber: 0,
       filterValues: { globalSearch: 'c' },
-      data: [ ['carlos', 'r'] ],
-      page: [ ['carlos', 'r'] ],
+      data: [['carlos', 'r']],
+      page: [['carlos', 'r']],
       totalPages: 1,
     };
 
     expect(dataReducer(state, action)).toEqual(expected);
   });
-
 });

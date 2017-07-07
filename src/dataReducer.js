@@ -2,11 +2,12 @@
  * @flow
  */
 
-import {sort, filter} from './utils';
-import {ActionTypes} from './actions';
-import type {State, Action, SortBy} from './types';
+import { sort, filter } from './utils';
+import { ActionTypes, DOMAIN } from './actions';
+import type { State, Action, SortBy } from './types';
 
 const initialState: State = {
+  initialized: false,
   initialData: [],
   data: [],
   page: [],
@@ -18,7 +19,7 @@ const initialState: State = {
 };
 
 function calculatePage(data, pageSize, pageNumber) {
-  if (pageSize === 0) {
+  if (pageSize === 0 || !data.length) {
     return { page: data, totalPages: 0 };
   }
 
@@ -30,7 +31,7 @@ function calculatePage(data, pageSize, pageNumber) {
   };
 }
 
-function pageNumberChange(state, {value: pageNumber}) {
+function pageNumberChange(state, { payload: pageNumber }) {
   return {
     ...state,
     ...calculatePage(state.data, state.pageSize, pageNumber),
@@ -39,10 +40,11 @@ function pageNumberChange(state, {value: pageNumber}) {
 }
 
 function pageSizeChange(state, action) {
-  const newPageSize = Number(action.value);
-  const {pageNumber, pageSize} = state;
-  const newPageNumber = newPageSize ?
-    Math.floor((pageNumber * pageSize) / newPageSize) : 0;
+  const newPageSize = Number(action.payload);
+  const { pageNumber, pageSize } = state;
+  const newPageNumber = newPageSize
+    ? Math.floor(pageNumber * pageSize / newPageSize)
+    : 0;
 
   return {
     ...state,
@@ -52,7 +54,7 @@ function pageSizeChange(state, action) {
   };
 }
 
-function dataSort(state, {value: sortBy}) {
+function dataSort(state, { payload: sortBy }) {
   const data = sort(sortBy, state.data);
 
   return {
@@ -63,7 +65,7 @@ function dataSort(state, {value: sortBy}) {
   };
 }
 
-function dataFilter(state, {value: {key, value, filters}}) {
+function dataFilter(state, { payload: { key, value, filters } }) {
   const newFilterValues = { ...state.filterValues, [key]: value };
   let data = filter(filters, newFilterValues, state.initialData);
 
@@ -80,10 +82,21 @@ function dataFilter(state, {value: {key, value, filters}}) {
   };
 }
 
-function dataLoaded(state, {value: data}) {
+function dataInit(state, action) {
+  const { payload } = action;
+
+  return {
+    ...state,
+    initialized: true,
+    initialData: payload,
+    data: payload,
+  };
+}
+
+function dataLoaded(state, { payload: data }) {
   // Filled missing properties.
   const filledState = { ...initialState, ...state };
-  const {pageSize, pageNumber} = filledState;
+  const { pageSize, pageNumber } = filledState;
 
   if (state.sortBy) {
     data = sort(state.sortBy, data);
@@ -92,16 +105,19 @@ function dataLoaded(state, {value: data}) {
   return {
     ...filledState,
     ...calculatePage(data, pageSize, pageNumber),
-    data,
     initialData: data,
+    data,
   };
 }
 
-export default function dataReducer(
+export function dataReducer(
   state: State = initialState,
-  action: Action
+  action: Action,
 ): State {
   switch (action.type) {
+    case ActionTypes.INITIALIZE:
+      return dataInit(state, action);
+
     case ActionTypes.DATA_LOADED:
       return dataLoaded(state, action);
 
@@ -116,6 +132,26 @@ export default function dataReducer(
 
     case ActionTypes.DATA_SORT:
       return dataSort(state, action);
+  }
+
+  return state;
+}
+
+export default function tableReducer(state: Object = {}, action: Action) {
+  switch (action.type) {
+    case ActionTypes.INITIALIZE:
+    case ActionTypes.DATA_LOADED:
+    case ActionTypes.PAGE_NUMBER_CHANGE:
+    case ActionTypes.PAGE_SIZE_CHANGE:
+    case ActionTypes.DATA_FILTER:
+    case ActionTypes.DATA_SORT: {
+      const { meta: { table } } = action;
+
+      return {
+        ...state,
+        [table]: dataReducer(state[table], action),
+      };
+    }
   }
 
   return state;

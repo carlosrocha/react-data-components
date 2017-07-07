@@ -1,23 +1,27 @@
 import React from 'react';
-import {render} from 'react-dom';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import {dataReducer, actions} from 'react-data-components';
-import DataTable from './containers/DataTable';
+import { render } from 'react-dom';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import {
+  dataReducer,
+  actions,
+  ReduxTable as DataTable,
+} from 'react-data-components';
 
-const store = createStore(dataReducer);
+const TABLE = 'react-data-components-example';
+const store = createStore(combineReducers({ datatable: dataReducer }));
 
-const renderMapUrl =
-  (val, row) =>
-    <a href={`https://www.google.com/maps?q=${row['lat']},${row['long']}`}>
-      Google Maps
-    </a>;
+const renderMapUrl = (val, row) =>
+  <a href={`https://www.google.com/maps?q=${row['lat']},${row['long']}`}>
+    Google Maps
+  </a>;
 
 render(
   <Provider store={store}>
     <DataTable
       keys="id"
-      pageLengthOptions={[ 5, 10, 20 ]}
+      table={TABLE}
+      pageLengthOptions={[5, 10, 20]}
       columns={[
         { title: 'Name', prop: 'name' },
         { title: 'City', prop: 'city' },
@@ -27,11 +31,9 @@ render(
       ]}
     />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
-fetch('/data.json')
-  .then(res => res.json())
-  .then(data => {
-    store.dispatch(actions.dataLoaded(data));
-  });
+fetch('/data.json').then(res => res.json()).then(data => {
+  store.dispatch(actions.dataLoaded(data, TABLE));
+});
