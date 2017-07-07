@@ -1,10 +1,10 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
 export default class Pagination extends Component {
-
   static defaultProps = {
     showPages: 5,
   };
@@ -19,9 +19,11 @@ export default class Pagination extends Component {
   shouldComponentUpdate(nextProps) {
     var props = this.props;
 
-    return props.totalPages !== nextProps.totalPages ||
+    return (
+      props.totalPages !== nextProps.totalPages ||
       props.currentPage !== nextProps.currentPage ||
-      props.showPages !== nextProps.showPages;
+      props.showPages !== nextProps.showPages
+    );
   }
 
   onChangePage(pageNumber, event) {
@@ -37,14 +39,16 @@ export default class Pagination extends Component {
     }
 
     var diff = Math.floor(showPages / 2),
-        start = Math.max(currentPage - diff, 0),
-        end = Math.min(start + showPages, totalPages);
+      start = Math.max(currentPage - diff, 0),
+      end = Math.min(start + showPages, totalPages);
 
     if (totalPages >= showPages && end >= totalPages) {
       start = totalPages - showPages;
     }
 
-    var buttons = [], btnEvent, isCurrent;
+    var buttons = [],
+      btnEvent,
+      isCurrent;
     for (var i = start; i < end; i++) {
       isCurrent = currentPage === i;
       // If the button is for the current page then disable the event.
@@ -56,11 +60,12 @@ export default class Pagination extends Component {
       buttons.push(
         <li key={i} className={isCurrent ? 'active' : null}>
           <a role="button" href="#" onClick={btnEvent} tabIndex="0">
-            <span>{i + 1}</span>
-            {isCurrent ?
-              <span className="sr-only">(current)</span> : null}
+            <span>
+              {i + 1}
+            </span>
+            {isCurrent ? <span className="sr-only">(current)</span> : null}
           </a>
-        </li>
+        </li>,
       );
     }
 
@@ -84,18 +89,26 @@ export default class Pagination extends Component {
 
     buttons = [
       <li key="first" className={!isNotFirst ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a
+          role="button"
+          href="#"
+          tabIndex="0"
           onClick={firstHandler}
           aria-disabled={!isNotFirst}
-          aria-label="First">
+          aria-label="First"
+        >
           <span className="fa fa-angle-double-left" aria-hidden="true" />
         </a>
       </li>,
       <li key="prev" className={!isNotFirst ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a
+          role="button"
+          href="#"
+          tabIndex="0"
           onClick={prevHandler}
           aria-disabled={!isNotFirst}
-          aria-label="Previous">
+          aria-label="Previous"
+        >
           <span className="fa fa-angle-left" aria-hidden="true" />
         </a>
       </li>,
@@ -103,18 +116,26 @@ export default class Pagination extends Component {
 
     buttons = buttons.concat([
       <li key="next" className={!isNotLast ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a
+          role="button"
+          href="#"
+          tabIndex="0"
           onClick={nextHandler}
           aria-disabled={!isNotLast}
-          aria-label="Next">
+          aria-label="Next"
+        >
           <span className="fa fa-angle-right" aria-hidden="true" />
         </a>
       </li>,
       <li key="last" className={!isNotLast ? 'disabled' : null}>
-        <a role="button" href="#" tabIndex="0"
+        <a
+          role="button"
+          href="#"
+          tabIndex="0"
           onClick={lastHandler}
           aria-disabled={!isNotLast}
-          aria-label="Last">
+          aria-label="Last"
+        >
           <span className="fa fa-angle-double-right" aria-hidden="true" />
         </a>
       </li>,

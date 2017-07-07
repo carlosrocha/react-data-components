@@ -1,9 +1,8 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import shallow from 'react-test-renderer/shallow';
 import Pagination from '../Pagination';
 
 describe('Pagination', () => {
-
   let onChangePage;
 
   beforeEach(() => {
@@ -15,14 +14,14 @@ describe('Pagination', () => {
     const currentPage = 5;
     const totalPages = 10;
 
-    const shallowRenderer = TestUtils.createRenderer();
+    const shallowRenderer = shallow.createRenderer();
     shallowRenderer.render(
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onChangePage={onChangePage}
         showPages={showPages}
-      />
+      />,
     );
 
     const result = shallowRenderer.getRenderOutput();
@@ -35,13 +34,13 @@ describe('Pagination', () => {
     const currentPage = 0;
     const totalPages = 10;
 
-    const shallowRenderer = TestUtils.createRenderer();
+    const shallowRenderer = shallow.createRenderer();
     shallowRenderer.render(
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onChangePage={onChangePage}
-      />
+      />,
     );
 
     const result = shallowRenderer.getRenderOutput();
@@ -54,13 +53,13 @@ describe('Pagination', () => {
     const currentPage = 9;
     const totalPages = 10;
 
-    const shallowRenderer = TestUtils.createRenderer();
+    const shallowRenderer = shallow.createRenderer();
     shallowRenderer.render(
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onChangePage={onChangePage}
-      />
+      />,
     );
 
     const { children } = shallowRenderer.getRenderOutput().props;
@@ -70,5 +69,4 @@ describe('Pagination', () => {
     expect(children[totalChildren - 1].props.className).toEqual('disabled');
     expect(onChangePage).not.toBeCalled();
   });
-
 });

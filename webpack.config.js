@@ -13,7 +13,7 @@ module.exports = {
     libraryTarget: 'umd',
   },
   externals: {
-    'react': {
+    react: {
       root: 'React',
       amd: 'react',
       commonjs: 'react',
@@ -37,7 +37,6 @@ module.exports = {
       shorthands: true,
       collections: true,
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         pure_getters: true,
