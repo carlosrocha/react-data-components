@@ -20,6 +20,23 @@ export default class PartialTable extends Component {
       return null;
     }
 
+    if (columns.length < 60) {
+      var pageSizeSelector = null;
+    } else {
+      var pageSizeSelector = (
+        <div>
+          <label htmlFor="page-menu">Page size:</label>
+          <select id="page-menu" value={pageSize} onChange={onPageSizeChange}>
+            {pageLengthOptions.map(opt =>
+              <option key={opt} value={opt}>
+                {opt === 0 ? 'All' : opt}
+              </option>,
+            )}
+          </select>
+        </div>
+      );
+    }
+
     const {
       page,
       pageSize,
@@ -33,20 +50,7 @@ export default class PartialTable extends Component {
       <div className="container">
         <div className="row">
           <div className="col-xs-4">
-            <div>
-              <label htmlFor="page-menu">Page size:</label>
-              <select
-                id="page-menu"
-                value={pageSize}
-                onChange={onPageSizeChange}
-              >
-                {pageLengthOptions.map(opt =>
-                  <option key={opt} value={opt}>
-                    {opt === 0 ? 'All' : opt}
-                  </option>,
-                )}
-              </select>
-            </div>
+            {pageSizeSelector}
             <div>
               <label htmlFor="search-field">Search:</label>
               <input
