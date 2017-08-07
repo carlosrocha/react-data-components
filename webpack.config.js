@@ -8,8 +8,8 @@ module.exports = {
   entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'react-data-components.min.js',
-    library: 'ReactDataComponents',
+    filename: 'react-data-components-updated.min.js',
+    library: 'ReactDataComponentsUpdated',
     libraryTarget: 'umd',
   },
   externals: {

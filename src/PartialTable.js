@@ -64,9 +64,28 @@ export default class PartialTable extends Component {
       );
     }
 
+    let pagination_tabs = <div className="col-xs-8" />;
+    if (totalPages > 1) {
+      pagination_tabs = (
+        <div className="col-xs-8">
+          <Pagination
+            className="pagination pull-right"
+            currentPage={pageNumber}
+            totalPages={totalPages}
+            onChangePage={onPageNumberChange}
+          />
+        </div>
+      );
+    }
+
+    let topRowMarginBottom = 0;
+    if (totalPages < 2) {
+      topRowMarginBottom = 20;
+    }
+
     return (
       <div className="container">
-        <div className="row">
+        <div className="row" style={{ marginBottom: topRowMarginBottom }}>
           <div className="col-xs-4">
             {pageSizeSelector}
             <div>
@@ -79,14 +98,7 @@ export default class PartialTable extends Component {
               />
             </div>
           </div>
-          <div className="col-xs-8">
-            <Pagination
-              className="pagination pull-right"
-              currentPage={pageNumber}
-              totalPages={totalPages}
-              onChangePage={onPageNumberChange}
-            />
-          </div>
+          {pagination_tabs}
         </div>
         <Table
           className="table table-bordered"

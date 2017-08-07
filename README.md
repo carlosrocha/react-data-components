@@ -6,6 +6,8 @@ DataTable: [Live demo and source](https://jsfiddle.net/carlosrocha/xgde4uh0/)
 
 SelectableTable: [Live demo and source](https://jsfiddle.net/carlosrocha/p9pouh1v/)
 
+An updated version of `react-data-components`
+
 ## Getting started
 
 ```sh
@@ -15,7 +17,7 @@ npm install react-data-components --save
 This component requires Bootstrap stylesheet and Font Awesome fonts, in addition
 to the [stylesheet for headers](css/table-twbs.css). If you are using Webpack
 and the `css-loader` you can also require the css
-with `require('react-data-components/css/table-twbs.css')`.
+with `require('react-data-components-updated/css/table-twbs.css')`.
 
 ### Using the default implementation
 
@@ -25,7 +27,7 @@ pagination and page size.
 ```javascript
 var React = require('react');
 var ReactDOM = require('react-dom');
-var DataTable = require('react-data-components').DataTable;
+var DataTable = require('react-data-components-updated').DataTable;
 
 var columns = [
   { title: 'Name', prop: 'name'  },
@@ -52,4 +54,3 @@ ReactDOM.render((
 ```
 
 See [complete example](example/table/main.js).
-
