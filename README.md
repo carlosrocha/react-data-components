@@ -1,4 +1,4 @@
-# react-data-components
+# react-data-components-updated
 
 An updated version of `react-data-components`
 
