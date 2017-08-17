@@ -106,6 +106,10 @@ export default class Table extends Component {
         order = sortProps['aria-sort'];
       }
 
+      console.log('inside `const headers = columns.map((col, idx) => {`:');
+      console.log('col.title-');
+      console.log(col.title);
+
       return (
         <th
           ref={c => (this._headers[idx] = c)}
