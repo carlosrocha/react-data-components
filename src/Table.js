@@ -23,6 +23,8 @@ const getCellClass = ({ prop, className }, row) =>
 
 function buildSortProps(col, sortBy, onSort) {
   const order = sortBy && sortBy.prop === col.prop ? sortBy.order : 'none';
+  console.log('order in buildSortProps():');
+  console.log(order);
   const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
   const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 

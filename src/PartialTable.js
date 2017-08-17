@@ -29,23 +29,11 @@ export default class PartialTable extends Component {
       filterValues,
     } = this.props.data;
 
-    console.log('\n\n\n\ninside react-data-components\n\n');
-
-    console.log('pageSize:');
-    console.log(pageSize);
-    console.log('totalPages:');
-    console.log(totalPages);
-    console.log('page:');
-    console.log(page);
-
     if (totalPages == 1) {
       var amount_of_elements = page.length;
     } else {
       var amount_of_elements = pageSize * totalPages;
     }
-
-    console.log('amount_of_elements:');
-    console.log(amount_of_elements);
 
     if (amount_of_elements < 60) {
       var pageSizeSelector = null;
