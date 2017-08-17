@@ -55,6 +55,11 @@ function pageSizeChange(state, action) {
 }
 
 function dataSort(state, { payload: sortBy }) {
+  console.log('data in dataSort() in dataReducer.js:');
+  console.log(state.data);
+  console.log('sortBy:');
+  console.log(sortBy);
+
   const data = sort(sortBy, state.data);
 
   return {
