@@ -105,7 +105,9 @@ export default class Table extends Component {
       // Only add sorting events if the column has a property and is sortable.
       console.log('onSort: ' + onSort);
       console.log('col.sortable: ' + col.sortable);
-      console.log('col: ' + col);
+      if ('prop' in col) {
+        console.log('"prop" found in col');
+      }
 
       if (onSort && col.sortable !== false && 'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
@@ -114,6 +116,13 @@ export default class Table extends Component {
         console.log('\norder-');
         console.log(order);
       }
+
+      col.sortable = true;
+      sortProps = buildSortProps(col, sortBy, onSort);
+      order = sortProps['aria-sort'];
+
+      console.log('sortProps');
+      console.log(sortProps);
 
       return (
         <th

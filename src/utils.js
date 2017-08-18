@@ -10,7 +10,14 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log(prop);
   console.log('order:');
   console.log(order);
-  return orderBy(data, prop, order === 'descending' ? 'desc' : 'asc');
+  let orderByResults = orderBy(
+    data,
+    prop,
+    order === 'descending' ? 'desc' : 'asc',
+  );
+  console.log('orderByResults:');
+  console.log(orderByResults);
+  return orderByResults;
 }
 
 export function filter(filters: Filters, filterValues, data: AppData) {
