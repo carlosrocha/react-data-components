@@ -25,22 +25,26 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('order:');
   console.log(order);
 
-  let all_are_numbers = are_all_numbers(data, prop);
+  // let all_are_numbers = are_all_numbers(data, prop);
 
-  if (all_are_numbers) {
-    var orderByResults = orderBy(
-      data,
-      item => parseInt(item),
-      order === 'descending' ? 'desc' : 'asc',
-    );
-  } else {
-    var orderByResults = orderBy(
-      data,
-      prop,
-      order === 'descending' ? 'desc' : 'asc',
-    );
-  }
-  // let orderByResults = orderBy(data, prop, order === 'descending' ? 'desc' : 'asc');
+  // if (all_are_numbers) {
+  //   var orderByResults = orderBy(
+  //     data,
+  //     item => parseInt(item),
+  //     order === 'descending' ? 'desc' : 'asc',
+  //   );
+  // } else {
+  //   var orderByResults = orderBy(
+  //     data,
+  //     prop,
+  //     order === 'descending' ? 'desc' : 'asc',
+  //   );
+  // }
+  let orderByResults = orderBy(
+    data,
+    prop,
+    order === 'descending' ? 'desc' : 'asc',
+  );
   console.log('orderByResults:');
   console.log(orderByResults);
   return orderByResults;
