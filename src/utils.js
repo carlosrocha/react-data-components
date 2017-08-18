@@ -9,7 +9,7 @@ function isNumber(item) {
 
 function are_all_numbers(data, key) {
   let values = _.map(data, key);
-  return _.every(array, isNumber);
+  return _.every(values, isNumber);
 }
 
 function toInt(item) {
@@ -25,9 +25,9 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('order:');
   console.log(order);
 
-  // let all_are_numbers = are_all_numbers(data, prop);
-  // console.log('all_are_numbers:');
-  // console.log(all_are_numbers);
+  let all_are_numbers = are_all_numbers(data, prop);
+  console.log('all_are_numbers:');
+  console.log(all_are_numbers);
 
   // if (all_are_numbers) {
   //   var orderByResults = orderBy(
