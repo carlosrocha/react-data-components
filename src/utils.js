@@ -25,18 +25,16 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('order:');
   console.log(order);
 
-  let orderByResults;
-
   let all_are_numbers = are_all_numbers(data, prop);
 
   if (all_are_numbers) {
-    orderByResults = orderBy(
+    var orderByResults = orderBy(
       data,
       item => parseInt(item),
       order === 'descending' ? 'desc' : 'asc',
     );
   } else {
-    orderByResults = orderBy(
+    var orderByResults = orderBy(
       data,
       prop,
       order === 'descending' ? 'desc' : 'asc',
