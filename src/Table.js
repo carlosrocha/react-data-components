@@ -103,6 +103,10 @@ export default class Table extends Component {
       let sortProps, order;
       console.log('\nmaking the headers:');
       // Only add sorting events if the column has a property and is sortable.
+      console.log('onSort: ' + onSort);
+      console.log('col.sortable: ' + col.sortable);
+      console.log('col: ' + col);
+
       if (onSort && col.sortable !== false && 'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
         order = sortProps['aria-sort'];
