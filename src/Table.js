@@ -23,8 +23,9 @@ const getCellClass = ({ prop, className }, row) =>
 
 function buildSortProps(col, sortBy, onSort) {
   const order = sortBy && sortBy.prop === col.prop ? sortBy.order : 'none';
-  console.log('order in buildSortProps():');
-  console.log(order);
+  // console.log('order in buildSortProps():');
+  // console.log(order);
+
   const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
   const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 
@@ -105,10 +106,6 @@ export default class Table extends Component {
         sortProps = buildSortProps(col, sortBy, onSort);
         order = sortProps['aria-sort'];
       }
-
-      console.log('inside `const headers = columns.map((col, idx) => {`:');
-      console.log('col.title-');
-      console.log(col.title);
 
       return (
         <th

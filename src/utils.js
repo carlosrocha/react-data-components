@@ -1,8 +1,15 @@
 import orderBy from 'lodash/orderBy';
 import some from 'lodash/some';
-import type {SortBy, AppData, Value, Filters} from './types';
+import type { SortBy, AppData, Value, Filters } from './types';
 
-export function sort({prop, order}: SortBy, data: AppData) {
+export function sort({ prop, order }: SortBy, data: AppData) {
+  console.log('\n\ninside sort():\n');
+  console.log('data:');
+  console.log(data);
+  console.log('prop:');
+  console.log(prop);
+  console.log('order:');
+  console.log(order);
   return orderBy(data, prop, order === 'descending' ? 'desc' : 'asc');
 }
 
@@ -16,11 +23,13 @@ export function filter(filters: Filters, filterValues, data: AppData) {
     };
   }
 
-  return data.filter((row) => some(
-    filterAndVals,
-    ({filter, value, prop}) =>
-      !prop ? some(row, filter.bind(null, value)) : filter(value, row[key])
-  ));
+  return data.filter(row =>
+    some(
+      filterAndVals,
+      ({ filter, value, prop }) =>
+        !prop ? some(row, filter.bind(null, value)) : filter(value, row[key]),
+    ),
+  );
 }
 
 export function containsIgnoreCase(a: Value, b: Value) {
