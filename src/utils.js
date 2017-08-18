@@ -3,8 +3,7 @@ import some from 'lodash/some';
 import type { SortBy, AppData, Value, Filters } from './types';
 
 function isNumber(item) {
-  let isnum = /^\d+$/.test(item);
-  return isnum;
+  return /^[0-9.]+$/.test(item);
 }
 
 function are_all_numbers(data, key) {
@@ -12,27 +11,25 @@ function are_all_numbers(data, key) {
   return _.every(values, isNumber);
 }
 
-function toInt(item) {
-  return parseInt(item);
+function isPercent(item) {
+  return /^[0-9.]+%$/.test(item);
 }
 
 export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('\n\ninside sort():\n');
-  console.log('data:');
-  console.log(data);
+  // console.log('data:');
+  // console.log(data);
   console.log('prop:');
   console.log(prop);
-  console.log('order:');
-  console.log(order);
+  // console.log('order:');
+  // console.log(order);
 
   let all_are_numbers = are_all_numbers(data, prop);
-  console.log('all_are_numbers:');
-  console.log(all_are_numbers);
 
   if (all_are_numbers) {
     var orderByResults = orderBy(
       data,
-      item => parseInt(item[prop]),
+      item => parseFloat(item[prop]),
       order === 'descending' ? 'desc' : 'asc',
     );
   } else {
@@ -42,13 +39,9 @@ export function sort({ prop, order }: SortBy, data: AppData) {
       order === 'descending' ? 'desc' : 'asc',
     );
   }
-  // let orderByResults = orderBy(
-  //   data,
-  //   prop,
-  //   order === 'descending' ? 'desc' : 'asc',
-  // );
-  console.log('orderByResults:');
-  console.log(orderByResults);
+
+  // console.log('orderByResults:');
+  // console.log(orderByResults);
   return orderByResults;
 }
 
