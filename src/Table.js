@@ -101,10 +101,14 @@ export default class Table extends Component {
 
     const headers = columns.map((col, idx) => {
       let sortProps, order;
+      console.log('\nmaking the headers:');
       // Only add sorting events if the column has a property and is sortable.
       if (onSort && col.sortable !== false && 'prop' in col) {
         sortProps = buildSortProps(col, sortBy, onSort);
         order = sortProps['aria-sort'];
+
+        console.log('\norder-');
+        console.log(order);
       }
 
       return (
