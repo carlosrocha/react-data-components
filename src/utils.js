@@ -2,6 +2,20 @@ import orderBy from 'lodash/orderBy';
 import some from 'lodash/some';
 import type { SortBy, AppData, Value, Filters } from './types';
 
+function isNumber(item) {
+  let isnum = /^\d+$/.test(item);
+  return isnum;
+}
+
+function are_all_numbers(data, key) {
+  let values = _.map(data, key);
+  return _.every(array, isNumber);
+}
+
+function toInt(item) {
+  return parseInt(item);
+}
+
 export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('\n\ninside sort():\n');
   console.log('data:');
@@ -10,11 +24,25 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log(prop);
   console.log('order:');
   console.log(order);
-  let orderByResults = orderBy(
-    data,
-    prop,
-    order === 'descending' ? 'desc' : 'asc',
-  );
+
+  let orderByResults;
+
+  let all_are_numbers = are_all_numbers(data, prop);
+
+  if (all_are_numbers) {
+    orderByResults = orderBy(
+      data,
+      item => parseInt(item),
+      order === 'descending' ? 'desc' : 'asc',
+    );
+  } else {
+    orderByResults = orderBy(
+      data,
+      prop,
+      order === 'descending' ? 'desc' : 'asc',
+    );
+  }
+  // let orderByResults = orderBy(data, prop, order === 'descending' ? 'desc' : 'asc');
   console.log('orderByResults:');
   console.log(orderByResults);
   return orderByResults;
