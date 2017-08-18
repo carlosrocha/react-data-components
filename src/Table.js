@@ -99,6 +99,9 @@ export default class Table extends Component {
       ...otherProps
     } = this.props;
 
+    console.log('these columns:');
+    console.log(columns);
+
     const headers = columns.map((col, idx) => {
       let sortProps, order;
       //   console.log('\nmaking the headers:');
