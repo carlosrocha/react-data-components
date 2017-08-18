@@ -32,7 +32,7 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   if (all_are_numbers) {
     var orderByResults = orderBy(
       data,
-      item => parseInt(item),
+      item => parseInt(item[prop]),
       order === 'descending' ? 'desc' : 'asc',
     );
   } else {
