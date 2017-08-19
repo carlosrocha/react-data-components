@@ -6,6 +6,20 @@ function isNumber(item) {
   return /^[0-9.]+$/.test(item);
 }
 
+function isPercent(item) {
+  return /^.*[%]$/.test(item);
+}
+
+function percentToNumber(item) {
+  let numString = item.replace('%', '');
+  return parseFloat(numString);
+}
+
+function are_all_percents(data, key) {
+  let values = _.map(data, key);
+  return _.every(values, isPercent);
+}
+
 function are_all_numbers(data, key) {
   let values = _.map(data, key);
   return _.every(values, isNumber);
@@ -25,11 +39,18 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   // console.log(order);
 
   let all_are_numbers = are_all_numbers(data, prop);
+  let all_are_percents = are_all_percents(data, prop);
 
   if (all_are_numbers) {
     var orderByResults = orderBy(
       data,
       item => parseFloat(item[prop]),
+      order === 'descending' ? 'desc' : 'asc',
+    );
+  } else if (all_are_percents) {
+    var orderByResults = orderBy(
+      data,
+      item => percentToNumber(item[prop]),
       order === 'descending' ? 'desc' : 'asc',
     );
   } else {
