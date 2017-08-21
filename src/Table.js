@@ -23,9 +23,6 @@ const getCellClass = ({ prop, className }, row) =>
 
 function buildSortProps(col, sortBy, onSort) {
   const order = sortBy && sortBy.prop === col.prop ? sortBy.order : 'none';
-  // console.log('col.prop in buildSortProps():');
-  // console.log(col.prop);
-
   const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
   const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
 
@@ -99,33 +96,11 @@ export default class Table extends Component {
       ...otherProps
     } = this.props;
 
-    // console.log('these columns:');
-    // console.log(columns);
-
     const headers = columns.map((col, idx) => {
       let sortProps, order;
-      //   console.log('\nmaking the headers:');
-      //   console.log('onSort: ' + onSort);
-      //   console.log('col.sortable: ' + col.sortable);
-      //   if ('prop' in col) {
-      //     console.log('"prop" found in col');
-      //   }
-
-      // Only add sorting events if the column has a property and is sortable.
-      //   if (onSort && col.sortable !== false && 'prop' in col) {
-      //     sortProps = buildSortProps(col, sortBy, onSort);
-      //     order = sortProps['aria-sort'];
-      //
-      //     console.log('\norder-');
-      //     console.log(order);
-      //   }
-
       col.sortable = true;
       sortProps = buildSortProps(col, sortBy, onSort);
       order = sortProps['aria-sort'];
-
-      //   console.log('sortProps');
-      //   console.log(sortProps);
 
       return (
         <th

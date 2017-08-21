@@ -7,12 +7,6 @@ function allEqual(arr) {
 }
 
 function isNumber(item) {
-  console.log('inside isNumber-');
-  console.log('item:');
-  console.log(item);
-  let result = /^[0-9.]+$/.test(item);
-  console.log('result:');
-  console.log(result);
   return /^[0-9.]+$/.test(item);
 }
 
@@ -32,7 +26,6 @@ function makeLowerCase(item) {
 }
 
 function equivalency_closure_generator(equivalencyCallback) {
-  console.log('inside equivalency_closure_generator-');
   return function(data, key) {
     let values = _.map(data, key);
     let results = [];
@@ -42,8 +35,6 @@ function equivalency_closure_generator(equivalencyCallback) {
       }
       results.push(equivalencyCallback(value));
     }
-    console.log('results:');
-    console.log(results);
     for (let item of results) {
       if (item == false) {
         return false;
@@ -60,36 +51,20 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   let all_are_numbers = are_all_numbers(data, prop);
   let all_are_percents = are_all_percents(data, prop);
   let orderingFlag = order === 'descending' ? 'desc' : 'asc';
-  console.log('inside sort-');
-  console.log('prop:');
-  console.log(prop);
-  console.log('data:');
-  console.log(data);
-  console.log('orderingFlag:');
-  console.log(orderingFlag);
-  console.log('all_are_numbers:');
-  console.log(all_are_numbers);
-  console.log('all_are_percents:');
-  console.log(all_are_percents);
-
-  console.log('\n\nwtffffffffffff\n\n');
 
   if (all_are_numbers) {
-    console.log('using the all_are_numbers orderBy');
     var orderByResults = orderBy(
       data,
       item => parseFloat(item[prop]),
       orderingFlag,
     );
   } else if (all_are_percents) {
-    console.log('using the all_are_percents orderBy');
     var orderByResults = orderBy(
       data,
       item => percentToNumber(item[prop]),
       orderingFlag,
     );
   } else {
-    console.log('using the default orderBy');
     var orderByResults = orderBy(
       data,
       item => item[prop].toLowerCase(),
