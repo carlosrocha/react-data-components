@@ -10,90 +10,50 @@ function isNumber(item) {
   return /^[0-9.]+$/.test(item);
 }
 
-// function isPercent(item) {
-//   console.log('\ninside isPercent-');
-//   console.log('item:');
-//   console.log(item);
-//   return /^[0-9.]+%$/.test(item);
-// }
-
 function isPercent(item) {
-  console.log('inside isPercent-');
-  console.log('item:');
-  console.log(item);
   let result = /^.*[%]$/.test(item);
-  console.log('result:');
-  console.log(result);
-  console.log('wtf');
   return result;
 }
 
 function percentToNumber(item) {
   let numString = item.replace('%', '');
   let this_number = parseFloat(numString);
-  console.log('\ninside percentToNumber-');
-  console.log('item:');
-  console.log(item);
-  console.log('this_number:');
-  console.log(this_number);
   return this_number;
 }
 
 function are_all_percents(data, key) {
-  console.log('inside are_all_percents-');
   let values = _.map(data, key);
-  console.log('values:');
-  console.log(values);
-  // let result = _.every(values, isPercent);
-  // console.log('result:');
-  // console.log(result);
-  // return result;
   let results = [];
   for (let value of values) {
-    console.log('value:');
-    console.log(value);
     if (value == 'N/A') {
       continue;
     }
     results.push(isNumber(value));
   }
 
-  console.log('results:');
-  console.log(results);
   return allEqual(results);
 }
 
-function are_all_numbers(data, key) {
-  let values = _.map(data, key);
-  // return _.every(values, isNumber);
-  let results = [];
-  for (let value of values) {
-    console.log('value:');
-    console.log(value);
-    if (value == 'N/A') {
-      continue;
-    }
-    results.push(isPercent(value));
-  }
-
-  console.log('results:');
-  console.log(results);
-  return allEqual(results);
-}
+// function are_all_numbers(data, key) {
+//   let values = _.map(data, key);
+//   // return _.every(values, isNumber);
+//   let results = [];
+//   for (let value of values) {
+//     console.log('value:');
+//     console.log(value);
+//     if (value == 'N/A') {
+//       continue;
+//     }
+//     results.push(isPercent(value));
+//   }
+//   console.log('results:');
+//   console.log(results);
+//   return allEqual(results);
+// }
 
 export function sort({ prop, order }: SortBy, data: AppData) {
-  // console.log('\n\ninside sort():\n');
-  // console.log('data:');
-  // console.log(data);
-  // console.log('prop:');
-  // console.log(prop);
-  // console.log('order:');
-  // console.log(order);
-
   let all_are_numbers = are_all_numbers(data, prop);
   let all_are_percents = are_all_percents(data, prop);
-  console.log('all_are_percents:');
-  console.log(all_are_percents);
   let orderingFlag = order === 'descending' ? 'desc' : 'asc';
 
   if (all_are_numbers) {
