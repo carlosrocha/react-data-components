@@ -40,7 +40,7 @@ function are_all_percents(data, key) {
   for (let value of values) {
     console.log('value:');
     console.log(value);
-    results.append(isPercent(value));
+    results.push(isPercent(value));
   }
 }
 
