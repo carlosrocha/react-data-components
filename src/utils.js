@@ -6,6 +6,13 @@ function isNumber(item) {
   return /^[0-9.]+$/.test(item);
 }
 
+// function isPercent(item) {
+//   console.log('\ninside isPercent-');
+//   console.log('item:');
+//   console.log(item);
+//   return /^[0-9.]+%$/.test(item);
+// }
+
 function isPercent(item) {
   console.log('inside isPercent-');
   console.log('item:');
@@ -46,18 +53,12 @@ function are_all_percents(data, key) {
 
   console.log('results:');
   console.log(results);
+  return;
 }
 
 function are_all_numbers(data, key) {
   let values = _.map(data, key);
   return _.every(values, isNumber);
-}
-
-function isPercent(item) {
-  console.log('\ninside isPercent-');
-  console.log('item:');
-  console.log(item);
-  return /^[0-9.]+%$/.test(item);
 }
 
 export function sort({ prop, order }: SortBy, data: AppData) {
