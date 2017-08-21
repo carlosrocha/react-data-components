@@ -55,7 +55,7 @@ function are_all_percents(data, key) {
     if (value == 'N/A') {
       continue;
     }
-    results.push(isPercent(value));
+    results.push(isNumber(value));
   }
 
   console.log('results:');
@@ -65,15 +65,28 @@ function are_all_percents(data, key) {
 
 function are_all_numbers(data, key) {
   let values = _.map(data, key);
-  return _.every(values, isNumber);
+  // return _.every(values, isNumber);
+  let results = [];
+  for (let value of values) {
+    console.log('value:');
+    console.log(value);
+    if (value == 'N/A') {
+      continue;
+    }
+    results.push(isPercent(value));
+  }
+
+  console.log('results:');
+  console.log(results);
+  return allEqual(results);
 }
 
 export function sort({ prop, order }: SortBy, data: AppData) {
-  console.log('\n\ninside sort():\n');
-  console.log('data:');
-  console.log(data);
-  console.log('prop:');
-  console.log(prop);
+  // console.log('\n\ninside sort():\n');
+  // console.log('data:');
+  // console.log(data);
+  // console.log('prop:');
+  // console.log(prop);
   // console.log('order:');
   // console.log(order);
 
