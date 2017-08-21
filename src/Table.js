@@ -23,8 +23,8 @@ const getCellClass = ({ prop, className }, row) =>
 
 function buildSortProps(col, sortBy, onSort) {
   const order = sortBy && sortBy.prop === col.prop ? sortBy.order : 'none';
-  console.log('col.prop in buildSortProps():');
-  console.log(col.prop);
+  // console.log('col.prop in buildSortProps():');
+  // console.log(col.prop);
 
   const nextOrder = order === 'ascending' ? 'descending' : 'ascending';
   const sortEvent = onSort.bind(null, { prop: col.prop, order: nextOrder });
@@ -99,8 +99,8 @@ export default class Table extends Component {
       ...otherProps
     } = this.props;
 
-    console.log('these columns:');
-    console.log(columns);
+    // console.log('these columns:');
+    // console.log(columns);
 
     const headers = columns.map((col, idx) => {
       let sortProps, order;

@@ -10,13 +10,18 @@ function isPercent(item) {
   console.log('inside isPercent-');
   console.log('item:');
   console.log(item);
-  return /^.*[%]$/.test(item);
+  let result = /^.*[%]$/.test(item);
+  console.log('result:');
+  console.log(result);
+  return result;
 }
 
 function percentToNumber(item) {
   let numString = item.replace('%', '');
   let this_number = parseFloat(numString);
-  console.log('in percentToNumber-');
+  console.log('\ninside percentToNumber-');
+  console.log('item:');
+  console.log(item);
   console.log('this_number:');
   console.log(this_number);
   return this_number;
@@ -33,6 +38,9 @@ function are_all_numbers(data, key) {
 }
 
 function isPercent(item) {
+  console.log('\ninside isPercent-');
+  console.log('item:');
+  console.log(item);
   return /^[0-9.]+%$/.test(item);
 }
 
@@ -40,8 +48,8 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('\n\ninside sort():\n');
   // console.log('data:');
   // console.log(data);
-  console.log('prop:');
-  console.log(prop);
+  // console.log('prop:');
+  // console.log(prop);
   // console.log('order:');
   // console.log(order);
 
