@@ -57,7 +57,7 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   } else if (all_are_percents) {
     var orderByResults = orderBy(
       data,
-      item => percentToNumber(item[prop]),
+      item => item[prop].toLowerCase(),
       orderingFlag,
     );
   } else {
