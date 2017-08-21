@@ -44,6 +44,11 @@ function equivalency_closure_generator(equivalencyCallback) {
     }
     console.log('results:');
     console.log(results);
+    for (let item of results) {
+      if (item == false) {
+        return false;
+      }
+    }
     return allEqual(results);
   };
 }
