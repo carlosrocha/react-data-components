@@ -90,7 +90,11 @@ export function sort({ prop, order }: SortBy, data: AppData) {
     );
   } else {
     console.log('using the default orderBy');
-    var orderByResults = orderBy(data, prop, orderingFlag);
+    var orderByResults = orderBy(
+      data,
+      item => item[prop].toLowerCase(),
+      orderingFlag,
+    );
   }
 
   return orderByResults;
