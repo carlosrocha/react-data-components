@@ -2,6 +2,10 @@ import orderBy from 'lodash/orderBy';
 import some from 'lodash/some';
 import type { SortBy, AppData, Value, Filters } from './types';
 
+function allEqual(arr) {
+  return new Set(arr).size == 1;
+}
+
 function isNumber(item) {
   return /^[0-9.]+$/.test(item);
 }
@@ -40,20 +44,23 @@ function are_all_percents(data, key) {
   let values = _.map(data, key);
   console.log('values:');
   console.log(values);
-  let result = _.every(values, isPercent);
-  console.log('result:');
-  console.log(result);
-  return result;
-  // let results = [];
-  // for (let value of values) {
-  //   console.log('value:');
-  //   console.log(value);
-  //   results.push(isPercent(value));
-  // }
-  //
-  // console.log('results:');
-  // console.log(results);
-  // return;
+  // let result = _.every(values, isPercent);
+  // console.log('result:');
+  // console.log(result);
+  // return result;
+  let results = [];
+  for (let value of values) {
+    console.log('value:');
+    console.log(value);
+    if (value == 'N/A') {
+      continue;
+    }
+    results.push(isPercent(value));
+  }
+
+  console.log('results:');
+  console.log(results);
+  return allEqual(results);
 }
 
 function are_all_numbers(data, key) {
