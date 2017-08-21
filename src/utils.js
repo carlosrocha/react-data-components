@@ -40,20 +40,20 @@ function are_all_percents(data, key) {
   let values = _.map(data, key);
   console.log('values:');
   console.log(values);
-  // let result = _.every(values, isPercent);
-  // console.log('result:');
-  // console.log(result);
-  // return result;
-  let results = [];
-  for (let value of values) {
-    console.log('value:');
-    console.log(value);
-    results.push(isPercent(value));
-  }
-
-  console.log('results:');
-  console.log(results);
-  return;
+  let result = _.every(values, isPercent);
+  console.log('result:');
+  console.log(result);
+  return result;
+  // let results = [];
+  // for (let value of values) {
+  //   console.log('value:');
+  //   console.log(value);
+  //   results.push(isPercent(value));
+  // }
+  //
+  // console.log('results:');
+  // console.log(results);
+  // return;
 }
 
 function are_all_numbers(data, key) {
