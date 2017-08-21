@@ -55,19 +55,24 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('orderingFlag:');
   console.log(orderingFlag);
 
+  console.log('\n\nwtffffffffffff\n\n');
+
   if (all_are_numbers) {
+    console.log('using the all_are_numbers orderBy');
     var orderByResults = orderBy(
       data,
       item => parseFloat(item[prop]),
       orderingFlag,
     );
   } else if (all_are_percents) {
+    console.log('using the all_are_percents orderBy');
     var orderByResults = orderBy(
       data,
-      item => item[prop].toLowerCase(),
+      item => percentToNumber(item[prop]),
       orderingFlag,
     );
   } else {
+    console.log('using the default orderBy');
     var orderByResults = orderBy(data, prop, orderingFlag);
   }
 
