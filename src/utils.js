@@ -32,6 +32,7 @@ function makeLowerCase(item) {
 }
 
 function equivalency_closure_generator(equivalencyCallback) {
+  console.log('inside equivalency_closure_generator-');
   return function(data, key) {
     let values = _.map(data, key);
     let results = [];
@@ -41,7 +42,8 @@ function equivalency_closure_generator(equivalencyCallback) {
       }
       results.push(equivalencyCallback(value));
     }
-
+    console.log('results:');
+    console.log(results);
     return allEqual(results);
   };
 }
