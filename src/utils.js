@@ -30,12 +30,18 @@ function percentToNumber(item) {
 function are_all_percents(data, key) {
   console.log('inside are_all_percents-');
   let values = _.map(data, key);
-  console.log('values:');
-  console.log(values);
-  let result = _.every(values, isPercent);
-  console.log('result:');
-  console.log(result);
-  return result;
+  // console.log('values:');
+  // console.log(values);
+  // let result = _.every(values, isPercent);
+  // console.log('result:');
+  // console.log(result);
+  // return result;
+  let results = [];
+  for (let value of values) {
+    console.log('value:');
+    console.log(value);
+    results.append(isPercent(value));
+  }
 }
 
 function are_all_numbers(data, key) {
