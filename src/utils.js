@@ -7,12 +7,19 @@ function isNumber(item) {
 }
 
 function isPercent(item) {
+  console.log('inside isPercent-');
+  console.log('item:');
+  console.log(item);
   return /^.*[%]$/.test(item);
 }
 
 function percentToNumber(item) {
   let numString = item.replace('%', '');
-  return parseFloat(numString);
+  let this_number = parseFloat(numString);
+  console.log('in percentToNumber-');
+  console.log('this_number:');
+  console.log(this_number);
+  return this_number;
 }
 
 function are_all_percents(data, key) {
