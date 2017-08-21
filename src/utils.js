@@ -61,11 +61,7 @@ export function sort({ prop, order }: SortBy, data: AppData) {
       orderingFlag,
     );
   } else {
-    var orderByResults = orderBy(
-      data,
-      item => makeLowerCase(item[prop]),
-      orderingFlag,
-    );
+    var orderByResults = orderBy(data, prop, orderingFlag);
   }
 
   return orderByResults;
