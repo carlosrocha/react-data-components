@@ -48,6 +48,11 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   let all_are_percents = are_all_percents(data, prop);
   let orderingFlag = order === 'descending' ? 'desc' : 'asc';
 
+  console.log('prop:');
+  console.log(prop);
+  console.log('data:');
+  console.log(data);
+
   if (all_are_numbers) {
     var orderByResults = orderBy(
       data,
