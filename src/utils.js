@@ -21,6 +21,10 @@ function percentToNumber(item) {
   return this_number;
 }
 
+function makeLowerCase(item) {
+  return item.toLowerCase();
+}
+
 function equivalency_closure_generator(equivalencyCallback) {
   return function(data, key) {
     let values = _.map(data, key);
@@ -59,7 +63,7 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   } else {
     var orderByResults = orderBy(
       data,
-      item => item[prop].toLowerCase(),
+      item => makeLowerCase(item[prop]),
       orderingFlag,
     );
   }
