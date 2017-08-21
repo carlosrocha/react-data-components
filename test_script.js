@@ -1,38 +1,60 @@
 const _ = require('lodash');
 const orderBy = require('lodash/orderBy');
-// import some from 'lodash/some';
-
-function isNumber(item) {
-  let isnum = /^\d+$/.test(item);
-  return isnum;
-}
-
-function are_all_numbers(data, key) {
-  let values = _.map(data, key);
-  return _.every(values, isNumber);
-}
 
 let data = [
-  { DATE: '2017-08-18', COUNT: '65', EVENT_NAME: 'TAX_EXEMPTION_FAILURE' },
-  { DATE: '2017-08-18', COUNT: '63', EVENT_NAME: 'FRAUD_NOT_DONE' },
-  { DATE: '2017-08-18', COUNT: '4451', EVENT_NAME: 'FRAUD_ACCEPT' },
+  {
+    '7 Days Prior': '512',
+    '% Deviation - 7 days prior': '-49%',
+    '1 Day Prior': '399',
+    '% Deviation - 1 day prior': '-34%',
+    Application: 'order-ui',
+  },
+  {
+    '7 Days Prior': '302187',
+    '% Deviation - 7 days prior': '-12%',
+    '1 Day Prior': '276618',
+    '% Deviation - 1 day prior': '-4%',
+    Application: 'customer-account-service',
+  },
+  {
+    '7 Days Prior': '19958',
+    '% Deviation - 7 days prior': '-14%',
+    '1 Day Prior': '21929',
+    '% Deviation - 1 day prior': '-22%',
+    Application: 'mylist-service',
+  },
+  {
+    '7 Days Prior': '24',
+    '% Deviation - 7 days prior': '45%',
+    '1 Day Prior': '92',
+    '% Deviation - 1 day prior': '-62%',
+    Application: 'mylist-ui',
+  },
+  {
+    '7 Days Prior': '145',
+    '% Deviation - 7 days prior': '-26%',
+    '1 Day Prior': '160',
+    '% Deviation - 1 day prior': '-33%',
+    Application: 'customer-ui',
+  },
+  {
+    '7 Days Prior': '31030',
+    '% Deviation - 7 days prior': '-7%',
+    '1 Day Prior': '20241',
+    '% Deviation - 1 day prior': '43%',
+    Application: 'common-ui',
+  },
+  {
+    '7 Days Prior': '36331',
+    '% Deviation - 7 days prior': '-11%',
+    '1 Day Prior': '33793',
+    '% Deviation - 1 day prior': '-5%',
+    Application: 'order-service',
+  },
 ];
 
-let order = 'descending';
+let orderByResults = orderBy(data, 'Application', ['desc']);
 
-let all_are_numbers = are_all_numbers(data, 'COUNT');
-console.log('all_are_numbers:');
-console.log(all_are_numbers);
-
-// https://stackoverflow.com/questions/37848030/lodash-how-to-do-a-case-insensitive-sorting-on-a-collection-using-orderby
-// if (all_are_numbers) {
-let orderByResults = orderBy(data, [item => parseInt(item.COUNT)], ['desc']);
-// } else {
-//     var orderByResults = orderBy(
-//       data,
-//       prop,
-//       order === 'descending' ? 'desc' : 'asc'
-//     );
-// }
-
+console.log(data);
+console.log('\n\n\n\n');
 console.log(orderByResults);

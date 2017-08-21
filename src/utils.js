@@ -52,6 +52,8 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   console.log(prop);
   console.log('data:');
   console.log(data);
+  console.log('orderingFlag:');
+  console.log(orderingFlag);
 
   if (all_are_numbers) {
     var orderByResults = orderBy(
