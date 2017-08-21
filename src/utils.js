@@ -7,6 +7,12 @@ function allEqual(arr) {
 }
 
 function isNumber(item) {
+  console.log('inside isNumber-');
+  console.log('item:');
+  console.log(item);
+  let result = /^[0-9.]+$/.test(item);
+  console.log('result:');
+  console.log(result);
   return /^[0-9.]+$/.test(item);
 }
 
@@ -47,13 +53,17 @@ export function sort({ prop, order }: SortBy, data: AppData) {
   let all_are_numbers = are_all_numbers(data, prop);
   let all_are_percents = are_all_percents(data, prop);
   let orderingFlag = order === 'descending' ? 'desc' : 'asc';
-
+  console.log('inside sort-');
   console.log('prop:');
   console.log(prop);
   console.log('data:');
   console.log(data);
   console.log('orderingFlag:');
   console.log(orderingFlag);
+  console.log('all_are_numbers:');
+  console.log(all_are_numbers);
+  console.log('all_are_percents:');
+  console.log(all_are_percents);
 
   console.log('\n\nwtffffffffffff\n\n');
 
