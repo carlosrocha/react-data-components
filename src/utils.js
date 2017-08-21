@@ -40,29 +40,26 @@ export function sort({ prop, order }: SortBy, data: AppData) {
 
   let all_are_numbers = are_all_numbers(data, prop);
   let all_are_percents = are_all_percents(data, prop);
+  console.log('all_are_percents:');
+  console.log(all_are_percents);
+  let orderingFlag = order === 'descending' ? 'desc' : 'asc';
 
   if (all_are_numbers) {
     var orderByResults = orderBy(
       data,
       item => parseFloat(item[prop]),
-      order === 'descending' ? 'desc' : 'asc',
+      orderingFlag,
     );
   } else if (all_are_percents) {
     var orderByResults = orderBy(
       data,
       item => percentToNumber(item[prop]),
-      order === 'descending' ? 'desc' : 'asc',
+      orderingFlag,
     );
   } else {
-    var orderByResults = orderBy(
-      data,
-      prop,
-      order === 'descending' ? 'desc' : 'asc',
-    );
+    var orderByResults = orderBy(data, prop, orderingFlag);
   }
 
-  // console.log('orderByResults:');
-  // console.log(orderByResults);
   return orderByResults;
 }
 
