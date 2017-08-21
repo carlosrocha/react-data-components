@@ -52,10 +52,10 @@ function isPercent(item) {
 
 export function sort({ prop, order }: SortBy, data: AppData) {
   console.log('\n\ninside sort():\n');
-  // console.log('data:');
-  // console.log(data);
-  // console.log('prop:');
-  // console.log(prop);
+  console.log('data:');
+  console.log(data);
+  console.log('prop:');
+  console.log(prop);
   // console.log('order:');
   // console.log(order);
 
