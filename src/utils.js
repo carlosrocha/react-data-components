@@ -21,35 +21,23 @@ function percentToNumber(item) {
   return this_number;
 }
 
-function are_all_percents(data, key) {
-  let values = _.map(data, key);
-  let results = [];
-  for (let value of values) {
-    if (value == 'N/A') {
-      continue;
+function equivalency_closure_generator(equivalencyCallback) {
+  return function(data, key) {
+    let values = _.map(data, key);
+    let results = [];
+    for (let value of values) {
+      if (value == 'N/A') {
+        continue;
+      }
+      results.push(equivalencyCallback(value));
     }
-    results.push(isNumber(value));
-  }
 
-  return allEqual(results);
+    return allEqual(results);
+  };
 }
 
-// function are_all_numbers(data, key) {
-//   let values = _.map(data, key);
-//   // return _.every(values, isNumber);
-//   let results = [];
-//   for (let value of values) {
-//     console.log('value:');
-//     console.log(value);
-//     if (value == 'N/A') {
-//       continue;
-//     }
-//     results.push(isPercent(value));
-//   }
-//   console.log('results:');
-//   console.log(results);
-//   return allEqual(results);
-// }
+let are_all_numbers = equivalency_closure_generator(isNumber);
+let are_all_percents = equivalency_closure_generator(isPercent);
 
 export function sort({ prop, order }: SortBy, data: AppData) {
   let all_are_numbers = are_all_numbers(data, prop);
