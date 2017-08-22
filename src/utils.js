@@ -1,9 +1,78 @@
 import orderBy from 'lodash/orderBy';
 import some from 'lodash/some';
-import type {SortBy, AppData, Value, Filters} from './types';
+import type { SortBy, AppData, Value, Filters } from './types';
 
-export function sort({prop, order}: SortBy, data: AppData) {
-  return orderBy(data, prop, order === 'descending' ? 'desc' : 'asc');
+function allEqual(arr) {
+  return new Set(arr).size == 1;
+}
+
+function isNumber(item) {
+  return /^[0-9.]+$/.test(item);
+}
+
+function isPercent(item) {
+  let result = /^.*[%]$/.test(item);
+  return result;
+}
+
+function percentToNumber(item) {
+  let numString = item.replace('%', '');
+  let this_number = parseFloat(numString);
+  return this_number;
+}
+
+function makeLowerCase(item) {
+  return item.toLowerCase();
+}
+
+function equivalency_closure_generator(equivalencyCallback) {
+  return function(data, key) {
+    let values = _.map(data, key);
+    let results = [];
+    for (let value of values) {
+      if (value == 'N/A') {
+        continue;
+      }
+      results.push(equivalencyCallback(value));
+    }
+    for (let item of results) {
+      if (item == false) {
+        return false;
+      }
+    }
+    return allEqual(results);
+  };
+}
+
+let are_all_numbers = equivalency_closure_generator(isNumber);
+let are_all_percents = equivalency_closure_generator(isPercent);
+
+export function sort({ prop, order }: SortBy, data: AppData) {
+  let all_are_numbers = are_all_numbers(data, prop);
+  let all_are_percents = are_all_percents(data, prop);
+  let orderingFlag = order === 'descending' ? 'desc' : 'asc';
+
+  if (all_are_numbers) {
+    var orderByResults = orderBy(
+      data,
+      item => parseFloat(item[prop]),
+      orderingFlag,
+    );
+  } else if (all_are_percents) {
+    var orderByResults = orderBy(
+      data,
+      item => percentToNumber(item[prop]),
+      orderingFlag,
+    );
+  } else {
+    var orderByResults = orderBy(
+      data,
+      item => item[prop].toLowerCase(),
+      orderingFlag,
+    );
+  }
+
+  return orderByResults;
 }
 
 export function filter(filters: Filters, filterValues, data: AppData) {
@@ -16,11 +85,13 @@ export function filter(filters: Filters, filterValues, data: AppData) {
     };
   }
 
-  return data.filter((row) => some(
-    filterAndVals,
-    ({filter, value, prop}) =>
-      !prop ? some(row, filter.bind(null, value)) : filter(value, row[key])
-  ));
+  return data.filter(row =>
+    some(
+      filterAndVals,
+      ({ filter, value, prop }) =>
+        !prop ? some(row, filter.bind(null, value)) : filter(value, row[key]),
+    ),
+  );
 }
 
 export function containsIgnoreCase(a: Value, b: Value) {
