@@ -31,15 +31,12 @@
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
-    "babel-eslint": "^7.0.0",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-lodash": "^3.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
-    "eslint": "^4.1.1",
-    "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.49.1",
     "husky": "^0.14.1",
     "jest": "^20.0.4",
@@ -60,11 +57,10 @@
     "build": "webpack && babel src -d lib",
     "check": "flow check",
     "clean": "rimraf lib dist coverage",
-    "lint": "eslint src",
     "precommit": "lint-staged",
     "prepublish": "npm run clean && npm run build",
     "start": "webpack-dev-server -d --config example/webpack.config.js",
-    "test": "npm run lint && npm run check && jest"
+    "test": "npm run check && jest"
   },
   "lint-staged": {
     "*.js": [
